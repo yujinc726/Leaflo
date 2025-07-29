@@ -8,28 +8,69 @@ import { Footer } from "@/components/footer"
 import { Leaf, DollarSign, Lightbulb, ArrowRight, Building2 } from "lucide-react"
 import Link from "next/link"
 
+// 기본 애니메이션 variants
+const fadeInUp = {
+  hidden: { 
+    opacity: 0, 
+    y: 30,
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94]
+    }
+  }
+}
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1
+    }
+  }
+}
+
+const scaleIn = {
+  hidden: { 
+    opacity: 0, 
+    scale: 0.9 
+  },
+  visible: { 
+    opacity: 1, 
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.46, 0.45, 0.94]
+    }
+  }
+}
+
 // Simple Animated Icon Component
 function AnimatedIcon({
   icon: Icon,
-  delay = 0,
   title,
   description,
-}: { icon: any; delay?: number; title: string; description: string }) {
-  const ref = useRef<HTMLDivElement>(null)
-
+}: { icon: any; title: string; description: string }) {
   return (
     <motion.div
-      ref={ref}
+      variants={fadeInUp}
       className="text-center"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
-      viewport={{ once: true }}
-      whileHover={{ y: -3, transition: { duration: 0.2, ease: "easeOut" } }}
+      whileHover={{ 
+        y: -5,
+        transition: { duration: 0.3, ease: "easeOut" }
+      }}
     >
       <motion.div
         className="w-16 h-16 mx-auto mb-4 bg-emerald-100 rounded-2xl flex items-center justify-center"
-        whileHover={{ scale: 1.03, transition: { duration: 0.2, ease: "easeOut" } }}
+        whileHover={{ 
+          scale: 1.05,
+          transition: { duration: 0.3, ease: "easeOut" }
+        }}
       >
         <Icon className="w-8 h-8 text-emerald-600" />
       </motion.div>
@@ -44,7 +85,7 @@ export default function HomePage() {
   const heroRef = useRef<HTMLElement>(null)
 
   // Subtle parallax effect
-  const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -30])
+  const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -20])
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
@@ -60,32 +101,35 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-green-50" />
 
         {/* Subtle floating elements */}
-        {[...Array(8)].map((_, i) => (
+        {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-emerald-200 rounded-full opacity-60"
+            className="absolute w-1 h-1 bg-emerald-200 rounded-full opacity-40"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
             animate={{
-              y: [-8, -20, -8],
-              opacity: [0.3, 0.6, 0.3],
+              y: [-5, -15, -5],
+              opacity: [0.2, 0.4, 0.2],
             }}
             transition={{
-              duration: Math.random() * 2 + 3,
-              repeat: Number.POSITIVE_INFINITY,
-              delay: Math.random() * 2,
+              duration: 4 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 3,
               ease: "easeInOut",
             }}
           />
         ))}
 
-        <div className="relative z-10 text-center px-6 max-w-4xl">
+        <motion.div 
+          className="relative z-10 text-center px-6 max-w-4xl"
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+        >
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            variants={scaleIn}
             className="mb-6"
           >
             <Leaf className="w-16 h-16 text-emerald-600 mx-auto" />
@@ -93,9 +137,7 @@ export default function HomePage() {
 
           <motion.h1
             className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            variants={fadeInUp}
           >
             낙엽이{" "}
             <span className="bg-gradient-to-r from-emerald-600 to-green-500 bg-clip-text text-transparent">에너지</span>
@@ -106,9 +148,7 @@ export default function HomePage() {
 
           <motion.p
             className="text-xl md:text-2xl mb-8 text-gray-600 leading-relaxed"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+            variants={fadeInUp}
           >
             버려지던 낙엽을 지속가능한 바이오매스 자원으로.
             <br />
@@ -116,48 +156,52 @@ export default function HomePage() {
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+            variants={fadeInUp}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
             <Link href="/about">
               <motion.div 
-                whileHover={{ scale: 1.02, transition: { duration: 0.2 } }} 
-                whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
+                whileHover={{ scale: 1.02 }} 
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
               >
                 <Button
                   size="lg"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg group transition-colors duration-200"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg group transition-all duration-300"
                 >
                   Leaflo 자세히 알아보기
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </Button>
               </motion.div>
             </Link>
 
             <Link href="/business">
               <motion.div 
-                whileHover={{ scale: 1.02, transition: { duration: 0.2 } }} 
-                whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
+                whileHover={{ scale: 1.02 }} 
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
               >
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-8 py-4 text-lg font-semibold rounded-xl bg-transparent transition-colors duration-200"
+                  className="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-8 py-4 text-lg font-semibold rounded-xl bg-transparent transition-all duration-300"
                 >
                   비즈니스 모델 보기
                 </Button>
               </motion.div>
             </Link>
           </motion.div>
-        </div>
+        </motion.div>
 
         {/* Simple scroll indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+          animate={{ y: [0, 8, 0] }}
+          transition={{ 
+            duration: 2.5, 
+            repeat: Infinity, 
+            ease: "easeInOut" 
+          }}
         >
           <div className="w-6 h-10 border-2 border-emerald-300 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-emerald-600 rounded-full mt-2" />
@@ -169,10 +213,10 @@ export default function HomePage() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">왜 Leaflo인가요?</h2>
@@ -182,45 +226,49 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-12 mb-16">
+          <motion.div 
+            className="grid md:grid-cols-3 gap-12 mb-16"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+          >
             <AnimatedIcon
               icon={Leaf}
-              delay={0.1}
               title="친환경 기술"
               description="100% 천연 낙엽을 활용한 친환경 에너지 솔루션으로 지구를 보호합니다"
             />
             <AnimatedIcon
               icon={DollarSign}
-              delay={0.2}
               title="비용 효율성"
               description="기존 연료 대비 경제적이고 효율적인 에너지원을 제공합니다"
             />
             <AnimatedIcon
               icon={Lightbulb}
-              delay={0.3}
               title="혁신적인 솔루션"
               description="폐기물을 자원으로 전환하는 순환경제 모델을 구현합니다"
             />
-          </div>
+          </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            variants={fadeInUp}
             className="text-center"
           >
             <Link href="/about">
               <motion.div 
-                whileHover={{ scale: 1.02, transition: { duration: 0.2 } }} 
-                whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
+                whileHover={{ scale: 1.02 }} 
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
               >
                 <Button
                   size="lg"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-3 text-lg font-semibold rounded-xl shadow-lg group transition-colors duration-200"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-3 text-lg font-semibold rounded-xl shadow-lg group transition-all duration-300"
                 >
                   더 자세히 알아보기
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </Button>
               </motion.div>
             </Link>
@@ -232,10 +280,10 @@ export default function HomePage() {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">3가지 수익 모델</h2>
@@ -244,13 +292,19 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <motion.div 
+            className="grid md:grid-cols-3 gap-8 mb-12"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+          >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5, transition: { duration: 0.2, ease: "easeOut" } }}
+              variants={fadeInUp}
+              whileHover={{ 
+                y: -8,
+                transition: { duration: 0.3, ease: "easeOut" }
+              }}
               className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300"
             >
               <div className="w-16 h-16 mx-auto mb-6 bg-emerald-100 rounded-2xl flex items-center justify-center">
@@ -270,11 +324,11 @@ export default function HomePage() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5, transition: { duration: 0.2, ease: "easeOut" } }}
+              variants={fadeInUp}
+              whileHover={{ 
+                y: -8,
+                transition: { duration: 0.3, ease: "easeOut" }
+              }}
               className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300"
             >
               <div className="w-16 h-16 mx-auto mb-6 bg-blue-100 rounded-2xl flex items-center justify-center">
@@ -294,11 +348,11 @@ export default function HomePage() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5, transition: { duration: 0.2, ease: "easeOut" } }}
+              variants={fadeInUp}
+              whileHover={{ 
+                y: -8,
+                transition: { duration: 0.3, ease: "easeOut" }
+              }}
               className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300"
             >
               <div className="w-16 h-16 mx-auto mb-6 bg-green-100 rounded-2xl flex items-center justify-center">
@@ -316,26 +370,27 @@ export default function HomePage() {
                 </div>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            variants={fadeInUp}
             className="text-center"
           >
             <Link href="/business">
               <motion.div 
-                whileHover={{ scale: 1.02, transition: { duration: 0.2 } }} 
-                whileTap={{ scale: 0.98, transition: { duration: 0.1 } }}
+                whileHover={{ scale: 1.02 }} 
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
               >
                 <Button
                   size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 text-lg font-semibold rounded-xl shadow-lg group transition-colors duration-200"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 text-lg font-semibold rounded-xl shadow-lg group transition-all duration-300"
                 >
                   비즈니스 모델 자세히 보기
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </Button>
               </motion.div>
             </Link>
@@ -347,10 +402,10 @@ export default function HomePage() {
       <section className="py-20 bg-emerald-600 text-white">
         <div className="container mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Leaflo의 임팩트</h2>
@@ -359,48 +414,42 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-4 gap-8">
+          <motion.div 
+            className="grid md:grid-cols-4 gap-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+          >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-              viewport={{ once: true }}
+              variants={fadeInUp}
               className="text-center"
             >
               <div className="text-4xl font-bold mb-2">90%</div>
               <p className="text-emerald-100">지자체 처리비용 절감</p>
             </motion.div>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-              viewport={{ once: true }}
+              variants={fadeInUp}
               className="text-center"
             >
               <div className="text-4xl font-bold mb-2">21-30톤</div>
               <p className="text-emerald-100">B2B 손익분기점</p>
             </motion.div>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
-              viewport={{ once: true }}
+              variants={fadeInUp}
               className="text-center"
             >
               <div className="text-4xl font-bold mb-2">74%</div>
               <p className="text-emerald-100">B2C 이익률 (소매가)</p>
             </motion.div>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
-              viewport={{ once: true }}
+              variants={fadeInUp}
               className="text-center"
             >
               <div className="text-4xl font-bold mb-2">1만원/톤</div>
               <p className="text-emerald-100">탄소배출권 현재가</p>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
