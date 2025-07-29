@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useEffect, useState } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/navigation"
@@ -8,31 +8,59 @@ import { Footer } from "@/components/footer"
 import { Leaf, DollarSign, Lightbulb, ArrowRight, Building2 } from "lucide-react"
 import Link from "next/link"
 
-// CSS 기반 애니메이션을 위한 스타일
-const fadeInStyle = {
-  opacity: 0,
-  transform: 'translateY(20px)',
-  transition: 'all 0.6s ease-out',
+// Intersection Observer 훅
+function useIntersectionObserver(options = {}) {
+  const [isVisible, setIsVisible] = useState(false)
+  const [hasAnimated, setHasAnimated] = useState(false)
+  const elementRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setIsVisible(true)
+          setHasAnimated(true)
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '50px',
+        ...options
+      }
+    )
+
+    const currentElement = elementRef.current
+    if (currentElement) {
+      observer.observe(currentElement)
+    }
+
+    return () => {
+      if (currentElement) {
+        observer.unobserve(currentElement)
+      }
+    }
+  }, [hasAnimated, options])
+
+  return { elementRef, isVisible }
 }
 
-const fadeInVisibleStyle = {
-  opacity: 1,
-  transform: 'translateY(0px)',
-}
-
-// Simple Animated Icon Component - CSS로 변경
+// Simple Animated Icon Component - Intersection Observer 추가
 function AnimatedIcon({
   icon: Icon,
   title,
   description,
   delay = 0,
 }: { icon: any; title: string; description: string; delay?: number }) {
+  const { elementRef, isVisible } = useIntersectionObserver()
+
   return (
     <div
-      className="text-center opacity-0 translate-y-5 animate-fade-in-up"
+      ref={elementRef}
+      className={`text-center transition-all duration-700 ease-out ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
       style={{
-        animationDelay: `${delay}ms`,
-        animationFillMode: 'forwards'
+        transitionDelay: isVisible ? `${delay}ms` : '0ms'
       }}
     >
       <div
@@ -46,7 +74,7 @@ function AnimatedIcon({
   )
 }
 
-// Business Card Component - CSS로 변경
+// Business Card Component - Intersection Observer 추가
 function BusinessCard({
   icon: Icon,
   title,
@@ -62,12 +90,16 @@ function BusinessCard({
   iconBg: string;
   iconColor: string;
 }) {
+  const { elementRef, isVisible } = useIntersectionObserver()
+
   return (
     <div
-      className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 opacity-0 translate-y-5 animate-fade-in-up"
+      ref={elementRef}
+      className={`bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-700 hover:-translate-y-2 ease-out ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
       style={{
-        animationDelay: `${delay}ms`,
-        animationFillMode: 'forwards'
+        transitionDelay: isVisible ? `${delay}ms` : '0ms'
       }}
     >
       <div className={`w-16 h-16 mx-auto mb-6 ${iconBg} rounded-2xl flex items-center justify-center`}>
@@ -79,7 +111,7 @@ function BusinessCard({
   )
 }
 
-// Stat Item Component - CSS로 변경
+// Stat Item Component - Intersection Observer 추가
 function StatItem({
   value,
   label,
@@ -89,12 +121,16 @@ function StatItem({
   label: string;
   delay?: number;
 }) {
+  const { elementRef, isVisible } = useIntersectionObserver()
+
   return (
     <div
-      className="text-center opacity-0 translate-y-5 animate-fade-in-up"
+      ref={elementRef}
+      className={`text-center transition-all duration-700 ease-out ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
       style={{
-        animationDelay: `${delay}ms`,
-        animationFillMode: 'forwards'
+        transitionDelay: isVisible ? `${delay}ms` : '0ms'
       }}
     >
       <div className="text-4xl font-bold mb-2">{value}</div>
@@ -103,39 +139,56 @@ function StatItem({
   )
 }
 
+// Section Title Component - 섹션 제목용
+function SectionTitle({
+  title,
+  subtitle,
+  className = "",
+}: {
+  title: string;
+  subtitle?: string;
+  className?: string;
+}) {
+  const { elementRef, isVisible } = useIntersectionObserver()
+
+  return (
+    <div
+      ref={elementRef}
+      className={`text-center mb-16 transition-all duration-700 ease-out ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      } ${className}`}
+    >
+      <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">{title}</h2>
+      {subtitle && (
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          {subtitle}
+        </p>
+      )}
+    </div>
+  )
+}
+
 export default function HomePage() {
   const { scrollYProgress } = useScroll()
   const heroRef = useRef<HTMLElement>(null)
+  
+  // Hero 애니메이션을 위한 상태
+  const [heroVisible, setHeroVisible] = useState(false)
 
   // Subtle parallax effect
   const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -15])
 
+  // Hero 섹션 애니메이션 시작
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHeroVisible(true)
+    }, 200)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <div className="min-h-screen bg-white text-gray-900">
       <Navigation />
-
-      {/* 커스텀 CSS 애니메이션 추가 */}
-      <style jsx global>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-fade-in-up {
-          animation: fadeInUp 0.6s ease-out;
-        }
-        
-        .hover-lift:hover {
-          transform: translateY(-4px);
-          transition: transform 0.2s ease-out;
-        }
-      `}</style>
 
       {/* Hero Section */}
       <motion.section
@@ -148,15 +201,18 @@ export default function HomePage() {
 
         <div className="relative z-10 text-center px-6 max-w-4xl">
           <div
-            className="mb-6 opacity-0 animate-fade-in-up"
-            style={{ animationDelay: '0ms', animationFillMode: 'forwards' }}
+            className={`mb-6 transition-all duration-700 ease-out ${
+              heroVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-4 scale-95'
+            }`}
           >
             <Leaf className="w-16 h-16 text-emerald-600 mx-auto" />
           </div>
 
           <h1
-            className="text-5xl md:text-7xl font-bold mb-6 leading-tight opacity-0 animate-fade-in-up"
-            style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}
+            className={`text-5xl md:text-7xl font-bold mb-6 leading-tight transition-all duration-700 ease-out ${
+              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
+            style={{ transitionDelay: heroVisible ? '100ms' : '0ms' }}
           >
             낙엽이{" "}
             <span className="bg-gradient-to-r from-emerald-600 to-green-500 bg-clip-text text-transparent">에너지</span>
@@ -166,8 +222,10 @@ export default function HomePage() {
           </h1>
 
           <p
-            className="text-xl md:text-2xl mb-8 text-gray-600 leading-relaxed opacity-0 animate-fade-in-up"
-            style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}
+            className={`text-xl md:text-2xl mb-8 text-gray-600 leading-relaxed transition-all duration-700 ease-out ${
+              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
+            style={{ transitionDelay: heroVisible ? '200ms' : '0ms' }}
           >
             버려지던 낙엽을 지속가능한 바이오매스 자원으로.
             <br />
@@ -175,8 +233,10 @@ export default function HomePage() {
           </p>
 
           <div
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center opacity-0 animate-fade-in-up"
-            style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}
+            className={`flex flex-col sm:flex-row gap-4 justify-center items-center transition-all duration-700 ease-out ${
+              heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+            }`}
+            style={{ transitionDelay: heroVisible ? '300ms' : '0ms' }}
           >
             <Link href="/about">
               <Button
@@ -204,13 +264,10 @@ export default function HomePage() {
       {/* Overview Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">왜 Leaflo인가요?</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              매년 버려지는 수많은 낙엽을 혁신적인 기술로 고효율 바이오매스 팰릿으로 전환하여 환경 보호와 경제적 가치를
-              동시에 실현합니다.
-            </p>
-          </div>
+          <SectionTitle
+            title="왜 Leaflo인가요?"
+            subtitle="매년 버려지는 수많은 낙엽을 혁신적인 기술로 고효율 바이오매스 팰릿으로 전환하여 환경 보호와 경제적 가치를 동시에 실현합니다."
+          />
 
           <div className="grid md:grid-cols-3 gap-12 mb-16">
             <AnimatedIcon
@@ -250,12 +307,10 @@ export default function HomePage() {
       {/* Business Model Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">3가지 수익 모델</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              지속가능하고 다양한 수익 구조로 안정적인 성장을 실현합니다
-            </p>
-          </div>
+          <SectionTitle
+            title="3가지 수익 모델"
+            subtitle="지속가능하고 다양한 수익 구조로 안정적인 성장을 실현합니다"
+          />
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             <BusinessCard
@@ -333,12 +388,11 @@ export default function HomePage() {
       {/* Impact Stats Section */}
       <section className="py-20 bg-emerald-600 text-white">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Leaflo의 임팩트</h2>
-            <p className="text-xl text-emerald-100 max-w-3xl mx-auto leading-relaxed">
-              환경 보호와 경제적 가치 창출을 동시에 실현하는 혁신적 솔루션
-            </p>
-          </div>
+          <SectionTitle
+            title="Leaflo의 임팩트"
+            subtitle="환경 보호와 경제적 가치 창출을 동시에 실현하는 혁신적 솔루션"
+            className="text-white"
+          />
 
           <div className="grid md:grid-cols-4 gap-8">
             <StatItem
