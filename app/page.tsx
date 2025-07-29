@@ -1,12 +1,16 @@
 "use client"
 
 import { useRef, useMemo } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useTransform, cubicBezier } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Leaf, DollarSign, Lightbulb, ArrowRight, Building2 } from "lucide-react"
 import Link from "next/link"
+
+// Custom easing curves for smoother animations
+const smoothEase = cubicBezier(0.25, 0.46, 0.45, 0.94)
+const gentleEase = cubicBezier(0.23, 1, 0.32, 1)
 
 // Simple Animated Icon Component
 function AnimatedIcon({
@@ -23,15 +27,31 @@ function AnimatedIcon({
       className="text-center"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      transition={{ 
+        duration: 0.8, 
+        delay, 
+        ease: gentleEase,
+        type: "tween"
+      }}
       viewport={{ once: true }}
-      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      whileHover={{ 
+        y: -5, 
+        transition: { 
+          duration: 0.3,
+          ease: smoothEase,
+          type: "tween"
+        } 
+      }}
       style={{ willChange: "transform" }}
     >
       <motion.div
         className="w-16 h-16 mx-auto mb-4 bg-emerald-100 rounded-2xl flex items-center justify-center"
         whileHover={{ scale: 1.05 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        transition={{ 
+          duration: 0.3,
+          ease: smoothEase,
+          type: "tween"
+        }}
         style={{ willChange: "transform" }}
       >
         <Icon className="w-8 h-8 text-emerald-600" />
@@ -55,8 +75,8 @@ export default function HomePage() {
       id: i,
       left: Math.random() * 100,
       top: Math.random() * 100,
-      duration: Math.random() * 2 + 3, // 3-5 seconds
-      delay: Math.random() * 2,
+      duration: Math.random() * 1.5 + 4, // 4-5.5 seconds (longer for smoother feel)
+      delay: Math.random() * 3,
     })), []
   )
 
@@ -91,8 +111,9 @@ export default function HomePage() {
               duration: element.duration,
               repeat: Infinity,
               delay: element.delay,
-              ease: "easeInOut",
+              ease: smoothEase,
               repeatType: "loop",
+              type: "tween"
             }}
           />
         ))}
@@ -101,7 +122,12 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            transition={{ 
+              duration: 1, 
+              delay: 0.2, 
+              ease: gentleEase,
+              type: "tween"
+            }}
             className="mb-6"
             style={{ willChange: "transform, opacity" }}
           >
@@ -112,7 +138,12 @@ export default function HomePage() {
             className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            transition={{ 
+              duration: 1.2, 
+              delay: 0.4, 
+              ease: gentleEase,
+              type: "tween"
+            }}
             style={{ willChange: "transform, opacity" }}
           >
             낙엽이{" "}
@@ -126,7 +157,12 @@ export default function HomePage() {
             className="text-xl md:text-2xl mb-8 text-gray-600 leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+            transition={{ 
+              duration: 1, 
+              delay: 0.7, 
+              ease: gentleEase,
+              type: "tween"
+            }}
             style={{ willChange: "transform, opacity" }}
           >
             버려지던 낙엽을 지속가능한 바이오매스 자원으로.
@@ -137,7 +173,12 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
+            transition={{ 
+              duration: 1, 
+              delay: 1, 
+              ease: gentleEase,
+              type: "tween"
+            }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             style={{ willChange: "transform, opacity" }}
           >
@@ -145,15 +186,21 @@ export default function HomePage() {
               <motion.div 
                 whileHover={{ scale: 1.02 }} 
                 whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
+                transition={{ 
+                  duration: 0.3,
+                  ease: smoothEase,
+                  type: "tween"
+                }}
                 style={{ willChange: "transform" }}
               >
                 <Button
                   size="lg"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg group transition-colors duration-200"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg group"
+                  style={{ transition: "background-color 0.3s ease" }}
                 >
                   Leaflo 자세히 알아보기
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1" 
+                    style={{ transition: "transform 0.3s ease" }} />
                 </Button>
               </motion.div>
             </Link>
@@ -162,13 +209,18 @@ export default function HomePage() {
               <motion.div 
                 whileHover={{ scale: 1.02 }} 
                 whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
+                transition={{ 
+                  duration: 0.3,
+                  ease: smoothEase,
+                  type: "tween"
+                }}
                 style={{ willChange: "transform" }}
               >
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-8 py-4 text-lg font-semibold rounded-xl bg-transparent transition-colors duration-200"
+                  className="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-8 py-4 text-lg font-semibold rounded-xl bg-transparent"
+                  style={{ transition: "background-color 0.3s ease" }}
                 >
                   비즈니스 모델 보기
                 </Button>
@@ -182,10 +234,11 @@ export default function HomePage() {
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
           animate={{ y: [0, 8, 0] }}
           transition={{ 
-            duration: 2, 
+            duration: 3, 
             repeat: Infinity, 
-            ease: "easeInOut",
-            repeatType: "loop"
+            ease: smoothEase,
+            repeatType: "loop",
+            type: "tween"
           }}
           style={{ willChange: "transform" }}
         >
@@ -201,7 +254,11 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ 
+              duration: 1, 
+              ease: gentleEase,
+              type: "tween"
+            }}
             viewport={{ once: true }}
             className="text-center mb-16"
             style={{ willChange: "transform, opacity" }}
@@ -216,19 +273,19 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-12 mb-16">
             <AnimatedIcon
               icon={Leaf}
-              delay={0.1}
+              delay={0.2}
               title="친환경 기술"
               description="100% 천연 낙엽을 활용한 친환경 에너지 솔루션으로 지구를 보호합니다"
             />
             <AnimatedIcon
               icon={DollarSign}
-              delay={0.2}
+              delay={0.4}
               title="비용 효율성"
               description="기존 연료 대비 경제적이고 효율적인 에너지원을 제공합니다"
             />
             <AnimatedIcon
               icon={Lightbulb}
-              delay={0.3}
+              delay={0.6}
               title="혁신적인 솔루션"
               description="폐기물을 자원으로 전환하는 순환경제 모델을 구현합니다"
             />
@@ -237,7 +294,12 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+            transition={{ 
+              duration: 0.8, 
+              delay: 0.8, 
+              ease: gentleEase,
+              type: "tween"
+            }}
             viewport={{ once: true }}
             className="text-center"
             style={{ willChange: "transform, opacity" }}
@@ -246,15 +308,21 @@ export default function HomePage() {
               <motion.div 
                 whileHover={{ scale: 1.02 }} 
                 whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
+                transition={{ 
+                  duration: 0.3,
+                  ease: smoothEase,
+                  type: "tween"
+                }}
                 style={{ willChange: "transform" }}
               >
                 <Button
                   size="lg"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-3 text-lg font-semibold rounded-xl shadow-lg group transition-colors duration-200"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-3 text-lg font-semibold rounded-xl shadow-lg group"
+                  style={{ transition: "background-color 0.3s ease" }}
                 >
                   더 자세히 알아보기
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1" 
+                    style={{ transition: "transform 0.3s ease" }} />
                 </Button>
               </motion.div>
             </Link>
@@ -268,7 +336,11 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ 
+              duration: 1, 
+              ease: gentleEase,
+              type: "tween"
+            }}
             viewport={{ once: true }}
             className="text-center mb-16"
             style={{ willChange: "transform, opacity" }}
@@ -280,86 +352,85 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              viewport={{ once: true }}
-              whileHover={{ y: -10, transition: { duration: 0.2 } }}
-              className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100"
-              style={{ willChange: "transform" }}
-            >
-              <div className="w-16 h-16 mx-auto mb-6 bg-emerald-100 rounded-2xl flex items-center justify-center">
-                <DollarSign className="w-8 h-8 text-emerald-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">A. 펠릿 제품 판매</h3>
-              <div className="space-y-3 text-gray-600">
-                <div className="bg-emerald-50 p-3 rounded-lg">
-                  <p className="font-semibold text-emerald-700">B2B 산업용</p>
-                  <p className="text-sm">373원/kg | 21-30톤에서 손익분기</p>
+            {[
+              {
+                icon: DollarSign,
+                title: "A. 펠릿 제품 판매",
+                bgColor: "bg-emerald-100",
+                iconColor: "text-emerald-600",
+                content: [
+                  { label: "B2B 산업용", value: "373원/kg | 21-30톤에서 손익분기", bgClass: "bg-emerald-50", textClass: "text-emerald-700" },
+                  { label: "B2C 생활용", value: "600-870원/kg | 캠핑·난로·고양이모래", bgClass: "bg-blue-50", textClass: "text-blue-700" }
+                ]
+              },
+              {
+                icon: Building2,
+                title: "B. 지자체 위탁계약",
+                bgColor: "bg-blue-100",
+                iconColor: "text-blue-600",
+                content: [
+                  { label: "이중 수익 구조", value: "위탁비 수입 + 펠릿 판매 수익", bgClass: "bg-blue-50", textClass: "text-blue-700" },
+                  { label: "지자체 혜택", value: "톤당 30-50만원 처리비용 절감", bgClass: "bg-green-50", textClass: "text-green-700" }
+                ]
+              },
+              {
+                icon: Leaf,
+                title: "C. 탄소저감 크레딧",
+                bgColor: "bg-green-100",
+                iconColor: "text-green-600",
+                content: [
+                  { label: "탄소배출권 판매", value: "현재 1만원/톤 | 상승 전망", bgClass: "bg-green-50", textClass: "text-green-700" },
+                  { label: "ESG 경영 기여", value: "대기업 ESG 목표 달성 지원", bgClass: "bg-amber-50", textClass: "text-amber-700" }
+                ]
+              }
+            ].map((model, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  duration: 0.8, 
+                  delay: index * 0.2 + 0.2, 
+                  ease: gentleEase,
+                  type: "tween"
+                }}
+                viewport={{ once: true }}
+                whileHover={{ 
+                  y: -10, 
+                  transition: { 
+                    duration: 0.4,
+                    ease: smoothEase,
+                    type: "tween"
+                  } 
+                }}
+                className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100"
+                style={{ willChange: "transform" }}
+              >
+                <div className={`w-16 h-16 mx-auto mb-6 ${model.bgColor} rounded-2xl flex items-center justify-center`}>
+                  <model.icon className={`w-8 h-8 ${model.iconColor}`} />
                 </div>
-                <div className="bg-blue-50 p-3 rounded-lg">
-                  <p className="font-semibold text-blue-700">B2C 생활용</p>
-                  <p className="text-sm">600-870원/kg | 캠핑·난로·고양이모래</p>
+                <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">{model.title}</h3>
+                <div className="space-y-3 text-gray-600">
+                  {model.content.map((item, itemIndex) => (
+                    <div key={itemIndex} className={`${item.bgClass} p-3 rounded-lg`}>
+                      <p className={`font-semibold ${item.textClass}`}>{item.label}</p>
+                      <p className="text-sm">{item.value}</p>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              viewport={{ once: true }}
-              whileHover={{ y: -10, transition: { duration: 0.2 } }}
-              className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100"
-              style={{ willChange: "transform" }}
-            >
-              <div className="w-16 h-16 mx-auto mb-6 bg-blue-100 rounded-2xl flex items-center justify-center">
-                <Building2 className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">B. 지자체 위탁계약</h3>
-              <div className="space-y-3 text-gray-600">
-                <div className="bg-blue-50 p-3 rounded-lg">
-                  <p className="font-semibold text-blue-700">이중 수익 구조</p>
-                  <p className="text-sm">위탁비 수입 + 펠릿 판매 수익</p>
-                </div>
-                <div className="bg-green-50 p-3 rounded-lg">
-                  <p className="font-semibold text-green-700">지자체 혜택</p>
-                  <p className="text-sm">톤당 30-50만원 처리비용 절감</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-              viewport={{ once: true }}
-              whileHover={{ y: -10, transition: { duration: 0.2 } }}
-              className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100"
-              style={{ willChange: "transform" }}
-            >
-              <div className="w-16 h-16 mx-auto mb-6 bg-green-100 rounded-2xl flex items-center justify-center">
-                <Leaf className="w-8 h-8 text-green-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">C. 탄소저감 크레딧</h3>
-              <div className="space-y-3 text-gray-600">
-                <div className="bg-green-50 p-3 rounded-lg">
-                  <p className="font-semibold text-green-700">탄소배출권 판매</p>
-                  <p className="text-sm">현재 1만원/톤 | 상승 전망</p>
-                </div>
-                <div className="bg-amber-50 p-3 rounded-lg">
-                  <p className="font-semibold text-amber-700">ESG 경영 기여</p>
-                  <p className="text-sm">대기업 ESG 목표 달성 지원</p>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+            transition={{ 
+              duration: 0.8, 
+              delay: 0.8, 
+              ease: gentleEase,
+              type: "tween"
+            }}
             viewport={{ once: true }}
             className="text-center"
             style={{ willChange: "transform, opacity" }}
@@ -368,15 +439,21 @@ export default function HomePage() {
               <motion.div 
                 whileHover={{ scale: 1.02 }} 
                 whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
+                transition={{ 
+                  duration: 0.3,
+                  ease: smoothEase,
+                  type: "tween"
+                }}
                 style={{ willChange: "transform" }}
               >
                 <Button
                   size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 text-lg font-semibold rounded-xl shadow-lg group transition-colors duration-200"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 text-lg font-semibold rounded-xl shadow-lg group"
+                  style={{ transition: "background-color 0.3s ease" }}
                 >
                   비즈니스 모델 자세히 보기
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1" 
+                    style={{ transition: "transform 0.3s ease" }} />
                 </Button>
               </motion.div>
             </Link>
@@ -390,7 +467,11 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ 
+              duration: 1, 
+              ease: gentleEase,
+              type: "tween"
+            }}
             viewport={{ once: true }}
             className="text-center mb-16"
             style={{ willChange: "transform, opacity" }}
@@ -412,7 +493,12 @@ export default function HomePage() {
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                transition={{ 
+                  duration: 0.8, 
+                  delay: index * 0.15 + 0.3, 
+                  ease: gentleEase,
+                  type: "tween"
+                }}
                 viewport={{ once: true }}
                 className="text-center"
                 style={{ willChange: "transform, opacity" }}
