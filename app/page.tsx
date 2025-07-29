@@ -347,50 +347,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Impact Stats Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <SectionTitle
-            title="Leaflo의 임팩트"
-            subtitle="데이터로 입증된 혁신적 가치와 시장 잠재력"
-          />
-
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="text-center bg-gradient-to-br from-emerald-50 to-green-50 p-8 rounded-3xl shadow-lg border border-emerald-100 hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 mx-auto mb-4 bg-emerald-100 rounded-2xl flex items-center justify-center">
-                <span className="text-2xl font-bold text-emerald-600">96</span>
-              </div>
-              <div className="text-3xl font-bold text-emerald-600 mb-2">96%</div>
-              <p className="text-gray-600 font-medium">목재 펠릿 대비 효율성</p>
-            </div>
-
-            <div className="text-center bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl shadow-lg border border-blue-100 hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 mx-auto mb-4 bg-blue-100 rounded-2xl flex items-center justify-center">
-                <span className="text-2xl font-bold text-blue-600">30</span>
-              </div>
-              <div className="text-3xl font-bold text-blue-600 mb-2">30만톤</div>
-              <p className="text-gray-600 font-medium">연간 낙엽 수거 가능량</p>
-            </div>
-
-            <div className="text-center bg-gradient-to-br from-amber-50 to-orange-50 p-8 rounded-3xl shadow-lg border border-amber-100 hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 mx-auto mb-4 bg-amber-100 rounded-2xl flex items-center justify-center">
-                <span className="text-2xl font-bold text-amber-600">840</span>
-              </div>
-              <div className="text-3xl font-bold text-amber-600 mb-2">840억원</div>
-              <p className="text-gray-600 font-medium">시장 규모</p>
-            </div>
-
-            <div className="text-center bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-3xl shadow-lg border border-green-100 hover:shadow-xl transition-all duration-300">
-              <div className="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-2xl flex items-center justify-center">
-                <span className="text-2xl font-bold text-green-600">70</span>
-              </div>
-              <div className="text-3xl font-bold text-green-600 mb-2">70%</div>
-              <p className="text-gray-600 font-medium">처리비용 절감 효과</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-6 text-center">

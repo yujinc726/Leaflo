@@ -14,7 +14,8 @@ import {
   CheckCircle,
   Zap,
   Settings,
-  Award
+  Award,
+  Recycle
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -360,7 +361,7 @@ export default function AboutPage() {
       </section>
 
       {/* Simple Stats */}
-      <section className="py-20 bg-emerald-600 text-white">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -368,48 +369,107 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Leaflo의 임팩트</h2>
-            <p className="text-xl text-emerald-100 max-w-3xl mx-auto leading-relaxed">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Leaflo의 임팩트</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               데이터로 입증된 Leaflo의 혁신적 가치와 시장 잠재력
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-4 gap-8">
-            <motion.div
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* 효율성 카드 */}
+            <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0 }}
-              className="text-center"
+              className="relative group"
             >
-              <div className="text-4xl font-bold mb-2">96%</div>
-              <p className="text-emerald-100">목재 펠릿 대비 효율성</p>
+              <div className="bg-gradient-to-br from-emerald-50 to-green-50 p-8 rounded-3xl shadow-lg border border-emerald-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Zap className="w-6 h-6 text-emerald-600" />
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-emerald-600 mb-1">96%</div>
+                    <div className="w-16 h-1 bg-emerald-200 rounded-full ml-auto">
+                      <div className="w-full h-full bg-emerald-500 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">효율성</h3>
+                <p className="text-gray-600 text-sm">목재 펠릿 대비</p>
+              </div>
             </motion.div>
-            <motion.div
+
+            {/* 수거량 카드 */}
+            <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-center"
+              className="relative group"
             >
-              <div className="text-4xl font-bold mb-2">30만톤</div>
-              <p className="text-emerald-100">연간 낙엽 수거량</p>
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl shadow-lg border border-blue-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Recycle className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-blue-600 mb-1">30만톤</div>
+                    <div className="w-16 h-1 bg-blue-200 rounded-full ml-auto">
+                      <div className="w-4/5 h-full bg-blue-500 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">수거 가능량</h3>
+                <p className="text-gray-600 text-sm">연간 낙엽</p>
+              </div>
             </motion.div>
-            <motion.div
+
+            {/* 시장 규모 카드 */}
+            <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-center"
+              className="relative group"
             >
-              <div className="text-4xl font-bold mb-2">840억원</div>
-              <p className="text-emerald-100">버려지는 시장 가치</p>
+              <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-8 rounded-3xl shadow-lg border border-amber-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <TrendingUp className="w-6 h-6 text-amber-600" />
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-amber-600 mb-1">840억원</div>
+                    <div className="w-16 h-1 bg-amber-200 rounded-full ml-auto">
+                      <div className="w-5/6 h-full bg-amber-500 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">시장 규모</h3>
+                <p className="text-gray-600 text-sm">블루오션 시장</p>
+              </div>
             </motion.div>
-            <motion.div
+
+            {/* 절감 효과 카드 */}
+            <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-center"
+              className="relative group"
             >
-              <div className="text-4xl font-bold mb-2">55억원</div>
-              <p className="text-emerald-100">2028년 목표 매출</p>
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-3xl shadow-lg border border-green-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <CheckCircle className="w-6 h-6 text-green-600" />
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-green-600 mb-1">70%</div>
+                    <div className="w-16 h-1 bg-green-200 rounded-full ml-auto">
+                      <div className="w-3/4 h-full bg-green-500 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-2">비용 절감</h3>
+                <p className="text-gray-600 text-sm">처리비용 절감 효과</p>
+              </div>
             </motion.div>
           </div>
         </div>
