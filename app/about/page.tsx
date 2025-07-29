@@ -1,344 +1,455 @@
 "use client"
 
-import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { motion } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { Card } from "@/components/ui/card"
-import { Leaf, DollarSign, Lightbulb, TreePine, Recycle, Factory, Users, Award, Target } from "lucide-react"
+import { 
+  Leaf, 
+  Users, 
+  Target, 
+  TrendingUp, 
+  ArrowRight, 
+  CheckCircle,
+  Zap,
+  Settings,
+  Award
+} from "lucide-react"
+import Link from "next/link"
+import Image from "next/image"
 
-// Simple Animated Icon Component
-function AnimatedIcon({ icon: Icon, delay = 0 }: { icon: any; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true })
-
+// AnimatedIcon 컴포넌트
+function AnimatedIcon({
+  icon: Icon,
+  title,
+  description,
+  delay = 0,
+}: { icon: any; title: string; description: string; delay?: number }) {
   return (
-    <div ref={ref} className="w-16 h-16 mx-auto mb-4">
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={isInView ? { scale: 1, opacity: 1 } : {}}
-        transition={{ duration: 0.4, delay, ease: "easeOut" }}
-        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-        className="w-full h-full bg-emerald-100 rounded-2xl flex items-center justify-center"
-      >
+    <motion.div
+      initial={{ scale: 0.8, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.4, delay, ease: "easeOut" }}
+      whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+      className="text-center"
+    >
+      <div className="w-16 h-16 mx-auto mb-4 bg-emerald-100 rounded-2xl flex items-center justify-center">
         <Icon className="w-8 h-8 text-emerald-600" />
-      </motion.div>
-    </div>
+      </div>
+      <h3 className="text-xl font-semibold text-gray-800 mb-3">{title}</h3>
+      <p className="text-gray-600 leading-relaxed">{description}</p>
+    </motion.div>
   )
 }
 
-// Team Member Card Component
-function TeamMemberCard({ member, delay = 0 }: { member: any; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true })
-
+// TeamMember 컴포넌트
+function TeamMember({
+  name,
+  role,
+  department,
+  achievement,
+  delay = 0,
+}: {
+  name: string;
+  role: string;
+  department: string;
+  achievement: string;
+  delay?: number;
+}) {
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay }}
-      whileHover={{ y: -5 }}
-      className="group"
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+      whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+      className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-200"
     >
-      <Card className="p-6 bg-white border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl">
-        {/* Profile Image */}
-        <motion.div
-          className="w-20 h-20 mx-auto mb-4 relative"
-          whileHover={{ scale: 1.05 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
-          <div className="w-full h-full bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center shadow-md">
-            <span className="text-xl font-bold text-white">{member.name[0]}</span>
-          </div>
-        </motion.div>
-
-        <h3 className="text-lg font-bold text-gray-800 mb-1">{member.name}</h3>
-        <p className="text-emerald-600 font-semibold mb-3">{member.position}</p>
-        <p className="text-gray-600 text-sm leading-relaxed mb-4">{member.description}</p>
-
-        {/* Skills */}
-        <div className="flex flex-wrap gap-2">
-          {member.skills.map((skill: string, index: number) => (
-            <motion.span
-              key={skill}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: delay + 0.1 * index }}
-              className="px-2 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-lg font-medium"
-            >
-              {skill}
-            </motion.span>
-          ))}
+      <div className="text-center">
+        <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-emerald-100 to-green-100 rounded-full flex items-center justify-center">
+          <Users className="w-10 h-10 text-emerald-600" />
         </div>
-      </Card>
+        <h3 className="text-xl font-bold text-gray-800 mb-1">{name}</h3>
+        <p className="text-emerald-600 font-semibold mb-2">{role}</p>
+        <p className="text-gray-600 text-sm mb-3">{department}</p>
+        <p className="text-gray-500 text-xs leading-relaxed">{achievement}</p>
+      </div>
     </motion.div>
   )
 }
 
 export default function AboutPage() {
-  const teamValues = [
-    {
-      title: "환경 전문성",
-      description: "환경공학, 바이오매스 에너지 분야의 풍부한 전문 지식과 경험을 보유한 전문가들로 구성되어 있습니다.",
-      skills: ["환경공학", "바이오매스", "에너지변환", "친환경기술"],
-    },
-    {
-      title: "사업 운영",
-      description: "효율적인 생산 시스템 구축과 운영 관리, 품질 관리를 통해 안정적인 제품 공급을 보장합니다.",
-      skills: ["운영관리", "품질관리", "생산최적화", "공급망관리"],
-    },
-    {
-      title: "시장 개발",
-      description: "B2B, B2C, B2G 시장에서의 마케팅 전략 수립과 고객 관계 관리를 담당하고 있습니다.",
-      skills: ["시장분석", "브랜드전략", "고객관계관리", "사업개발"],
-    },
-    {
-      title: "기술 혁신",
-      description: "지속적인 연구개발을 통해 낙엽 처리 기술과 펠릿 제조 공정을 개선하고 있습니다.",
-      skills: ["R&D", "공정개선", "특허개발", "기술혁신"],
-    },
-  ]
-
   return (
     <div className="min-h-screen bg-white text-gray-900">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-emerald-50 to-green-50">
-        <div className="container mx-auto px-6">
+      <section className="relative py-20 bg-gradient-to-br from-emerald-50 via-white to-green-50">
+        <div className="container mx-auto px-6 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
+            transition={{ duration: 0.6 }}
+            className="mb-8"
           >
             <Leaf className="w-16 h-16 text-emerald-600 mx-auto mb-6" />
             <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
-              Leaflo는 <span className="text-emerald-600">무엇인가요?</span>
+              환경에 진심인 사람들이 모였다
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              낙엽 폐기물 문제에 대한 친환경 솔루션을 제공하는 혁신적인 스타트업입니다.
+              버려지던 낙엽을 에너지원으로 전환하여 지속가능한 미래를 만들어가는 Leaflo의 이야기를 소개합니다.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Mission Section */}
-      <section className="py-20">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">우리의 미션</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              연간 30만톤의 낙엽을 96% 효율의 바이오매스 펠릿으로 전환하여
+              <br />
+              840억원 규모의 블루오션 시장을 개척합니다.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-12">
+            <AnimatedIcon
+              icon={Target}
+              title="명확한 목표"
+              description="2028년까지 연간 10,000톤의 낙엽 펠릿 생산으로 55억원 매출 달성"
+              delay={0}
+            />
+            <AnimatedIcon
+              icon={Zap}
+              title="혁신적 기술"
+              description="ISO 17225 시리즈 기준 96% 효율의 검증된 에테르 펠릿 기술"
+              delay={0.1}
+            />
+            <AnimatedIcon
+              icon={TrendingUp}
+              title="지속가능한 성장"
+              description="이중 수익 구조(Dual-Revenue Engine)를 통한 안정적 수익 창출"
+              delay={0.2}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">우리 팀</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              환경에 진심이고, 혁신에 목마른 다양한 전문가들이 모여 Leaflo를 만들어가고 있습니다.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <TeamMember
+              name="노민수"
+              role="CEO"
+              department="연세대학교 대기과학과"
+              achievement="생명사정 환경공학학회 회원 | 한국공학게시 사회미디어 대학생 환경부 탄소종합협조 5기 팀장"
+              delay={0}
+            />
+            <TeamMember
+              name="신상현"
+              role="CCO"
+              department="한림디지인학교 출신"
+              achievement="건축가 | 1급 소방안전관리자"
+              delay={0.1}
+            />
+            <TeamMember
+              name="고희승"
+              role="COO"
+              department="연세대학교 컴퓨터과학과 전공"
+              achievement="에어텍 개발 기획팀 | 연세대학교 YCC 학술부 임원 | 미디 워크스케어선 개발팀장"
+              delay={0.2}
+            />
+            <TeamMember
+              name="차유진"
+              role="CCO"
+              department="연세대학교 컴퓨터과학과 전공"
+              achievement="2024년 넥슨 창의블랙챗 최우수상 수상 | 2025년 AGI Agent 해커톤 대회 우수상 수상"
+              delay={0.3}
+            />
+            <TeamMember
+              name="김진세"
+              role="CTO"
+              department="연세대학교 전기전자공학 전공"
+              achievement="드론 기반 상품 택배 조달 시스템 Fullstack 개발자 | IoT 기반 자이로콘돔츠룸 - 마인크래프트 CTO | IoT 기반 물류 운반 안정화 시스템 CTO"
+              delay={0.4}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Technology Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Our Technology</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              검증된 3단계 솔루션으로 낙엽을 고품질 바이오매스 펠릿으로 전환합니다.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="space-y-6"
+              transition={{ duration: 0.5, delay: 0 }}
+              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-200"
             >
-              <div className="flex items-center space-x-3 mb-4">
-                <Target className="w-6 h-6 text-emerald-600" />
-                <h2 className="text-3xl font-bold text-gray-800">우리의 미션</h2>
+              <div className="w-16 h-16 mx-auto mb-6 bg-emerald-100 rounded-2xl flex items-center justify-center">
+                <span className="text-2xl font-bold text-emerald-600">1</span>
               </div>
-
-              <p className="text-lg text-gray-700 leading-relaxed">
-                Leaflo는 낙엽 폐기물 문제에 대한 친환경 솔루션을 제공하는 혁신적인 스타트업입니다. 우리는 버려지는
-                낙엽으로 고효율 바이오매스 팰릿을 생산하여 순환 경제와 지속 가능한 미래에 기여합니다.
-              </p>
-
-              <p className="text-lg text-gray-700 leading-relaxed">
-                매년 수많은 낙엽이 단순 소각되거나 매립되면서 환경 오염의 원인이 되고 있습니다. Leaflo는 이러한 문제를
-                해결하고 동시에 경제적 가치를 창출하는 혁신적인 기술을 보유하고 있습니다.
-              </p>
-
-              {/* Simple Stats */}
-              <div className="grid grid-cols-2 gap-4 mt-8">
-                <div className="bg-emerald-50 rounded-xl p-4 text-center">
-                  <div className="text-2xl font-bold text-emerald-600 mb-1">3가지</div>
-                  <div className="text-gray-600 text-sm">수익 모델</div>
-                </div>
-                <div className="bg-amber-50 rounded-xl p-4 text-center">
-                  <div className="text-2xl font-bold text-amber-600 mb-1">90%</div>
-                  <div className="text-gray-600 text-sm">비용 절감</div>
-                </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">'깨끗하게' 분류합니다</h3>
+              <div className="space-y-4 text-gray-600">
+                <p className="leading-relaxed">
+                  <strong>트럼멜 스크린과 자석 선별기로</strong> 낙엽 외의 자 이물질을 완벽히 제거합니다.
+                </p>
+                <p className="text-sm leading-relaxed">
+                  다단 침전 세척 방식으로 흙, 미세먼지 등 외부(Ash)의 직접적인 원인이 되는 잔류물을 제거합니다.
+                </p>
               </div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
+              initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="relative"
+              transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-200"
             >
-              <div className="bg-gray-50 p-6 rounded-2xl">
-                <img
-                  src="/placeholder.svg?height=400&width=500"
-                  alt="Leaflo 생산 과정"
-                  className="w-full h-64 object-cover rounded-xl"
-                />
+              <div className="w-16 h-16 mx-auto mb-6 bg-blue-100 rounded-2xl flex items-center justify-center">
+                <span className="text-2xl font-bold text-blue-600">2</span>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">'똑똑하게' 섞습니다</h3>
+              <div className="space-y-4 text-gray-600">
+                <p className="leading-relaxed">
+                  정제된 원료의 성분과 상태를 <strong>NIR(근적외선) 분석 데이터 기반으로</strong> 실시간 진단합니다.
+                </p>
+                <p className="text-sm leading-relaxed">
+                  진단 결과에 따라 최적의 연소 효율과 성형성을 구현할 수 있는 천연 유래바인더를 가장 이상적인 비율로 자동 블렌딩합니다.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-200"
+            >
+              <div className="w-16 h-16 mx-auto mb-6 bg-green-100 rounded-2xl flex items-center justify-center">
+                <span className="text-2xl font-bold text-green-600">3</span>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">'단단하게' 만듭니다</h3>
+              <div className="space-y-4 text-gray-600">
+                <p className="leading-relaxed">
+                  해머밀로 원료 입자를 균일하게 분쇄한 뒤, <strong>저온 벨트 건조기를 통해</strong> 최소한의 에너지로 함수율을 7~11%까지 정밀하게 조절합니다.
+                </p>
+                <p className="text-sm leading-relaxed">
+                  고온·고압의 <strong>링타이(Ring-die) 펠릿밀에서</strong> 고밀도 펠릿으로 압축하고 카운터플로우 쿨러를 통해 금속 냉각 및 미세 가루 제거를 통해 최종 제품을 완성합니다.
+                </p>
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
 
-          {/* Core Values */}
+      {/* Process Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <div className="flex items-center justify-center space-x-3 mb-6">
-              <Award className="w-6 h-6 text-emerald-600" />
-              <h2 className="text-4xl font-bold text-gray-800">Leaflo의 핵심 가치</h2>
-            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">낙엽펠릿, 이렇게 이동합니다</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              버려지던 낙엽이 에너지원으로 변화하는 전체 과정을 소개합니다.
+            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-20">
+          <div className="grid md:grid-cols-4 gap-8">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0 }}
+              className="text-center"
+            >
+              <div className="w-20 h-20 mx-auto mb-6 bg-emerald-100 rounded-full flex items-center justify-center">
+                <Leaf className="w-10 h-10 text-emerald-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">낙엽 발생원</h3>
+              <p className="text-gray-600 leading-relaxed">
+                도심 공원, 가로수, 산림에서 자연 발생하는 낙엽을 체계적으로 수집합니다.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-center"
+            >
+              <div className="w-20 h-20 mx-auto mb-6 bg-blue-100 rounded-full flex items-center justify-center">
+                <Settings className="w-10 h-10 text-blue-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">낙엽 수거</h3>
+              <p className="text-gray-600 leading-relaxed">
+                지자체와의 위탁계약을 통해 효율적이고 체계적인 낙엽 수거 시스템을 운영합니다.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-center"
+            >
+              <div className="w-20 h-20 mx-auto mb-6 bg-green-100 rounded-full flex items-center justify-center">
+                <Zap className="w-10 h-10 text-green-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">전처리 공장</h3>
+              <p className="text-gray-600 leading-relaxed">
+                3단계 솔루션을 통해 낙엽을 분류, 세척, 건조하여 고품질 펠릿으로 가공합니다.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="text-center"
+            >
+              <div className="w-20 h-20 mx-auto mb-6 bg-amber-100 rounded-full flex items-center justify-center">
+                <Award className="w-10 h-10 text-amber-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">에테르 펠릿 수요자</h3>
+              <p className="text-gray-600 leading-relaxed">
+                B2B 산업용 보일러, B2C 생활용 연료, ESG 탄소저감 크레딧 등 다양한 수요처에 공급합니다.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Simple Stats */}
+      <section className="py-20 bg-emerald-600 text-white">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Leaflo의 임팩트</h2>
+            <p className="text-xl text-emerald-100 max-w-3xl mx-auto leading-relaxed">
+              데이터로 입증된 Leaflo의 혁신적 가치와 시장 잠재력
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-4 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0 }}
+              className="text-center"
+            >
+              <div className="text-4xl font-bold mb-2">96%</div>
+              <p className="text-emerald-100">목재 펠릿 대비 효율성</p>
+            </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5 }}
+              className="text-center"
             >
-              <Card className="p-6 text-center bg-white border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl">
-                <AnimatedIcon icon={Leaf} delay={0.2} />
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">친환경 기술</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  100% 천연 낙엽을 활용한 친환경 에너지 솔루션으로 환경 보호에 기여합니다.
-                </p>
-              </Card>
+              <div className="text-4xl font-bold mb-2">30만톤</div>
+              <p className="text-emerald-100">연간 낙엽 수거량</p>
             </motion.div>
-
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5 }}
+              className="text-center"
             >
-              <Card className="p-6 text-center bg-white border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl">
-                <AnimatedIcon icon={DollarSign} delay={0.4} />
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">비용 효율성</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  기존 연료 대비 경제적이고 효율적인 에너지원을 제공하여 비용을 절감합니다.
-                </p>
-              </Card>
+              <div className="text-4xl font-bold mb-2">840억원</div>
+              <p className="text-emerald-100">버려지는 시장 가치</p>
             </motion.div>
-
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5 }}
+              className="text-center"
             >
-              <Card className="p-6 text-center bg-white border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl">
-                <AnimatedIcon icon={Lightbulb} delay={0.6} />
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">혁신적인 솔루션</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  폐기물을 자원으로 전환하는 순환경제 모델을 통해 지속가능한 미래를 만듭니다.
-                </p>
-              </Card>
+              <div className="text-4xl font-bold mb-2">55억원</div>
+              <p className="text-emerald-100">2028년 목표 매출</p>
             </motion.div>
           </div>
+        </div>
+      </section>
 
-          {/* Team Section */}
+      {/* CTA Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
+            transition={{ duration: 0.6 }}
           >
-            <div className="flex items-center justify-center space-x-3 mb-6">
-              <Users className="w-6 h-6 text-emerald-600" />
-              <h2 className="text-4xl font-bold text-gray-800">전문가 팀</h2>
-            </div>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              다양한 분야의 전문가들이 모여 Leaflo의 혁신적인 비전을 현실로 만들어가고 있습니다.
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+              함께 만들어가는 지속가능한 미래
+            </h2>
+            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
+              Leaflo와 함께 버려지던 낙엽을 에너지원으로 전환하여 환경을 보호하고 새로운 가치를 창출해보세요.
             </p>
-          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-            {teamValues.map((area, index) => (
-              <motion.div
-                key={area.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ y: -5 }}
-                className="group"
-              >
-                <Card className="p-6 bg-white border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl h-full">
-                  <div className="text-center mb-4">
-                    <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center shadow-md">
-                      <Users className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-
-                  <h3 className="text-lg font-bold text-gray-800 mb-2 text-center">{area.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4">{area.description}</p>
-
-                  {/* Skills */}
-                  <div className="flex flex-wrap gap-2">
-                    {area.skills.map((skill: string, skillIndex: number) => (
-                      <motion.span
-                        key={skill}
-                        initial={{ opacity: 0, scale: 0 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: index * 0.1 + skillIndex * 0.05 }}
-                        viewport={{ once: true }}
-                        className="px-2 py-1 bg-emerald-50 text-emerald-700 text-xs rounded-lg font-medium"
-                      >
-                        {skill}
-                      </motion.span>
-                    ))}
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Process Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="bg-gray-50 p-8 rounded-2xl"
-          >
-            <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Leaflo 생산 과정</h2>
-
-            <div className="grid md:grid-cols-4 gap-6">
-              {[
-                { icon: TreePine, title: "1. 낙엽 수집", desc: "지자체와 협력하여 낙엽을 효율적으로 수집합니다." },
-                { icon: Recycle, title: "2. 전처리", desc: "수집된 낙엽을 세척하고 건조하여 가공 준비를 합니다." },
-                {
-                  icon: Factory,
-                  title: "3. 팰릿 제조",
-                  desc: "혁신적인 기술로 고효율 바이오매스 팰릿을 생산합니다.",
-                },
-                { icon: DollarSign, title: "4. 판매 및 유통", desc: "B2B, B2C, B2G 시장에 최적화된 제품을 공급합니다." },
-              ].map((step, index) => (
-                <motion.div
-                  key={step.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -3 }}
-                  className="text-center"
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/business">
+                <Button
+                  size="lg"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg group transition-all duration-200 hover:scale-102 hover:-translate-y-1"
                 >
-                  <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md">
-                    <step.icon className="w-8 h-8 text-emerald-600" />
-                  </div>
-                  <h4 className="font-semibold text-gray-800 mb-2">{step.title}</h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">{step.desc}</p>
-                </motion.div>
-              ))}
+                  비즈니스 모델 보기
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                </Button>
+              </Link>
+
+              <Link href="/contact">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-8 py-4 text-lg font-semibold rounded-xl bg-transparent transition-all duration-200 hover:scale-102 hover:-translate-y-1"
+                >
+                  파트너십 문의
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </div>

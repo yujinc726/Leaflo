@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { Leaf, DollarSign, Lightbulb, ArrowRight, Building2 } from "lucide-react"
+import { Leaf, DollarSign, Lightbulb, ArrowRight, Building2, TrendingUp, Zap, Target } from "lucide-react"
 import Link from "next/link"
 
 // Intersection Observer 훅
@@ -227,9 +227,9 @@ export default function HomePage() {
             }`}
             style={{ transitionDelay: heroVisible ? '200ms' : '0ms' }}
           >
-            버려지던 낙엽을 지속가능한 바이오매스 자원으로.
+            연간 30만톤의 버려지던 낙엽을 <span className="text-emerald-700 font-semibold">96% 효율</span>의 바이오매스 펠릿으로.
             <br />
-            <span className="text-emerald-700 font-semibold">Leaflo는 혁신으로 미래를 만듭니다.</span>
+            <span className="text-emerald-700 font-semibold">840억원 규모</span>의 블루오션 시장에서 <span className="text-emerald-700 font-semibold">Leaflo가 혁신을 만듭니다.</span>
           </p>
 
           <div
@@ -261,31 +261,65 @@ export default function HomePage() {
         </div>
       </motion.section>
 
+      {/* Key Facts Section - 새로운 섹션 추가 */}
+      <section className="py-20 bg-gradient-to-r from-emerald-600 to-green-600 text-white">
+        <div className="container mx-auto px-6">
+          <SectionTitle
+            title="Leaflo의 혁신적 가치"
+            subtitle="데이터로 입증된 Leaflo 펠릿의 우수성과 시장 잠재력"
+            className="text-white"
+          />
+
+          <div className="grid md:grid-cols-4 gap-8">
+            <StatItem
+              value="96%"
+              label="목재 펠릿 대비 효율성<br/>(ISO 17225 시리즈 기준)"
+              delay={0}
+            />
+            <StatItem
+              value="30만톤"
+              label="연간 낙엽 수거량<br/>(전국 기준)"
+              delay={100}
+            />
+            <StatItem
+              value="840억원"
+              label="버려지는 시장 가치<br/>(경기정책연구소)"
+              delay={200}
+            />
+            <StatItem
+              value="70%"
+              label="현재 버려지는 낙엽 비율<br/>(재활용 가능 자원)"
+              delay={300}
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Overview Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <SectionTitle
             title="왜 Leaflo인가요?"
-            subtitle="매년 버려지는 수많은 낙엽을 혁신적인 기술로 고효율 바이오매스 팰릿으로 전환하여 환경 보호와 경제적 가치를 동시에 실현합니다."
+            subtitle="버려지던 낙엽을 에너지원으로 전환하여 환경 보호와 경제적 가치를 동시에 실현하는 차세대 바이오매스 솔루션입니다."
           />
 
           <div className="grid md:grid-cols-3 gap-12 mb-16">
             <AnimatedIcon
-              icon={Leaf}
-              title="친환경 기술"
-              description="100% 천연 낙엽을 활용한 친환경 에너지 솔루션으로 지구를 보호합니다"
+              icon={Zap}
+              title="검증된 효율성"
+              description="에테르 펠릿은 기존 목재펠릿 대비 96% 효율로 ±5% 이내 동일 연료로 간주됩니다"
               delay={0}
             />
             <AnimatedIcon
-              icon={DollarSign}
-              title="비용 효율성"
-              description="기존 연료 대비 경제적이고 효율적인 에너지원을 제공합니다"
+              icon={TrendingUp}
+              title="블루오션 시장"
+              description="경쟁자 없는 840억원 규모의 낙엽 활용 시장에서 선도적 위치를 확보합니다"
               delay={100}
             />
             <AnimatedIcon
-              icon={Lightbulb}
-              title="혁신적인 솔루션"
-              description="폐기물을 자원으로 전환하는 순환경제 모델을 구현합니다"
+              icon={Target}
+              title="이중 수익 구조"
+              description="지자체 위탁사업과 펠릿 판매를 통한 Dual-Revenue Engine으로 안정적 수익을 보장합니다"
               delay={200}
             />
           </div>
@@ -309,51 +343,51 @@ export default function HomePage() {
         <div className="container mx-auto px-6">
           <SectionTitle
             title="3가지 수익 모델"
-            subtitle="지속가능하고 다양한 수익 구조로 안정적인 성장을 실현합니다"
+            subtitle="이중 수익 구조(Dual-Revenue Engine)로 지속가능하고 다양한 수익을 창출합니다"
           />
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             <BusinessCard
-              icon={DollarSign}
-              title="A. 펠릿 제품 판매"
-              iconBg="bg-emerald-100"
-              iconColor="text-emerald-600"
+              icon={Building2}
+              title="B2G 지자체 위탁"
+              iconBg="bg-blue-100"
+              iconColor="text-blue-600"
               delay={0}
             >
               <div className="space-y-3 text-gray-600">
-                <div className="bg-emerald-50 p-3 rounded-lg">
-                  <p className="font-semibold text-emerald-700">B2B 산업용</p>
-                  <p className="text-sm">373원/kg | 21-30톤에서 손익분기</p>
-                </div>
                 <div className="bg-blue-50 p-3 rounded-lg">
-                  <p className="font-semibold text-blue-700">B2C 생활용</p>
-                  <p className="text-sm">600-870원/kg | 캠핑·난로·고양이모래</p>
+                  <p className="font-semibold text-blue-700">낙엽 처리 위탁사업</p>
+                  <p className="text-sm">톤당 18만원 수거 처리비</p>
+                </div>
+                <div className="bg-green-50 p-3 rounded-lg">
+                  <p className="font-semibold text-green-700">비용 절감 효과</p>
+                  <p className="text-sm">기존 소각 대비 70% 절감</p>
                 </div>
               </div>
             </BusinessCard>
 
             <BusinessCard
-              icon={Building2}
-              title="B. 지자체 위탁계약"
-              iconBg="bg-blue-100"
-              iconColor="text-blue-600"
+              icon={DollarSign}
+              title="B2B/B2C 펠릿 판매"
+              iconBg="bg-emerald-100"
+              iconColor="text-emerald-600"
               delay={100}
             >
               <div className="space-y-3 text-gray-600">
-                <div className="bg-blue-50 p-3 rounded-lg">
-                  <p className="font-semibold text-blue-700">이중 수익 구조</p>
-                  <p className="text-sm">위탁비 수입 + 펠릿 판매 수익</p>
+                <div className="bg-emerald-50 p-3 rounded-lg">
+                  <p className="font-semibold text-emerald-700">B2B 산업용</p>
+                  <p className="text-sm">373원/kg | 발전소·산업용 보일러</p>
                 </div>
-                <div className="bg-green-50 p-3 rounded-lg">
-                  <p className="font-semibold text-green-700">지자체 혜택</p>
-                  <p className="text-sm">톤당 30-50만원 처리비용 절감</p>
+                <div className="bg-amber-50 p-3 rounded-lg">
+                  <p className="font-semibold text-amber-700">B2C 생활용</p>
+                  <p className="text-sm">870원/kg | 캠핑·난로·고양이모래</p>
                 </div>
               </div>
             </BusinessCard>
 
             <BusinessCard
               icon={Leaf}
-              title="C. 탄소저감 크레딧"
+              title="ESG·탄소저감 크레딧"
               iconBg="bg-green-100"
               iconColor="text-green-600"
               delay={200}
@@ -363,9 +397,9 @@ export default function HomePage() {
                   <p className="font-semibold text-green-700">탄소배출권 판매</p>
                   <p className="text-sm">현재 1만원/톤 | 상승 전망</p>
                 </div>
-                <div className="bg-amber-50 p-3 rounded-lg">
-                  <p className="font-semibold text-amber-700">ESG 경영 기여</p>
-                  <p className="text-sm">대기업 ESG 목표 달성 지원</p>
+                <div className="bg-purple-50 p-3 rounded-lg">
+                  <p className="font-semibold text-purple-700">ESG 경영 지원</p>
+                  <p className="text-sm">대기업 환경 목표 달성 기여</p>
                 </div>
               </div>
             </BusinessCard>
@@ -385,36 +419,53 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Impact Stats Section */}
-      <section className="py-20 bg-emerald-600 text-white">
+      {/* Technology Section - 새로운 섹션 추가 */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <SectionTitle
-            title="Leaflo의 임팩트"
-            subtitle="환경 보호와 경제적 가치 창출을 동시에 실현하는 혁신적 솔루션"
-            className="text-white"
+            title="Our Technology: 3-Step Solution"
+            subtitle="검증된 기술력으로 낙엽을 고품질 바이오매스 펠릿으로 전환합니다"
           />
 
-          <div className="grid md:grid-cols-4 gap-8">
-            <StatItem
-              value="90%"
-              label="지자체 처리비용 절감"
+          <div className="grid md:grid-cols-3 gap-8">
+            <BusinessCard
+              icon={() => <span className="text-2xl font-bold">1</span>}
+              title="깨끗하게 분류"
+              iconBg="bg-emerald-100"
+              iconColor="text-emerald-600"
               delay={0}
-            />
-            <StatItem
-              value="21-30톤"
-              label="B2B 손익분기점"
+            >
+              <div className="text-gray-600 text-center">
+                <p className="mb-3">트럼멜 스크린과 자석 선별기로 낙엽 외의 자 이물질을 완벽히 제거합니다.</p>
+                <p className="text-sm">다단 침전 세척 방식으로 흙, 미세먼지 등 외부(Ash)의 직접적인 원인이 되는 잔류물을 제거합니다.</p>
+              </div>
+            </BusinessCard>
+
+            <BusinessCard
+              icon={() => <span className="text-2xl font-bold">2</span>}
+              title="똑똑하게 섞습니다"
+              iconBg="bg-blue-100"
+              iconColor="text-blue-600"
               delay={100}
-            />
-            <StatItem
-              value="74%"
-              label="B2C 이익률 (소매가)"
+            >
+              <div className="text-gray-600 text-center">
+                <p className="mb-3">정제된 원료의 성분과 상태를 NIR(근적외선) 분석 데이터 기반으로 실시간 진단합니다.</p>
+                <p className="text-sm">진단 결과에 따라 최적의 연소 효율과 성형성을 구현할 수 있는 천연 유래바인더를 가장 이상적인 비율로자동 블렌딩합니다.</p>
+              </div>
+            </BusinessCard>
+
+            <BusinessCard
+              icon={() => <span className="text-2xl font-bold">3</span>}
+              title="단단하게 만듭니다"
+              iconBg="bg-green-100"
+              iconColor="text-green-600"
               delay={200}
-            />
-            <StatItem
-              value="1만원/톤"
-              label="탄소배출권 현재가"
-              delay={300}
-            />
+            >
+              <div className="text-gray-600 text-center">
+                <p className="mb-3">해머밀로 원료 입자를 균일하게 분쇄한 뒤, 저온 벨트 건조기를 통해 최소한의 에너지로 함수율을 7~11%까지 정밀하게 조절합니다.</p>
+                <p className="text-sm">고온·고압의 링타이(Ring-die) 펠릿밀에서 고밀도 펠릿으로 압축하고 카운터플로우 쿨러를 금속 냉각 및 미세 가루 제거를 통해 최종 제품을 완성합니다.</p>
+              </div>
+            </BusinessCard>
           </div>
         </div>
       </section>

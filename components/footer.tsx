@@ -25,11 +25,11 @@ export function Footer() {
             <div className="space-y-3 text-gray-600">
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4" />
-                <span>info@leaflo.co.kr</span>
+                <span>leaflo@gmail.com</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4" />
-                <span>02-1234-5678</span>
+                <span>010-0000-0000</span>
               </div>
             </div>
           </div>
@@ -82,7 +82,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-gray-200 mt-12 pt-8 text-center text-gray-500">
-          <p>&copy; 2024 Leaflo. All rights reserved.</p>
+          <p>&copy; 2025 Leaflo. All rights reserved.</p>
         </div>
       </div>
     </footer>
