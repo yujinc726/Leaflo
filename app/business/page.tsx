@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card"
 import { Factory, Home, Building2, DollarSign, TreePine, Recycle, TrendingUp, Leaf, Award } from "lucide-react"
 
 // Counter Animation Component
-function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
+function AnimatedCounter({ end, duration = 1500, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
   const [count, setCount] = useState(0)
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true })
@@ -23,8 +23,10 @@ function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; d
     const updateCount = (timestamp: number) => {
       if (!startTime) startTime = timestamp
       const progress = Math.min((timestamp - startTime) / duration, 1)
-
-      setCount(Math.floor(progress * (end - startCount) + startCount))
+      
+      // 부드러운 easing 함수 적용
+      const easeOutCubic = 1 - Math.pow(1 - progress, 3)
+      setCount(Math.floor(easeOutCubic * (end - startCount) + startCount))
 
       if (progress < 1) {
         requestAnimationFrame(updateCount)

@@ -15,9 +15,10 @@ function AnimatedIcon({ icon: Icon, delay = 0 }: { icon: any; delay?: number }) 
   return (
     <div ref={ref} className="w-16 h-16 mx-auto mb-4">
       <motion.div
-        initial={{ scale: 0, opacity: 0 }}
+        initial={{ scale: 0.8, opacity: 0 }}
         animate={isInView ? { scale: 1, opacity: 1 } : {}}
-        transition={{ duration: 0.5, delay, type: "spring", stiffness: 200 }}
+        transition={{ duration: 0.4, delay, ease: "easeOut" }}
+        whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
         className="w-full h-full bg-emerald-100 rounded-2xl flex items-center justify-center"
       >
         <Icon className="w-8 h-8 text-emerald-600" />
