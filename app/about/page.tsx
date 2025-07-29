@@ -153,7 +153,7 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">우리 팀</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">팀 에테르 소개</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               환경에 진심이고, 혁신에 목마른 다양한 전문가들이 모여 Leaflo를 만들어가고 있습니다.
             </p>
