@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card"
 import { Factory, Home, Building2, DollarSign, TreePine, Recycle, TrendingUp, Leaf, Award } from "lucide-react"
 
 // Counter Animation Component
-function AnimatedCounter({ end, duration = 1500, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
+function AnimatedCounter({ end, duration = 1200, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
   const [count, setCount] = useState(0)
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true })
@@ -24,9 +24,9 @@ function AnimatedCounter({ end, duration = 1500, suffix = "" }: { end: number; d
       if (!startTime) startTime = timestamp
       const progress = Math.min((timestamp - startTime) / duration, 1)
       
-      // 부드러운 easing 함수 적용
-      const easeOutCubic = 1 - Math.pow(1 - progress, 3)
-      setCount(Math.floor(easeOutCubic * (end - startCount) + startCount))
+      // 부드러운 easing 적용
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4)
+      setCount(Math.floor(easeOutQuart * (end - startCount) + startCount))
 
       if (progress < 1) {
         requestAnimationFrame(updateCount)
@@ -53,9 +53,9 @@ export default function BusinessPage() {
       <section className="pt-24 pb-16 bg-gradient-to-br from-emerald-50 to-green-50">
         <div className="container mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-center"
           >
             <h1 className="text-5xl md:text-6xl font-bold text-emerald-800 mb-6">Leaflo의 3가지 수익 모델</h1>
@@ -71,10 +71,10 @@ export default function BusinessPage() {
         <div className="container mx-auto px-6">
           {/* Module 1: B2B/B2C 펠릿 제품 판매 */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.2 }}
             className="mb-20"
           >
             <Card className="p-8 bg-gradient-to-r from-emerald-50 to-green-50 border-emerald-200 shadow-lg">
@@ -85,101 +85,108 @@ export default function BusinessPage() {
               
               <div className="grid md:grid-cols-2 gap-8 mb-8">
                 {/* B2B Section */}
-                <Card className="p-6 bg-white border border-emerald-200 shadow-md">
-                  <div className="flex items-center mb-4">
-                    <Factory className="w-8 h-8 text-emerald-600 mr-3" />
-                    <h3 className="text-2xl font-bold text-emerald-700">B2B 산업용</h3>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="bg-emerald-50 p-4 rounded-lg">
-                      <p className="text-gray-700 mb-2">
-                        <strong>대상:</strong> 공장, 제조업체, 바이오매스 연료 사용 기업
-                      </p>
-                      <p className="text-gray-700 mb-2">
-                        <strong>제조비:</strong> 450,000원/톤 (수거·분류·건조·가공 포함)
-                      </p>
-                      <p className="text-gray-700 mb-2">
-                        <strong>판매가격:</strong> <span className="text-emerald-600 font-bold">373원/kg</span>
-                      </p>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+                  viewport={{ once: true }}
+                >
+                  <Card className="p-6 bg-white border border-emerald-200 shadow-md hover:shadow-lg transition-shadow duration-200">
+                    <div className="flex items-center mb-4">
+                      <Factory className="w-8 h-8 text-emerald-600 mr-3" />
+                      <h3 className="text-2xl font-bold text-emerald-700">B2B 산업용</h3>
                     </div>
-                    <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
-                      <p className="text-amber-800 font-semibold mb-1">💡 손익분기점</p>
-                      <p className="text-gray-700">21-30톤에서 손익분기점 달성 후 지속적인 수익 창출</p>
+                    <div className="space-y-4">
+                      <div className="bg-emerald-50 p-4 rounded-lg">
+                        <p className="text-gray-700 mb-2">
+                          <strong>대상:</strong> 공장, 제조업체, 바이오매스 연료 사용 기업
+                        </p>
+                        <p className="text-gray-700 mb-2">
+                          <strong>제조비:</strong> 450,000원/톤 (수거·분류·건조·가공 포함)
+                        </p>
+                        <p className="text-gray-700 mb-2">
+                          <strong>판매가격:</strong> <span className="text-emerald-600 font-bold">373원/kg</span>
+                        </p>
+                      </div>
+                      <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                        <p className="text-amber-800 font-semibold mb-1">💡 손익분기점</p>
+                        <p className="text-gray-700">21-30톤에서 손익분기점 달성 후 지속적인 수익 창출</p>
+                      </div>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                </motion.div>
 
                 {/* B2C Section */}
-                <Card className="p-6 bg-white border border-blue-200 shadow-md">
-                  <div className="flex items-center mb-4">
-                    <Home className="w-8 h-8 text-blue-600 mr-3" />
-                    <h3 className="text-2xl font-bold text-blue-700">B2C 생활용</h3>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <p className="text-gray-700 mb-2">
-                        <strong>대상:</strong> 캠핑연료, 난로연료, 고양이모래 사용자
-                      </p>
-                      <p className="text-gray-700 mb-2">
-                        <strong>제조비:</strong> 500,000원/톤 (포장비 포함)
-                      </p>
-                      <p className="text-gray-700 mb-2">
-                        <strong>도매가:</strong> <span className="text-blue-600 font-bold">600원/kg</span>
-                      </p>
-                      <p className="text-gray-700">
-                        <strong>소매가:</strong> <span className="text-blue-600 font-bold">870원/kg</span>
-                      </p>
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+                  viewport={{ once: true }}
+                >
+                  <Card className="p-6 bg-white border border-blue-200 shadow-md hover:shadow-lg transition-shadow duration-200">
+                    <div className="flex items-center mb-4">
+                      <Home className="w-8 h-8 text-blue-600 mr-3" />
+                      <h3 className="text-2xl font-bold text-blue-700">B2C 생활용</h3>
                     </div>
-                    <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                      <p className="text-green-800 font-semibold mb-1">📦 포장 단위</p>
-                      <p className="text-gray-700">2kg ~ 20kg 소포장으로 개인고객 맞춤 판매</p>
+                    <div className="space-y-4">
+                      <div className="bg-blue-50 p-4 rounded-lg">
+                        <p className="text-gray-700 mb-2">
+                          <strong>대상:</strong> 캠핑연료, 난로연료, 고양이모래 사용자
+                        </p>
+                        <p className="text-gray-700 mb-2">
+                          <strong>제조비:</strong> 500,000원/톤 (포장비 포함)
+                        </p>
+                        <p className="text-gray-700 mb-2">
+                          <strong>도매가:</strong> <span className="text-blue-600 font-bold">600원/kg</span>
+                        </p>
+                        <p className="text-gray-700">
+                          <strong>소매가:</strong> <span className="text-blue-600 font-bold">870원/kg</span>
+                        </p>
+                      </div>
+                      <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                        <p className="text-green-800 font-semibold mb-1">📦 포장 단위</p>
+                        <p className="text-gray-700">2kg ~ 20kg 소포장으로 개인고객 맞춤 판매</p>
+                      </div>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                </motion.div>
               </div>
 
               {/* Stats */}
               <div className="grid md:grid-cols-3 gap-6">
-                <motion.div 
-                  className="bg-white p-6 rounded-lg shadow-md text-center"
-                  whileHover={{ scale: 1.05 }} 
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="text-3xl font-bold text-emerald-600 mb-2">
-                    <AnimatedCounter end={25} suffix="톤" />
-                  </div>
-                  <p className="text-gray-600">월 평균 손익분기점</p>
-                </motion.div>
-                <motion.div 
-                  className="bg-white p-6 rounded-lg shadow-md text-center"
-                  whileHover={{ scale: 1.05 }} 
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="text-3xl font-bold text-blue-600 mb-2">
-                    <AnimatedCounter end={74} suffix="%" />
-                  </div>
-                  <p className="text-gray-600">B2C 이익률 (소매가 기준)</p>
-                </motion.div>
-                <motion.div 
-                  className="bg-white p-6 rounded-lg shadow-md text-center"
-                  whileHover={{ scale: 1.05 }} 
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="text-3xl font-bold text-amber-600 mb-2">
-                    <AnimatedCounter end={20} suffix="%" />
-                  </div>
-                  <p className="text-gray-600">B2C 이익률 (도매가 기준)</p>
-                </motion.div>
+                {[
+                  { value: 25, label: "월 평균 손익분기점", suffix: "톤", color: "text-emerald-600" },
+                  { value: 74, label: "B2C 이익률 (소매가 기준)", suffix: "%", color: "text-blue-600" },
+                  { value: 20, label: "B2C 이익률 (도매가 기준)", suffix: "%", color: "text-amber-600" },
+                ].map((stat, index) => (
+                  <motion.div 
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 + index * 0.1, ease: "easeOut" }}
+                    viewport={{ once: true }}
+                    whileHover={{ 
+                      scale: 1.02,
+                      transition: { duration: 0.2 }
+                    }}
+                    className="bg-white p-6 rounded-lg shadow-md text-center hover:shadow-lg transition-shadow duration-200"
+                  >
+                    <div className={`text-3xl font-bold ${stat.color} mb-2`}>
+                      <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+                    </div>
+                    <p className="text-gray-600 text-sm">{stat.label}</p>
+                  </motion.div>
+                ))}
               </div>
             </Card>
           </motion.div>
 
           {/* Module 2: 지자체 수거/위탁 계약 (B2G) */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+            viewport={{ once: true, amount: 0.2 }}
             className="mb-20"
           >
             <Card className="p-8 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 shadow-lg">
@@ -189,7 +196,12 @@ export default function BusinessPage() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+                  viewport={{ once: true }}
+                >
                   <div className="space-y-6">
                     <div className="bg-white p-6 rounded-lg shadow-md">
                       <h4 className="text-xl font-bold text-blue-700 mb-3 flex items-center">
@@ -215,13 +227,21 @@ export default function BusinessPage() {
                       </ul>
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="space-y-6">
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+                  viewport={{ once: true }}
+                  className="space-y-6"
+                >
                   <motion.div 
-                    className="bg-white p-6 rounded-lg shadow-lg text-center"
-                    whileHover={{ scale: 1.05 }} 
-                    transition={{ duration: 0.3 }}
+                    whileHover={{ 
+                      scale: 1.02,
+                      transition: { duration: 0.2 }
+                    }}
+                    className="bg-white p-6 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow duration-200"
                   >
                     <h4 className="text-lg font-semibold text-gray-800 mb-2">기존 처리비용</h4>
                     <div className="text-3xl font-bold text-red-500 mb-1">
@@ -235,9 +255,11 @@ export default function BusinessPage() {
                   </div>
 
                   <motion.div 
-                    className="bg-emerald-100 p-6 rounded-lg shadow-lg text-center border border-emerald-200"
-                    whileHover={{ scale: 1.05 }} 
-                    transition={{ duration: 0.3 }}
+                    whileHover={{ 
+                      scale: 1.02,
+                      transition: { duration: 0.2 }
+                    }}
+                    className="bg-emerald-100 p-6 rounded-lg shadow-lg text-center border border-emerald-200 hover:shadow-xl transition-shadow duration-200"
                   >
                     <h4 className="text-lg font-semibold text-emerald-800 mb-2">이중 수익 구조</h4>
                     <div className="space-y-2">
@@ -249,7 +271,7 @@ export default function BusinessPage() {
                       </div>
                     </div>
                   </motion.div>
-                </div>
+                </motion.div>
               </div>
 
               <div className="mt-8 bg-blue-100 p-6 rounded-lg border border-blue-200">
@@ -262,10 +284,10 @@ export default function BusinessPage() {
 
           {/* Module 3: ESG·탄소저감 크레딧 수익 */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+            viewport={{ once: true, amount: 0.2 }}
           >
             <Card className="p-8 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 shadow-lg">
               <div className="text-center mb-8">
@@ -274,7 +296,12 @@ export default function BusinessPage() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+                  viewport={{ once: true }}
+                >
                   <div className="space-y-6">
                     <div className="bg-white p-6 rounded-lg shadow-md">
                       <h4 className="text-xl font-bold text-green-700 mb-3 flex items-center">
@@ -282,22 +309,24 @@ export default function BusinessPage() {
                         탄소저감 과정
                       </h4>
                       <div className="space-y-3 text-gray-700">
-                        <div className="flex items-center">
-                          <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                          <span>낙엽 소각 → 펠릿 연료화</span>
-                        </div>
-                        <div className="flex items-center">
-                          <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                          <span>탄소저감량 계산 및 인증</span>
-                        </div>
-                        <div className="flex items-center">
-                          <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                          <span>탄소배출권 플랫폼 등록</span>
-                        </div>
-                        <div className="flex items-center">
-                          <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                          <span>대기업 판매 및 수익 창출</span>
-                        </div>
+                        {[
+                          "낙엽 소각 → 펠릿 연료화",
+                          "탄소저감량 계산 및 인증",
+                          "탄소배출권 플랫폼 등록",
+                          "대기업 판매 및 수익 창출"
+                        ].map((step, index) => (
+                          <motion.div
+                            key={step}
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }}
+                            viewport={{ once: true }}
+                            className="flex items-center"
+                          >
+                            <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                            <span>{step}</span>
+                          </motion.div>
+                        ))}
                       </div>
                     </div>
 
@@ -311,13 +340,21 @@ export default function BusinessPage() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="space-y-6">
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
+                  viewport={{ once: true }}
+                  className="space-y-6"
+                >
                   <motion.div 
-                    className="bg-white p-6 rounded-lg shadow-lg text-center"
-                    whileHover={{ scale: 1.05 }} 
-                    transition={{ duration: 0.3 }}
+                    whileHover={{ 
+                      scale: 1.02,
+                      transition: { duration: 0.2 }
+                    }}
+                    className="bg-white p-6 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow duration-200"
                   >
                     <h4 className="text-lg font-semibold text-gray-800 mb-2">현재 탄소배출권 가격</h4>
                     <div className="text-3xl font-bold text-green-600 mb-1">
@@ -327,9 +364,11 @@ export default function BusinessPage() {
                   </motion.div>
 
                   <motion.div 
-                    className="bg-green-100 p-6 rounded-lg shadow-lg text-center border border-green-200"
-                    whileHover={{ scale: 1.05 }} 
-                    transition={{ duration: 0.3 }}
+                    whileHover={{ 
+                      scale: 1.02,
+                      transition: { duration: 0.2 }
+                    }}
+                    className="bg-green-100 p-6 rounded-lg shadow-lg text-center border border-green-200 hover:shadow-xl transition-shadow duration-200"
                   >
                     <h4 className="text-lg font-semibold text-green-800 mb-2">연간 예상 수익</h4>
                     <div className="space-y-2">
@@ -347,7 +386,7 @@ export default function BusinessPage() {
                       📈 탄소배출권 가격 상승 시 수익 배수 효과 기대
                     </p>
                   </div>
-                </div>
+                </motion.div>
               </div>
 
               <div className="mt-8 bg-gradient-to-r from-green-100 to-emerald-100 p-6 rounded-lg border border-green-200">
