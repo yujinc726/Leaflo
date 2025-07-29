@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useMemo } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/navigation"
@@ -23,14 +23,16 @@ function AnimatedIcon({
       className="text-center"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay }}
+      transition={{ duration: 0.6, delay, ease: "easeOut" }}
       viewport={{ once: true }}
-      whileHover={{ y: -5 }}
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      style={{ willChange: "transform" }}
     >
       <motion.div
         className="w-16 h-16 mx-auto mb-4 bg-emerald-100 rounded-2xl flex items-center justify-center"
         whileHover={{ scale: 1.05 }}
-        transition={{ type: "spring", stiffness: 300 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        style={{ willChange: "transform" }}
       >
         <Icon className="w-8 h-8 text-emerald-600" />
       </motion.div>
@@ -44,8 +46,19 @@ export default function HomePage() {
   const { scrollYProgress } = useScroll()
   const heroRef = useRef<HTMLElement>(null)
 
-  // Subtle parallax effect
-  const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -50])
+  // Optimized parallax effect with reduced intensity
+  const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -30])
+
+  // Pre-generate floating element positions for better performance
+  const floatingElements = useMemo(() => 
+    Array.from({ length: 6 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      duration: Math.random() * 2 + 3, // 3-5 seconds
+      delay: Math.random() * 2,
+    })), []
+  )
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
@@ -55,28 +68,31 @@ export default function HomePage() {
       <motion.section
         ref={heroRef}
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
-        style={{ y: heroY }}
+        style={{ y: heroY, willChange: "transform" }}
       >
         {/* Clean Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-green-50" />
 
-        {/* Subtle floating elements */}
-        {[...Array(8)].map((_, i) => (
+        {/* Optimized floating elements */}
+        {floatingElements.map((element) => (
           <motion.div
-            key={i}
+            key={element.id}
             className="absolute w-1 h-1 bg-emerald-200 rounded-full opacity-60"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${element.left}%`,
+              top: `${element.top}%`,
+              willChange: "transform, opacity",
             }}
             animate={{
-              y: [-10, -30, -10],
-              opacity: [0.3, 0.6, 0.3],
+              y: [-10, -25, -10],
+              opacity: [0.4, 0.8, 0.4],
             }}
             transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Number.POSITIVE_INFINITY,
-              delay: Math.random() * 2,
+              duration: element.duration,
+              repeat: Infinity,
+              delay: element.delay,
+              ease: "easeInOut",
+              repeatType: "loop",
             }}
           />
         ))}
@@ -85,8 +101,9 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="mb-6"
+            style={{ willChange: "transform, opacity" }}
           >
             <Leaf className="w-16 h-16 text-emerald-600 mx-auto" />
           </motion.div>
@@ -95,7 +112,8 @@ export default function HomePage() {
             className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            style={{ willChange: "transform, opacity" }}
           >
             낙엽이{" "}
             <span className="bg-gradient-to-r from-emerald-600 to-green-500 bg-clip-text text-transparent">에너지</span>
@@ -108,7 +126,8 @@ export default function HomePage() {
             className="text-xl md:text-2xl mb-8 text-gray-600 leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
+            style={{ willChange: "transform, opacity" }}
           >
             버려지던 낙엽을 지속가능한 바이오매스 자원으로.
             <br />
@@ -118,27 +137,38 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            style={{ willChange: "transform, opacity" }}
           >
             <Link href="/about">
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <motion.div 
+                whileHover={{ scale: 1.02 }} 
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+                style={{ willChange: "transform" }}
+              >
                 <Button
                   size="lg"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg group"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg group transition-colors duration-200"
                 >
                   Leaflo 자세히 알아보기
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
                 </Button>
               </motion.div>
             </Link>
 
             <Link href="/business">
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <motion.div 
+                whileHover={{ scale: 1.02 }} 
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+                style={{ willChange: "transform" }}
+              >
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-8 py-4 text-lg font-semibold rounded-xl bg-transparent"
+                  className="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-8 py-4 text-lg font-semibold rounded-xl bg-transparent transition-colors duration-200"
                 >
                   비즈니스 모델 보기
                 </Button>
@@ -147,11 +177,17 @@ export default function HomePage() {
           </motion.div>
         </div>
 
-        {/* Simple scroll indicator */}
+        {/* Optimized scroll indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
           animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+          transition={{ 
+            duration: 2, 
+            repeat: Infinity, 
+            ease: "easeInOut",
+            repeatType: "loop"
+          }}
+          style={{ willChange: "transform" }}
         >
           <div className="w-6 h-10 border-2 border-emerald-300 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-emerald-600 rounded-full mt-2" />
@@ -165,9 +201,10 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
             className="text-center mb-16"
+            style={{ willChange: "transform, opacity" }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">왜 Leaflo인가요?</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -200,18 +237,24 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
             viewport={{ once: true }}
             className="text-center"
+            style={{ willChange: "transform, opacity" }}
           >
             <Link href="/about">
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <motion.div 
+                whileHover={{ scale: 1.02 }} 
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+                style={{ willChange: "transform" }}
+              >
                 <Button
                   size="lg"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-3 text-lg font-semibold rounded-xl shadow-lg group"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-3 text-lg font-semibold rounded-xl shadow-lg group transition-colors duration-200"
                 >
                   더 자세히 알아보기
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
                 </Button>
               </motion.div>
             </Link>
@@ -225,9 +268,10 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
             className="text-center mb-16"
+            style={{ willChange: "transform, opacity" }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">3가지 수익 모델</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -239,10 +283,11 @@ export default function HomePage() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
               viewport={{ once: true }}
-              whileHover={{ y: -10 }}
+              whileHover={{ y: -10, transition: { duration: 0.2 } }}
               className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100"
+              style={{ willChange: "transform" }}
             >
               <div className="w-16 h-16 mx-auto mb-6 bg-emerald-100 rounded-2xl flex items-center justify-center">
                 <DollarSign className="w-8 h-8 text-emerald-600" />
@@ -263,10 +308,11 @@ export default function HomePage() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               viewport={{ once: true }}
-              whileHover={{ y: -10 }}
+              whileHover={{ y: -10, transition: { duration: 0.2 } }}
               className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100"
+              style={{ willChange: "transform" }}
             >
               <div className="w-16 h-16 mx-auto mb-6 bg-blue-100 rounded-2xl flex items-center justify-center">
                 <Building2 className="w-8 h-8 text-blue-600" />
@@ -287,10 +333,11 @@ export default function HomePage() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
               viewport={{ once: true }}
-              whileHover={{ y: -10 }}
+              whileHover={{ y: -10, transition: { duration: 0.2 } }}
               className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100"
+              style={{ willChange: "transform" }}
             >
               <div className="w-16 h-16 mx-auto mb-6 bg-green-100 rounded-2xl flex items-center justify-center">
                 <Leaf className="w-8 h-8 text-green-600" />
@@ -312,18 +359,24 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
             viewport={{ once: true }}
             className="text-center"
+            style={{ willChange: "transform, opacity" }}
           >
             <Link href="/business">
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <motion.div 
+                whileHover={{ scale: 1.02 }} 
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2 }}
+                style={{ willChange: "transform" }}
+              >
                 <Button
                   size="lg"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 text-lg font-semibold rounded-xl shadow-lg group"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-3 text-lg font-semibold rounded-xl shadow-lg group transition-colors duration-200"
                 >
                   비즈니스 모델 자세히 보기
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
                 </Button>
               </motion.div>
             </Link>
@@ -337,9 +390,10 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
             className="text-center mb-16"
+            style={{ willChange: "transform, opacity" }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Leaflo의 임팩트</h2>
             <p className="text-xl text-emerald-100 max-w-3xl mx-auto leading-relaxed">
@@ -348,46 +402,25 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid md:grid-cols-4 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: true }}
-              className="text-center"
-            >
-              <div className="text-4xl font-bold mb-2">90%</div>
-              <p className="text-emerald-100">지자체 처리비용 절감</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="text-center"
-            >
-              <div className="text-4xl font-bold mb-2">21-30톤</div>
-              <p className="text-emerald-100">B2B 손익분기점</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
-              className="text-center"
-            >
-              <div className="text-4xl font-bold mb-2">74%</div>
-              <p className="text-emerald-100">B2C 이익률 (소매가)</p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-              className="text-center"
-            >
-              <div className="text-4xl font-bold mb-2">1만원/톤</div>
-              <p className="text-emerald-100">탄소배출권 현재가</p>
-            </motion.div>
+            {[
+              { value: "90%", label: "지자체 처리비용 절감" },
+              { value: "21-30톤", label: "B2B 손익분기점" },
+              { value: "74%", label: "B2C 이익률 (소매가)" },
+              { value: "1만원/톤", label: "탄소배출권 현재가" }
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
+                viewport={{ once: true }}
+                className="text-center"
+                style={{ willChange: "transform, opacity" }}
+              >
+                <div className="text-4xl font-bold mb-2">{stat.value}</div>
+                <p className="text-emerald-100">{stat.label}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
