@@ -94,7 +94,7 @@ export default function AboutPage() {
           >
             <Leaf className="w-16 h-16 text-emerald-600 mx-auto mb-6" />
             <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
-              환경에 진심인 사람들이 모였다
+              팀 에테르, 환경에 진심인 사람들이 모였다
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               버려지던 낙엽을 에너지원으로 전환하여 지속가능한 미래를 만들어가는 Leaflo의 이야기를 소개합니다.
@@ -163,35 +163,35 @@ export default function AboutPage() {
               name="노민수"
               role="CEO"
               department="연세대학교 대기과학과"
-              achievement="생명사정 환경공학학회 회원 | 한국공학게시 사회미디어 대학생 환경부 탄소종합협조 5기 팀장"
+              achievement="성남시청 청년정책협의체 위원 | 한국장학재단 사회리더 대학생 | 환경부 탄소중립서포터즈 5기 팀장"
               delay={0}
             />
             <TeamMember
               name="신상현"
               role="CCO"
-              department="한림디지인학교 출신"
-              achievement="건축가 | 1급 소방안전관리자"
+              department="환경디자인학과 졸업"
+              achievement="건축기사 | 1급 소방안전관리자"
               delay={0.1}
             />
             <TeamMember
               name="고희승"
               role="COO"
               department="연세대학교 컴퓨터과학과 전공"
-              achievement="에어텍 개발 기획팀 | 연세대학교 YCC 학술부 임원 | 미디 워크스케어선 개발팀장"
+              achievement="에어캡 게임 기획팀 | 연세대학교 YCC 학술부 임원 | IHEI 워크스테이션 개발팀장"
               delay={0.2}
             />
             <TeamMember
               name="차유진"
-              role="CCO"
+              role="COO"
               department="연세대학교 컴퓨터과학과 전공"
-              achievement="2024년 넥슨 창의블랙챗 최우수상 수상 | 2025년 AGI Agent 해커톤 대회 우수상 수상"
+              achievement="2021년 공군 행정 업무 자동화 표창장 수상 | 2024년 넥슨 창의플랫폼 최우수상 수상 | 2025년 AGI Agent 해커톤 대회 우수상 수상"
               delay={0.3}
             />
             <TeamMember
               name="김진세"
               role="CTO"
-              department="연세대학교 전기전자공학 전공"
-              achievement="드론 기반 상품 택배 조달 시스템 Fullstack 개발자 | IoT 기반 자이로콘돔츠룸 - 마인크래프트 CTO | IoT 기반 물류 운반 안정화 시스템 CTO"
+              department="연세대학교 전기전자공학 재학"
+              achievement="드론 기반 상공 택배 조달 시스템 Fullstack 개발자 | IoT 기반 자이로컨트롤러 - 마인크래프트 CTO | IoT 기반 물류 운반 안정화 시스템 CTO"
               delay={0.4}
             />
           </div>
