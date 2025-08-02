@@ -248,36 +248,37 @@ function TechStepCard({ step, title, description, features }: {
   )
 }
 
-// Team member data - with 박연진 added as first member
+// Team member data - with 박연진 added as first member and updated achievements
 const teamMembers = [
   {
     name: "박연진",
     role: "CEO",
     department: "중앙여자고등학교 졸업",
-    achievement: "고등학생 시절 유명 학교 폭력범, 닭강정 따뜻하게 먹음, 카이스트 인턴중 ㄷㄷ"
+    achievement: "고등학생 시절 유명 학교 폭력범, 닭강정 따뜻하게 먹음, 카이스트 인턴중 ㄷㄷ",
+    image: "/park-yeon-jin.jpg"
   },
   {
     name: "차유진",
     role: "CIO",
     department: "중앙여자고등학교 중퇴",
-    achievement: "박연진 학교폭력 피해자, 박연진 빵셔틀"
+    achievement: "박연진 괴롭힘 계획안 디지털 전환 PM, 빵셔틀 경로 최적화 알고리즘 개발, 고데기 온도 예측 AI 모델 개발"
   },
   {
     name: "노민수",
     role: "CFO",
     department: "중앙여자고등학교 졸업",
-    achievement: "박연진 학교폭력 피해자, 박연진 전용 운전 기사"
+    achievement: "매점 외상 장부 디지털화 주도, 삥뜯은 돈 자산 운용 담당, 박연진 전용 '카카오 법인 택시' 호출 담당"
   },
   {
     name: "고희승",
     role: "COO",
     department: "동명여자중학교 졸업",
-    achievement: "박연진 전용 재롱 셔틀"
+    achievement: "전교생 대상 재롱 공연 총괄, 따뜻한 닭강정 적시 공급망 관리(SCM), 박연진 심기 관리 및 대응 메뉴얼 제작"
   }
 ]
 
 // TeamMemberCard component with clear icons
-function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
+function TeamMemberCard({ member }: { member: typeof teamMembers[0] & { image?: string } }) {
   const roleColors = {
     CEO: 'from-purple-500 to-indigo-600',
     CTO: 'from-blue-500 to-cyan-600',
@@ -307,7 +308,7 @@ function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
   }
   
   const Icon = roleIcons[member.role as keyof typeof roleIcons] || Users
-  const gradientColor = roleColors[member.role as keyof typeof roleColors] || 'from-gray-500 to-gray-600'
+  const gradientColor = roleColors[member.role as keyof typeof roleIcons] || 'from-gray-500 to-gray-600'
   const iconBgColor = solidRoleColors[member.role as keyof typeof solidRoleColors] || 'bg-gray-500'
 
   return (
@@ -329,6 +330,19 @@ function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
           <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${gradientColor}`}></div>
            
           <div className="relative z-10">
+            {/* Image for the member */}
+            {member.image && (
+              <div className="mb-6 flex justify-center">
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  width={100}
+                  height={100}
+                  className="rounded-full object-cover border-4 border-white shadow-lg"
+                />
+              </div>
+            )}
+
             {/* Role badge and icon */}
             <div className="flex items-start justify-between mb-6">
               <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r ${gradientColor} text-white text-sm font-semibold`}>
