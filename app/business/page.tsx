@@ -125,10 +125,10 @@ function ModelCard({
         <div className={`absolute -top-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br ${gradient} opacity-5 blur-3xl group-hover:scale-110 transition-transform duration-500`}></div>
         
         <div className="relative z-10">
-          {/* Icon section */}
+          {/* Icon section - more visible */}
           <div className="flex items-center gap-4 mb-6">
-            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${gradient} opacity-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-              <Icon className="w-7 h-7 text-gray-700" />
+            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${gradient} opacity-20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+              <Icon className={`w-7 h-7 text-gradient bg-gradient-to-br ${gradient} bg-clip-text`} style={{ WebkitTextFillColor: 'transparent' }} />
             </div>
             <h3 className="text-xl font-bold text-gray-800">{title}</h3>
           </div>
@@ -137,7 +137,7 @@ function ModelCard({
           <div className="space-y-4">
             {features.map((feature, index) => (
               <div key={index} className="flex items-start gap-3">
-                <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${gradient} opacity-60 mt-2 flex-shrink-0`}></div>
+                <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${gradient} opacity-80 mt-2 flex-shrink-0`}></div>
                 <div className="text-gray-700">
                   <span className="font-medium text-gray-800">{feature.label}:</span>
                   <span className="ml-2 text-gray-600">{feature.value}</span>
@@ -178,21 +178,21 @@ function MarketStatCard({
         <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-300`}></div>
         
         <div className="relative z-10">
-          {/* Icon */}
-          <div className={`w-12 h-12 mb-4 rounded-xl bg-gradient-to-br ${color} opacity-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-            <Icon className="w-6 h-6 text-gray-700" />
+          {/* Icon - more visible */}
+          <div className={`w-12 h-12 mb-4 rounded-xl bg-gradient-to-br ${color} opacity-20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+            <Icon className={`w-6 h-6 text-gradient bg-gradient-to-br ${color} bg-clip-text`} style={{ WebkitTextFillColor: 'transparent' }} />
           </div>
           
           {/* Content */}
           <h4 className="text-sm font-medium text-gray-600 mb-2">{title}</h4>
-          <div className={`text-3xl font-bold mb-3 bg-gradient-to-r ${color} bg-clip-text text-transparent opacity-80`}>
+          <div className={`text-3xl font-bold mb-3 bg-gradient-to-r ${color} bg-clip-text text-transparent`}>
             {value}
           </div>
           <p className="text-sm text-gray-600 leading-relaxed">{description}</p>
         </div>
         
         {/* Bottom accent line */}
-        <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${color} opacity-20 scale-x-0 group-hover:scale-x-100 transition-transform duration-300`}></div>
+        <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${color} opacity-30 scale-x-0 group-hover:scale-x-100 transition-transform duration-300`}></div>
       </div>
     </motion.div>
   )
@@ -412,7 +412,7 @@ export default function BusinessPage() {
               icon={TrendingUp}
               color="from-amber-600 to-amber-400"
             />
-          </div>
+                      </div>
 
           {/* Competitive Advantages */}
           <motion.div
@@ -433,17 +433,17 @@ export default function BusinessPage() {
                   { icon: Shield, title: "ESG 가치", desc: "탄소중립 기여" }
                 ].map((item, index) => (
                   <div key={index} className="text-center group">
-                    <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-emerald-100 to-green-100 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <item.icon className="w-7 h-7 text-emerald-700" />
+                    <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 opacity-20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <item.icon className="w-7 h-7 text-gradient bg-gradient-to-br from-emerald-500 to-green-600 bg-clip-text" style={{ WebkitTextFillColor: 'transparent' }} />
                     </div>
                     <h4 className="font-semibold text-gray-800 mb-2">{item.title}</h4>
                     <p className="text-sm text-gray-600">{item.desc}</p>
                   </div>
                 ))}
+                    </div>
+                  </div>
+                </motion.div>
               </div>
-            </div>
-          </motion.div>
-        </div>
       </section>
 
       {/* Milestone Roadmap */}
@@ -514,7 +514,7 @@ export default function BusinessPage() {
                         ? 'bg-gradient-to-br from-emerald-500 to-green-600 shadow-lg shadow-emerald-500/50' 
                         : 'bg-white border-4 border-emerald-300'
                     }`}></div>
-                  </div>
+                    </div>
                   
                   <div className="flex-1">
                     {index % 2 === 1 && (
@@ -523,9 +523,9 @@ export default function BusinessPage() {
                   </div>
                 </motion.div>
               ))}
-            </div>
-          </div>
-        </div>
+                  </div>
+                </div>
+              </div>
       </section>
 
       {/* CTA Section */}
