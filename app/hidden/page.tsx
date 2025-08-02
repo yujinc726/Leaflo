@@ -253,32 +253,26 @@ const teamMembers = [
   {
     name: "박연진",
     role: "CEO",
-    department: "연세대학교 대기과학과",
+    department: "중앙여자고등학교 졸업",
     achievement: "고등학생 시절 유명 학교 폭력범, 닭강정 따뜻하게 먹음, 카이스트 인턴중 ㄷㄷ"
   },
   {
-    name: "노민수",
-    role: "CFO", // Changed from CEO to CTO
-    department: "연세대학교 대기과학과",
-    achievement: "박연진 학교폭력 피해자자, 한국장학재단 사회리더 대학생, 환경부 탄소중립서포터즈 5기 팀장"
+    name: "차유진",
+    role: "CIO",
+    department: "중앙여자고등학교 중퇴",
+    achievement: "박연진 학교폭력 피해자, 박연진 빵셔틀"
   },
   {
-    name: "차유진",
-    role: "CIO", // Changed from CIO to COO
-    department: "연세대학교 컴퓨터과학과 전공",
-    achievement: "Slide-Scribe CEO (2025년 9월 서비스 예정), 2021년 공군 행정 업무 자동화 기여 표창장, 2024년 넥슨 창의플랫폼 최우수상, 2025년 AGI Agent 해커톤 대회 우수상"
+    name: "노민수",
+    role: "CFO",
+    department: "중앙여자고등학교 졸업",
+    achievement: "박연진 학교폭력 피해자, 박연진 전용 운전 기사"
   },
   {
     name: "고희승",
-    role: "COO", // Changed from COO to CCO
-    department: "연세대학교 컴퓨터과학과 전공",
-    achievement: "에어캡 게임 기획팀, 연세대학교 YCC 학술부 임원, IHEI 워크스테이션 개발팀장"
-  },
-  {
-    name: "신상현",
-    role: "CFO", // Changed from CCO to CFO
-    department: "환경디자인학과 졸업",
-    achievement: "건축기사, 1급 소방안전관리자"
+    role: "COO",
+    department: "동명여자중학교 졸업",
+    achievement: "박연진 전용 재롱"
   }
 ]
 
@@ -404,16 +398,16 @@ export default function HiddenAboutPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100/80 backdrop-blur-sm text-emerald-700 text-sm font-medium mb-8">
               <Users className="w-4 h-4" />
-              Team Aether (Secret Version)
+              Team Bully (Secret Version)
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
               <GradientText>팀 에테르</GradientText>,<br />
-              <span className="text-gray-800">진짜 이야기</span>
+              <span className="text-gray-800">박연진의 원대한 꿈</span>
             </h1>
             
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              우리는 기술과 열정... 그리고 약간의 비밀로 지속가능한 미래를 만들어가는 혁신가들입니다
+              우리는 연진이의 꿈을 위해 기술과 열정을 바칩니다... (살려주세요)
             </p>
           </motion.div>
         </div>
@@ -429,7 +423,7 @@ export default function HiddenAboutPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              우리의 <GradientText>미션</GradientText>
+              우리의 <GradientText>진짜 미션</GradientText>
             </h2>
           </motion.div>
 
@@ -437,19 +431,19 @@ export default function HiddenAboutPage() {
             <TechValueCard
               icon={Target}
               title="환경 보호"
-              description="버려지는 낙엽을 활용하여 지구를 구하고... 닭강정도 따뜻하게 먹습니다"
+              description="버려지는 낙엽을 활용하여... 연진이의 닭강정을 따뜻하게 데웁니다."
               delay={0}
             />
             <TechValueCard
               icon={Lightbulb}
               title="혁신 기술"
-              description="최첨단 기술로 혁신을 이끌어가며, 때로는 학교에서도 혁신(?)을 일으킵니다"
+              description="최첨단 기술로 펠릿을 만들고... 고데기 온도를 혁신적으로 조절합니다."
               delay={100}
             />
             <TechValueCard
               icon={TreePine}
               title="지속가능성"
-              description="미래 세대를 위한 지속가능한 솔루션을 개발하고, 인턴십도 지속가능하게 합니다"
+              description="미래 세대를 위한 지속가능한 빵셔틀 솔루션을 개발합니다."
               delay={200}
             />
           </div>
@@ -466,44 +460,44 @@ export default function HiddenAboutPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <GradientText>Our Technology</GradientText>
+              <GradientText>Our True Technology</GradientText>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              낙엽에서 에너지까지, 3단계의 혁신적 솔루션
+              연진이의 꿈을 위한 3단계의 혁신적 솔루션
             </p>
           </motion.div>
 
           <div className="max-w-4xl mx-auto space-y-12">
             <TechStepCard
               step={1}
-              title="스마트 수거 시스템"
-              description="AI 기반 낙엽 분류 및 효율적 수거 네트워크 구축"
+              title="스마트 상납 시스템"
+              description="AI 기반으로 연진이의 심기를 파악하고, 최적의 빵셔틀 경로를 계산합니다."
               features={[
-                "IoT 센서를 활용한 실시간 낙엽량 모니터링",
-                "최적 경로 알고리즘으로 수거 효율성 극대화",
-                "자동 분류 시스템으로 품질 관리"
+                "IoT 센서를 활용한 실시간 심기 모니터링",
+                "최적 경로 알고리즘으로 빵셔틀 효율성 극대화",
+                "자동 닭강정 주문 시스템으로 품질 관리"
               ]}
             />
             
             <TechStepCard
               step={2}
-              title="고효율 가공 기술"
-              description="특허 기술을 통한 96% 효율의 펠릿 제조 공정"
+              title="고데기 온도 제어 기술"
+              description="특허 기술을 통한 99.9% 정확도의 고데기 온도 제어"
               features={[
-                "특허받은 건조 및 압축 기술",
-                "목재 펠릿 대비 96% 효율 달성",
-                "ISO 17225 국제 표준 충족"
+                "특허받은 열 전달 및 유지 기술",
+                "피해자 만족도 99% 달성",
+                "ISO 1818 국제 고문 표준 충족"
               ]}
             />
             
             <TechStepCard
               step={3}
-              title="통합 관리 플랫폼"
-              description="전체 공급망을 관리하는 디지털 플랫폼"
+              title="통합 심기 관리 플랫폼"
+              description="연진이의 심기를 관리하는 디지털 플랫폼"
               features={[
-                "실시간 생산량 및 품질 모니터링",
-                "고객사 연동 및 자동 주문 시스템",
-                "탄소 저감량 측정 및 ESG 리포팅"
+                "실시간 심기 및 만족도 모니터링",
+                "재롱 자동 추천 및 실행 시스템",
+                "폭력 수치 측정 및 ESG(Error & Sin Gauge) 리포팅"
               ]}
             />
           </div>
@@ -521,14 +515,14 @@ export default function HiddenAboutPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100/80 backdrop-blur-sm text-emerald-700 text-sm font-medium mb-6">
               <Users className="w-4 h-4" />
-              Team Aether (Real Version)
+              The Bullies
             </div>
             
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <GradientText>우리 팀</GradientText>을 소개합니다
+              <GradientText>연진이와 아이들</GradientText>을 소개합니다
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              각 분야의 전문가들(?)이 모여 Leaflo의 비전을 실현합니다
+              각 분야의 빵셔틀 전문가들이 모여 연진이의 비전을 실현합니다
             </p>
           </motion.div>
 
@@ -553,26 +547,26 @@ export default function HiddenAboutPage() {
               숫자로 보는 <GradientText>임팩트</GradientText>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              데이터로 증명하는 Leaflo의 혁신적 가치 (그리고 박연진의 임팩트)
+              데이터로 증명하는 연진이의 압도적인 임팩트
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             <StatCard
-              value="96%"
-              label="목재 펠릿 대비 효율"
+              value="100%"
+              label="빵셔틀 성공률"
               icon={Zap}
               color="from-emerald-600 to-emerald-400"
             />
             <StatCard
-              value="30만톤"
-              label="연간 처리 가능량"
+              value="365일"
+              label="연간 상납 일수"
               icon={Leaf}
               color="from-blue-600 to-blue-400"
             />
             <StatCard
-              value="840억원"
-              label="시장 규모"
+              value="999조"
+              label="연진이의 야망 규모"
               icon={Globe}
               color="from-purple-600 to-purple-400"
             />
@@ -620,28 +614,28 @@ export default function HiddenAboutPage() {
                 </div>
                 
                 <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                  함께 만들어가는<br />
-                  <GradientText>진짜 미래</GradientText>
+                  연진이의 꿈에<br />
+                  <GradientText>동참하시겠습니까?</GradientText>
                 </h2>
                 
                 <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                   Leaflo와 함께 환경을 보호하고 새로운 가치를 창출하세요.
-                  (닭강정은 선택사항입니다)
+                  (동참하지 않을 시 고데기 온도 올라감)
                 </p>
 
                 {/* Feature list */}
                 <div className="space-y-4 mb-8">
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                    <span className="text-gray-700">연간 30만톤 낙엽 처리 가능</span>
+                    <span className="text-gray-700">따뜻한 닭강정 상시 제공</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                    <span className="text-gray-700">목재 펠릿 대비 96% 효율</span>
+                    <span className="text-gray-700">고데기 온도 제어 기술 체험</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                    <span className="text-gray-700">박연진의 카이스트 인턴 경험</span>
+                    <span className="text-gray-700">박연진의 카이스트 인턴 경험 공유</span>
                   </div>
                 </div>
                 
@@ -651,7 +645,7 @@ export default function HiddenAboutPage() {
                     <Link href="/business">
                       <Button size="lg" className="text-lg px-8 py-6 bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-xl hover:shadow-emerald-500/25">
                         <span className="flex items-center gap-2">
-                          비밀 사업 계획 보기
+                          연진이의 사업 계획
                           <ArrowRight className="w-5 h-5" />
                         </span>
                       </Button>
@@ -662,7 +656,7 @@ export default function HiddenAboutPage() {
                     <Link href="/contact">
                       <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50">
                         <span className="flex items-center gap-2">
-                          진짜 파트너십 문의
+                          새로운 빵셔틀 지원
                           <Users className="w-5 h-5" />
                         </span>
                       </Button>
@@ -700,7 +694,7 @@ export default function HiddenAboutPage() {
                     <Target className="w-6 h-6 text-blue-600" />
                   </div>
                   <h4 className="font-semibold text-gray-800 mb-2">혁신적 기술</h4>
-                  <p className="text-sm text-gray-600">특허받은 고효율 펠릿 제조 기술</p>
+                  <p className="text-sm text-gray-600">특허받은 고효율 빵셔틀 기술</p>
                 </motion.div>
 
                 {/* Card 3 - Bottom */}
