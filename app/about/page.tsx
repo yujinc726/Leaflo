@@ -65,29 +65,88 @@ function Card3D({ children, className = "" }: { children: React.ReactNode, class
 
 // Team member card with glassmorphism
 function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
+  const roleColors = {
+    CEO: 'from-purple-500 to-indigo-600',
+    CTO: 'from-blue-500 to-cyan-600',
+    CIO: 'from-green-500 to-emerald-600',
+    COO: 'from-orange-500 to-red-600',
+    CCO: 'from-pink-500 to-rose-600'
+  }
+  
+  const roleIcons = {
+    CEO: Users,
+    CTO: Zap,
+    CIO: Shield,
+    COO: Globe,
+    CCO: Award
+  }
+  
+  const Icon = roleIcons[member.role as keyof typeof roleIcons] || Users
+  const gradientColor = roleColors[member.role as keyof typeof roleColors] || 'from-gray-500 to-gray-600'
+
   return (
     <Card3D>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="relative p-8 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl hover:bg-white/20 transition-all duration-300 group overflow-hidden h-full"
+        className="relative h-full"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        {/* Gradient background decoration */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${gradientColor} opacity-5 rounded-2xl`}></div>
         
-        <div className="relative z-10">
-          <div className="w-24 h-24 mb-6 rounded-2xl bg-gradient-to-br from-emerald-400 to-green-600 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-            <span className="text-3xl font-bold text-white">{member.name[0]}</span>
-          </div>
+        <div className="relative p-8 rounded-2xl bg-white/80 backdrop-blur-sm border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 group h-full overflow-hidden">
+          {/* Hover effect gradient */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${gradientColor} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
           
-          <h3 className="text-2xl font-bold text-gray-800 mb-1">{member.name}</h3>
-          <p className="text-emerald-600 font-semibold mb-4">{member.role}</p>
+          {/* Top decoration line */}
+          <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${gradientColor}`}></div>
           
-          <div className="space-y-2">
-            <p className="text-gray-700 font-medium">{member.department}</p>
-            <div className="pt-3 border-t border-gray-200">
-              <p className="text-sm text-gray-600 leading-relaxed">{member.achievement}</p>
+          <div className="relative z-10">
+            {/* Role badge and icon */}
+            <div className="flex items-start justify-between mb-6">
+              <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r ${gradientColor} text-white text-sm font-semibold`}>
+                <Icon className="w-4 h-4" />
+                {member.role}
+              </div>
+              
+              {/* Decorative icon */}
+              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradientColor} opacity-10 flex items-center justify-center`}>
+                <Icon className={`w-6 h-6 text-transparent bg-gradient-to-br ${gradientColor} bg-clip-text`} />
+              </div>
             </div>
+            
+            {/* Name and department */}
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text transition-all duration-300 group-hover:from-emerald-600 group-hover:to-green-600">
+                {member.name}
+              </h3>
+              <p className="text-gray-600 font-medium flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-emerald-500" />
+                {member.department}
+              </p>
+            </div>
+            
+            {/* Achievement section */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 mb-2">
+                <Award className="w-4 h-4 text-amber-500" />
+                <span className="text-sm font-semibold text-gray-700">주요 성과</span>
+              </div>
+              
+              {/* Split achievements by comma and display as list */}
+              <div className="space-y-2">
+                {member.achievement.split(',').map((achievement, index) => (
+                  <div key={index} className="flex items-start gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
+                    <p className="text-sm text-gray-600 leading-relaxed">{achievement.trim()}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Bottom gradient line */}
+            <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${gradientColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
           </div>
         </div>
       </motion.div>
@@ -368,6 +427,11 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100/80 backdrop-blur-sm text-emerald-700 text-sm font-medium mb-6">
+              <Users className="w-4 h-4" />
+              Team Aether
+            </div>
+            
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               <GradientText>우리 팀</GradientText>을 소개합니다
             </h2>
@@ -376,9 +440,16 @@ export default function AboutPage() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {teamMembers.map((member, index) => (
-              <TeamMemberCard key={index} member={member} />
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <TeamMemberCard member={member} />
+              </motion.div>
             ))}
           </div>
         </div>
