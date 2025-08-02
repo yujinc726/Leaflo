@@ -3,8 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Navigation } from '@/components/navigation'
-import { Footer } from '@/components/footer'
 import { 
   ArrowRight, 
   Sparkles, 
@@ -220,17 +218,6 @@ function StatCard({ value, label, icon: Icon, color }: {
 }
 
 export default function HomePage() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
   return (
     <>
       <style jsx global>{`
@@ -264,8 +251,6 @@ export default function HomePage() {
         }
       `}</style>
 
-      <Navigation />
-      
       <main className="min-h-screen bg-gradient-to-br from-gray-50 to-emerald-50 overflow-hidden">
         {/* Hero Section with parallax effect */}
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -279,14 +264,6 @@ export default function HomePage() {
           <div className="absolute bottom-20 left-20">
             <FloatingIcon icon={Globe} delay={4} />
           </div>
-          
-          {/* Mouse follower */}
-          <div 
-            className="pointer-events-none fixed w-96 h-96 rounded-full bg-emerald-400/20 blur-3xl transition-transform duration-1000 ease-out"
-            style={{
-              transform: `translate(${mousePosition.x - 192}px, ${mousePosition.y - 192}px)`
-            }}
-          />
           
           <div className="container mx-auto px-6 relative z-10">
             <div className="text-center max-w-5xl mx-auto">
@@ -373,46 +350,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Stats Section with animated counters */}
-        <section className="py-24 relative bg-gradient-to-b from-transparent to-emerald-50/50">
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-6xl font-bold mb-6 text-gray-800">
-                숫자로 보는 <GradientText>임팩트</GradientText>
-              </h2>
-            </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <StatCard
-                value="96%"
-                label="목재 펠릿 대비 효율"
-                icon={Zap}
-                color="from-emerald-500 to-green-600"
-              />
-              <StatCard
-                value="30만톤"
-                label="연간 처리 가능량"
-                icon={Leaf}
-                color="from-blue-500 to-indigo-600"
-              />
-              <StatCard
-                value="840억원"
-                label="시장 규모"
-                icon={BarChart3}
-                color="from-purple-500 to-pink-600"
-              />
-              <StatCard
-                value="70%"
-                label="처리비용 절감"
-                icon={TrendingUp}
-                color="from-orange-500 to-red-600"
-              />
-            </div>
-          </div>
-        </section>
-
         {/* CTA Section */}
-        <section className="py-24 relative">
+        <section className="py-24 relative bg-gradient-to-b from-transparent to-emerald-50/50">
           <div className="container mx-auto px-6">
             <Card3D>
               <div className="relative rounded-3xl bg-gradient-to-br from-emerald-600 to-green-700 p-16 text-center overflow-hidden">
@@ -445,8 +384,6 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-      
-      <Footer />
     </>
   )
 }

@@ -14,10 +14,12 @@ import {
   Zap,
   Shield,
   ArrowRight,
-  Leaf
+  Leaf,
+  TrendingUp
 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useState, useEffect, useRef } from 'react'
 
 // Gradient text component
 function GradientText({ children, className = "" }: { children: React.ReactNode, className?: string }) {
@@ -171,10 +173,16 @@ const teamMembers = [
     achievement: "성남시청 청년정책협의체 위원, 한국장학재단 사회리더 대학생, 환경부 탄소중립서포터즈 5기 팀장"
   },
   {
-    name: "신상현",
-    role: "CCO",
-    department: "환경디자인학과 졸업",
-    achievement: "건축기사, 1급 소방안전관리자"
+    name: "김진세",
+    role: "CTO",
+    department: "연세대학교 전기전자공학",
+    achievement: "드론 기반 상공 택배 조달 시스템 Fullstack 개발자, IoT 기반 자이로컨트롤러 마인크래프트 CTO, IoT 기반 물류 운반 안정화 시스템 CTO"
+  },
+  {
+    name: "차유진",
+    role: "CIO",
+    department: "연세대학교 컴퓨터과학과",
+    achievement: "2021년 공군 행정 업무 자동화 기여 표창장, 2024년 넥슨 창의플랫폼 최우수상, 2025년 AGI Agent 해커톤 대회 우수상"
   },
   {
     name: "고희승",
@@ -183,18 +191,93 @@ const teamMembers = [
     achievement: "에어캡 게임 기획팀, 연세대학교 YCC 학술부 임원, IHEI 워크스테이션 개발팀장"
   },
   {
-    name: "차유진",
-    role: "COO",
-    department: "연세대학교 컴퓨터과학과",
-    achievement: "2021년 공군 행정 업무 자동화 표창장, 2024년 넥슨 창의플랫폼 최우수상, 2025년 AGI Agent 해커톤 대회 우수상"
-  },
-  {
-    name: "김진세",
-    role: "CTO",
-    department: "연세대학교 전기전자공학",
-    achievement: "드론 기반 상공 택배 조달 시스템 Fullstack 개발자, IoT 기반 자이로컨트롤러 마인크래프트 CTO, IoT 기반 물류 운반 안정화 시스템 CTO"
+    name: "신상현",
+    role: "CCO",
+    department: "환경디자인학과 졸업",
+    achievement: "건축기사, 1급 소방안전관리자"
   }
 ]
+
+// Interactive stat card - copied from homepage design
+function StatCard({ value, label, icon: Icon, color }: { 
+  value: string, 
+  label: string, 
+  icon: any,
+  color: string 
+}) {
+  const [count, setCount] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const numericValue = parseInt(value.replace(/[^0-9]/g, ''))
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    if (ref.current) {
+      observer.observe(ref.current)
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (isVisible && numericValue) {
+      const duration = 2000
+      const steps = 60
+      const increment = numericValue / steps
+      let current = 0
+
+      const timer = setInterval(() => {
+        current += increment
+        if (current >= numericValue) {
+          setCount(numericValue)
+          clearInterval(timer)
+        } else {
+          setCount(Math.floor(current))
+        }
+      }, duration / steps)
+
+      return () => clearInterval(timer)
+    }
+  }, [isVisible, numericValue])
+
+  return (
+    <div ref={ref}>
+      <Card3D>
+        <div className={`relative p-8 rounded-3xl bg-gradient-to-br ${color} shadow-2xl overflow-hidden group`}>
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl transform translate-x-16 -translate-y-16"></div>
+          
+          <Icon className="w-12 h-12 text-white/80 mb-4" />
+          
+          <div className="relative z-10">
+            <div className="text-5xl font-bold text-white mb-2">
+              {isVisible ? value.replace(/[0-9]+/, count.toString()) : '0'}
+            </div>
+            <p className="text-white/80 text-lg">{label}</p>
+          </div>
+          
+          <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20">
+            <div 
+              className="h-full bg-white/40 transition-all duration-2000 ease-out"
+              style={{ width: isVisible ? '100%' : '0%' }}
+            ></div>
+          </div>
+        </div>
+      </Card3D>
+    </div>
+  )
+}
 
 export default function AboutPage() {
   return (
@@ -411,39 +494,36 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-              Leaflo의 <GradientText>임팩트</GradientText>
+            <h2 className="text-5xl md:text-6xl font-bold mb-6 text-gray-800">
+              숫자로 보는 <GradientText>임팩트</GradientText>
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              데이터로 입증된 Leaflo의 혁신적 가치와 시장 잠재력
-            </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { value: "96%", label: "목재 펠릿 대비 효율성", color: "from-emerald-500 to-green-600" },
-              { value: "30만톤", label: "연간 낙엽 수거 가능량", color: "from-blue-500 to-indigo-600" },
-              { value: "840억원", label: "시장 규모", color: "from-purple-500 to-pink-600" },
-              { value: "70%", label: "처리비용 절감 효과", color: "from-orange-500 to-red-600" }
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Card3D>
-                  <div className={`relative p-8 rounded-3xl bg-gradient-to-br ${stat.color} shadow-2xl overflow-hidden group`}>
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl transform translate-x-16 -translate-y-16"></div>
-                    
-                    <div className="relative z-10 text-center">
-                      <div className="text-5xl font-bold text-white mb-2">{stat.value}</div>
-                      <p className="text-white/80 text-lg">{stat.label}</p>
-                    </div>
-                  </div>
-                </Card3D>
-              </motion.div>
-            ))}
+            <StatCard
+              value="96%"
+              label="목재 펠릿 대비 효율"
+              icon={Zap}
+              color="from-emerald-500 to-green-600"
+            />
+            <StatCard
+              value="30만톤"
+              label="연간 처리 가능량"
+              icon={Leaf}
+              color="from-blue-500 to-indigo-600"
+            />
+            <StatCard
+              value="840억원"
+              label="시장 규모"
+              icon={Globe}
+              color="from-purple-500 to-pink-600"
+            />
+            <StatCard
+              value="70%"
+              label="처리비용 절감"
+              icon={TrendingUp}
+              color="from-orange-500 to-red-600"
+            />
           </div>
         </div>
       </section>
