@@ -15,7 +15,8 @@ import {
   Shield,
   ArrowRight,
   Leaf,
-  TrendingUp
+  TrendingUp,
+  Cpu
 } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -75,8 +76,8 @@ function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
   
   const roleIcons = {
     CEO: Users,
-    CTO: Zap,
-    CIO: Shield,
+    CTO: Cpu,      // Changed from Zap to Cpu - represents technology leadership
+    CIO: Zap,      // Changed from Shield to Zap - represents development/engineering
     COO: Globe,
     CCO: Award
   }
