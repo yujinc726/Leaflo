@@ -82,18 +82,18 @@ function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
     CCO: Award
   }
 
-  // Define solid colors for team member icons
+  // Define solid colors for team member icons - using actual background colors
   const solidRoleColors = {
-    CEO: 'text-purple-600',
-    CTO: 'text-blue-600',
-    CIO: 'text-emerald-600',
-    COO: 'text-orange-600',
-    CCO: 'text-pink-600'
+    CEO: 'bg-purple-500',
+    CTO: 'bg-blue-500',
+    CIO: 'bg-emerald-500',
+    COO: 'bg-orange-500',
+    CCO: 'bg-pink-500'
   }
   
   const Icon = roleIcons[member.role as keyof typeof roleIcons] || Users
   const gradientColor = roleColors[member.role as keyof typeof roleColors] || 'from-gray-500 to-gray-600'
-  const iconSolidColor = solidRoleColors[member.role as keyof typeof solidRoleColors] || 'text-gray-700'
+  const iconBgColor = solidRoleColors[member.role as keyof typeof solidRoleColors] || 'bg-gray-500'
 
   return (
     <Card3D>
@@ -121,9 +121,9 @@ function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
                 {member.role}
               </div>
               
-              {/* Decorative icon - solid color */}
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradientColor} opacity-30 flex items-center justify-center`}>
-                <Icon className={`w-6 h-6 ${iconSolidColor}`} />
+              {/* Decorative icon - solid color background with white icon */}
+              <div className={`w-12 h-12 rounded-xl ${iconBgColor} flex items-center justify-center shadow-lg`}>
+                <Icon className="w-6 h-6 text-white" />
               </div>
             </div>
             
@@ -280,15 +280,23 @@ function StatCard({ value, label, icon: Icon, color }: {
   const ref = useRef<HTMLDivElement>(null)
   const numericValue = parseInt(value.replace(/[^0-9]/g, ''))
 
-  // Define solid colors for each gradient
+  // Define solid colors for each gradient - using darker shades
   const solidColors = {
-    'from-emerald-600 to-emerald-400': 'text-emerald-600',
-    'from-blue-600 to-blue-400': 'text-blue-600', 
-    'from-purple-600 to-purple-400': 'text-purple-600',
-    'from-amber-600 to-amber-400': 'text-amber-600'
+    'from-emerald-600 to-emerald-400': 'text-white',
+    'from-blue-600 to-blue-400': 'text-white', 
+    'from-purple-600 to-purple-400': 'text-white',
+    'from-amber-600 to-amber-400': 'text-white'
   }
 
-  const iconColor = solidColors[color as keyof typeof solidColors] || 'text-gray-700'
+  const iconBgColors = {
+    'from-emerald-600 to-emerald-400': 'bg-emerald-500',
+    'from-blue-600 to-blue-400': 'bg-blue-500', 
+    'from-purple-600 to-purple-400': 'bg-purple-500',
+    'from-amber-600 to-amber-400': 'bg-amber-500'
+  }
+
+  const iconColor = solidColors[color as keyof typeof solidColors] || 'text-white'
+  const iconBg = iconBgColors[color as keyof typeof iconBgColors] || 'bg-gray-500'
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -349,8 +357,8 @@ function StatCard({ value, label, icon: Icon, color }: {
           <div className={`absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br ${color} opacity-10 blur-2xl group-hover:scale-110 transition-transform duration-500`}></div>
           
           <div className="relative z-10">
-            {/* Icon with solid background and color */}
-            <div className={`w-14 h-14 mb-6 rounded-2xl bg-gradient-to-br ${color} opacity-30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+            {/* Icon with solid background and white icon */}
+            <div className={`w-14 h-14 mb-6 rounded-2xl ${iconBg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
               <Icon className={`w-7 h-7 ${iconColor}`} />
             </div>
             

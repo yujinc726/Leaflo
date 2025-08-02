@@ -109,14 +109,14 @@ function ModelCard({
   gradient: string,
   delay?: number 
 }) {
-  // Define solid colors for each gradient
+  // Define solid colors for each gradient - using solid backgrounds
   const solidColors = {
-    'from-emerald-600 to-emerald-400': 'text-emerald-600',
-    'from-blue-600 to-blue-400': 'text-blue-600',
-    'from-purple-600 to-purple-400': 'text-purple-600'
+    'from-emerald-600 to-emerald-400': 'bg-emerald-500',
+    'from-blue-600 to-blue-400': 'bg-blue-500',
+    'from-purple-600 to-purple-400': 'bg-purple-500'
   }
 
-  const iconColor = solidColors[gradient as keyof typeof solidColors] || 'text-gray-700'
+  const iconBg = solidColors[gradient as keyof typeof solidColors] || 'bg-gray-500'
 
   return (
     <motion.div
@@ -134,10 +134,10 @@ function ModelCard({
         <div className={`absolute -top-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br ${gradient} opacity-5 blur-3xl group-hover:scale-110 transition-transform duration-500`}></div>
         
         <div className="relative z-10">
-          {/* Icon section - solid color */}
+          {/* Icon section - solid color background with white icon */}
           <div className="flex items-center gap-4 mb-6">
-            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${gradient} opacity-30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-              <Icon className={`w-7 h-7 ${iconColor}`} />
+            <div className={`w-14 h-14 rounded-2xl ${iconBg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+              <Icon className="w-7 h-7 text-white" />
             </div>
             <h3 className="text-xl font-bold text-gray-800">{title}</h3>
           </div>
@@ -174,15 +174,15 @@ function MarketStatCard({
   icon: any,
   color: string 
 }) {
-  // Define solid colors for each gradient
+  // Define solid colors for each gradient - using solid backgrounds
   const solidColors = {
-    'from-emerald-600 to-emerald-400': 'text-emerald-600',
-    'from-blue-600 to-blue-400': 'text-blue-600',
-    'from-purple-600 to-purple-400': 'text-purple-600',
-    'from-amber-600 to-amber-400': 'text-amber-600'
+    'from-emerald-600 to-emerald-400': 'bg-emerald-500',
+    'from-blue-600 to-blue-400': 'bg-blue-500',
+    'from-purple-600 to-purple-400': 'bg-purple-500',
+    'from-amber-600 to-amber-400': 'bg-amber-500'
   }
 
-  const iconColor = solidColors[color as keyof typeof solidColors] || 'text-gray-700'
+  const iconBg = solidColors[color as keyof typeof solidColors] || 'bg-gray-500'
 
   return (
     <motion.div
@@ -197,9 +197,9 @@ function MarketStatCard({
         <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-300`}></div>
         
         <div className="relative z-10">
-          {/* Icon - solid color */}
-          <div className={`w-12 h-12 mb-4 rounded-xl bg-gradient-to-br ${color} opacity-30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-            <Icon className={`w-6 h-6 ${iconColor}`} />
+          {/* Icon - solid background with white icon */}
+          <div className={`w-12 h-12 mb-4 rounded-xl ${iconBg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+            <Icon className="w-6 h-6 text-white" />
           </div>
           
           {/* Content */}
@@ -452,8 +452,8 @@ export default function BusinessPage() {
                   { icon: Shield, title: "ESG 가치", desc: "탄소중립 기여" }
                 ].map((item, index) => (
                   <div key={index} className="text-center group">
-                    <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 opacity-30 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <item.icon className="w-7 h-7 text-emerald-600" />
+                    <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-emerald-500 flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                      <item.icon className="w-7 h-7 text-white" />
                     </div>
                     <h4 className="font-semibold text-gray-800 mb-2">{item.title}</h4>
                     <p className="text-sm text-gray-600">{item.desc}</p>
