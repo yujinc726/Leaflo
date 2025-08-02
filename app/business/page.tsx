@@ -95,7 +95,7 @@ function AnimatedCounter({ value, suffix = "" }: { value: number, suffix?: strin
   )
 }
 
-// Business model card
+// Business model card - redesigned with softer design
 function ModelCard({ 
   title, 
   icon: Icon, 
@@ -114,36 +114,44 @@ function ModelCard({
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: delay * 0.001 }}
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      className="h-full"
     >
-      <Card3D>
-        <div className={`relative h-full p-8 rounded-3xl bg-gradient-to-br ${gradient} shadow-2xl overflow-hidden group`}>
-          <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-3xl transform translate-x-20 -translate-y-20"></div>
+      <div className="relative h-full p-8 rounded-3xl bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300 group overflow-hidden">
+        {/* Subtle gradient accent */}
+        <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${gradient} opacity-60`}></div>
+        
+        {/* Decorative background circle */}
+        <div className={`absolute -top-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br ${gradient} opacity-5 blur-3xl group-hover:scale-110 transition-transform duration-500`}></div>
+        
+        <div className="relative z-10">
+          {/* Icon section */}
+          <div className="flex items-center gap-4 mb-6">
+            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${gradient} opacity-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+              <Icon className="w-7 h-7 text-gray-700" />
+            </div>
+            <h3 className="text-xl font-bold text-gray-800">{title}</h3>
+          </div>
           
-          <div className="relative z-10">
-            <div className="w-16 h-16 mb-6 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-              <Icon className="w-8 h-8 text-white" />
-            </div>
-            
-            <h3 className="text-2xl font-bold text-white mb-6">{title}</h3>
-            
-            <div className="space-y-4">
-              {features.map((feature, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-white/80 mt-0.5 flex-shrink-0" />
-                  <div className="text-white/90">
-                    <span className="font-semibold">{feature.label}:</span> {feature.value}
-                  </div>
+          {/* Features list */}
+          <div className="space-y-4">
+            {features.map((feature, index) => (
+              <div key={index} className="flex items-start gap-3">
+                <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${gradient} opacity-60 mt-2 flex-shrink-0`}></div>
+                <div className="text-gray-700">
+                  <span className="font-medium text-gray-800">{feature.label}:</span>
+                  <span className="ml-2 text-gray-600">{feature.value}</span>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
-      </Card3D>
+      </div>
     </motion.div>
   )
 }
 
-// Market stat card
+// Market stat card - redesigned with minimal style
 function MarketStatCard({ 
   title, 
   value, 
@@ -158,19 +166,35 @@ function MarketStatCard({
   color: string 
 }) {
   return (
-    <Card3D>
-      <div className={`relative p-8 rounded-3xl bg-gradient-to-br ${color} shadow-2xl overflow-hidden group h-full`}>
-        <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
-        
-        <Icon className="w-12 h-12 text-white mb-4 group-hover:scale-110 transition-transform" />
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      className="group"
+    >
+      <div className="relative p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-md hover:shadow-lg transition-all duration-300 h-full overflow-hidden">
+        {/* Subtle gradient background */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-300`}></div>
         
         <div className="relative z-10">
-          <h4 className="text-lg font-semibold text-white/90 mb-2">{title}</h4>
-          <div className="text-4xl font-bold text-white mb-3">{value}</div>
-          <p className="text-white/80 text-sm leading-relaxed">{description}</p>
+          {/* Icon */}
+          <div className={`w-12 h-12 mb-4 rounded-xl bg-gradient-to-br ${color} opacity-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+            <Icon className="w-6 h-6 text-gray-700" />
+          </div>
+          
+          {/* Content */}
+          <h4 className="text-sm font-medium text-gray-600 mb-2">{title}</h4>
+          <div className={`text-3xl font-bold mb-3 bg-gradient-to-r ${color} bg-clip-text text-transparent opacity-80`}>
+            {value}
+          </div>
+          <p className="text-sm text-gray-600 leading-relaxed">{description}</p>
         </div>
+        
+        {/* Bottom accent line */}
+        <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${color} opacity-20 scale-x-0 group-hover:scale-x-100 transition-transform duration-300`}></div>
       </div>
-    </Card3D>
+    </motion.div>
   )
 }
 
@@ -283,7 +307,7 @@ export default function BusinessPage() {
       </motion.section>
 
       {/* Business Models Section */}
-      <section className="py-24 relative">
+      <section className="py-24 relative bg-gradient-to-b from-white to-gray-50/50">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -299,7 +323,7 @@ export default function BusinessPage() {
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             <ModelCard
               title="낙엽 펠릿 판매 (B2B/B2C)"
               icon={Package}
@@ -309,7 +333,7 @@ export default function BusinessPage() {
                 { label: "B2C 판매가", value: "600~870원/kg" },
                 { label: "손익분기점", value: "21~30톤" }
               ]}
-              gradient="from-emerald-500 to-green-600"
+              gradient="from-emerald-600 to-emerald-400"
               delay={0}
             />
             
@@ -322,7 +346,7 @@ export default function BusinessPage() {
                 { label: "수익 구조", value: "이중 수익" },
                 { label: "계약 형태", value: "장기 위탁" }
               ]}
-              gradient="from-blue-500 to-indigo-600"
+              gradient="from-blue-600 to-blue-400"
               delay={100}
             />
             
@@ -335,7 +359,7 @@ export default function BusinessPage() {
                 { label: "시장 전망", value: "연 20% 성장" },
                 { label: "구매처", value: "대기업 ESG" }
               ]}
-              gradient="from-purple-500 to-pink-600"
+              gradient="from-purple-600 to-purple-400"
               delay={200}
             />
           </div>
@@ -343,7 +367,7 @@ export default function BusinessPage() {
       </section>
 
       {/* Market Analysis Section */}
-      <section className="py-24 relative bg-gradient-to-b from-transparent to-emerald-50/30">
+      <section className="py-24 relative">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -356,62 +380,38 @@ export default function BusinessPage() {
             </h2>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <MarketStatCard
-                title="TAM (전체 시장)"
-                value="840억원"
-                description="국내 전체 낙엽 처리 시장 규모"
-                icon={Globe}
-                color="from-emerald-500 to-green-600"
-              />
-            </motion.div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 max-w-6xl mx-auto">
+            <MarketStatCard
+              title="TAM (전체 시장)"
+              value="840억원"
+              description="국내 전체 낙엽 처리 시장 규모"
+              icon={Globe}
+              color="from-emerald-600 to-emerald-400"
+            />
             
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <MarketStatCard
-                title="SAM (유효 시장)"
-                value="420억원"
-                description="도시 지역 낙엽 처리 시장"
-                icon={Target}
-                color="from-blue-500 to-indigo-600"
-              />
-            </motion.div>
+            <MarketStatCard
+              title="SAM (유효 시장)"
+              value="420억원"
+              description="도시 지역 낙엽 처리 시장"
+              icon={Target}
+              color="from-blue-600 to-blue-400"
+            />
             
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <MarketStatCard
-                title="SOM (목표 시장)"
-                value="84억원"
-                description="5년 내 점유 가능 시장"
-                icon={ChartBar}
-                color="from-purple-500 to-pink-600"
-              />
-            </motion.div>
+            <MarketStatCard
+              title="SOM (목표 시장)"
+              value="84억원"
+              description="5년 내 점유 가능 시장"
+              icon={ChartBar}
+              color="from-purple-600 to-purple-400"
+            />
             
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <MarketStatCard
-                title="시장 성장률"
-                value="15%+"
-                description="연평균 예상 성장률"
-                icon={TrendingUp}
-                color="from-orange-500 to-red-600"
-              />
-            </motion.div>
+            <MarketStatCard
+              title="시장 성장률"
+              value="15%+"
+              description="연평균 예상 성장률"
+              icon={TrendingUp}
+              color="from-amber-600 to-amber-400"
+            />
           </div>
 
           {/* Competitive Advantages */}
@@ -420,30 +420,28 @@ export default function BusinessPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Card3D>
-              <div className="p-10 rounded-3xl bg-white/80 backdrop-blur-xl border border-emerald-100 shadow-2xl">
-                <h3 className="text-2xl font-bold text-gray-800 mb-8 text-center">
-                  <GradientText>경쟁 우위</GradientText>
-                </h3>
-                
-                <div className="grid md:grid-cols-4 gap-6">
-                  {[
-                    { icon: Zap, title: "특허 기술", desc: "96% 효율 펠릿 제조" },
-                    { icon: Users, title: "독점 계약", desc: "지자체 장기 위탁" },
-                    { icon: Award, title: "품질 인증", desc: "ISO 17225 충족" },
-                    { icon: Shield, title: "ESG 가치", desc: "탄소중립 기여" }
-                  ].map((item, index) => (
-                    <div key={index} className="text-center group">
-                      <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-emerald-100 to-green-100 flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <item.icon className="w-8 h-8 text-emerald-600" />
-                      </div>
-                      <h4 className="font-semibold text-gray-800 mb-2">{item.title}</h4>
-                      <p className="text-sm text-gray-600">{item.desc}</p>
+            <div className="p-10 rounded-3xl bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-lg">
+              <h3 className="text-2xl font-bold text-gray-800 mb-8 text-center">
+                <GradientText>경쟁 우위</GradientText>
+              </h3>
+              
+              <div className="grid md:grid-cols-4 gap-6">
+                {[
+                  { icon: Zap, title: "특허 기술", desc: "96% 효율 펠릿 제조" },
+                  { icon: Users, title: "독점 계약", desc: "지자체 장기 위탁" },
+                  { icon: Award, title: "품질 인증", desc: "ISO 17225 충족" },
+                  { icon: Shield, title: "ESG 가치", desc: "탄소중립 기여" }
+                ].map((item, index) => (
+                  <div key={index} className="text-center group">
+                    <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-emerald-100 to-green-100 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <item.icon className="w-7 h-7 text-emerald-700" />
                     </div>
-                  ))}
-                </div>
+                    <h4 className="font-semibold text-gray-800 mb-2">{item.title}</h4>
+                    <p className="text-sm text-gray-600">{item.desc}</p>
+                  </div>
+                ))}
               </div>
-            </Card3D>
+            </div>
           </motion.div>
         </div>
       </section>

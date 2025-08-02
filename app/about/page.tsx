@@ -257,7 +257,7 @@ const teamMembers = [
   }
 ]
 
-// Interactive stat card - copied from homepage design
+// Interactive stat card - redesigned with softer colors and glassmorphism
 function StatCard({ value, label, icon: Icon, color }: { 
   value: string, 
   label: string, 
@@ -313,27 +313,46 @@ function StatCard({ value, label, icon: Icon, color }: {
 
   return (
     <div ref={ref}>
-      <Card3D>
-        <div className={`relative p-8 rounded-3xl bg-gradient-to-br ${color} shadow-2xl overflow-hidden group`}>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl transform translate-x-16 -translate-y-16"></div>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        whileHover={{ y: -5, transition: { duration: 0.2 } }}
+        className="group"
+      >
+        <div className="relative p-8 rounded-3xl bg-white/60 backdrop-blur-md border border-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+          {/* Subtle gradient overlay */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-300`}></div>
           
-          <Icon className="w-12 h-12 text-white/80 mb-4" />
+          {/* Decorative circle */}
+          <div className={`absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br ${color} opacity-10 blur-2xl group-hover:scale-110 transition-transform duration-500`}></div>
           
           <div className="relative z-10">
-            <div className="text-5xl font-bold text-white mb-2">
-              {isVisible ? value.replace(/[0-9]+/, count.toString()) : '0'}
+            {/* Icon with subtle background */}
+            <div className={`w-14 h-14 mb-6 rounded-2xl bg-gradient-to-br ${color} opacity-10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+              <Icon className={`w-7 h-7 text-gray-700`} />
             </div>
-            <p className="text-white/80 text-lg">{label}</p>
+            
+            {/* Value with subtle gradient text */}
+            <div className="text-4xl font-bold mb-2">
+              <span className={`bg-gradient-to-r ${color} bg-clip-text text-transparent opacity-80`}>
+                {isVisible ? value.replace(/[0-9]+/, count.toString()) : '0'}
+              </span>
+            </div>
+            
+            {/* Label */}
+            <p className="text-gray-600 font-medium">{label}</p>
           </div>
           
-          <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20">
+          {/* Progress bar at bottom */}
+          <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gray-200">
             <div 
-              className="h-full bg-white/40 transition-all duration-2000 ease-out"
+              className={`h-full bg-gradient-to-r ${color} opacity-30 transition-all duration-2000 ease-out`}
               style={{ width: isVisible ? '100%' : '0%' }}
             ></div>
           </div>
         </div>
-      </Card3D>
+      </motion.div>
     </div>
   )
 }
@@ -557,7 +576,7 @@ export default function AboutPage() {
       </section>
 
       {/* Impact Stats Section */}
-      <section className="py-24 relative">
+      <section className="py-24 relative bg-gradient-to-b from-gray-50/50 to-white">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -568,32 +587,35 @@ export default function AboutPage() {
             <h2 className="text-5xl md:text-6xl font-bold mb-6 text-gray-800">
               숫자로 보는 <GradientText>임팩트</GradientText>
             </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              데이터로 증명하는 Leaflo의 혁신적 가치
+            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             <StatCard
               value="96%"
               label="목재 펠릿 대비 효율"
               icon={Zap}
-              color="from-emerald-500 to-green-600"
+              color="from-emerald-600 to-emerald-400"
             />
             <StatCard
               value="30만톤"
               label="연간 처리 가능량"
               icon={Leaf}
-              color="from-blue-500 to-indigo-600"
+              color="from-blue-600 to-blue-400"
             />
             <StatCard
               value="840억원"
               label="시장 규모"
               icon={Globe}
-              color="from-purple-500 to-pink-600"
+              color="from-purple-600 to-purple-400"
             />
             <StatCard
               value="70%"
               label="처리비용 절감"
               icon={TrendingUp}
-              color="from-orange-500 to-red-600"
+              color="from-amber-600 to-amber-400"
             />
           </div>
         </div>
