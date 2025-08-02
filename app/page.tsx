@@ -265,16 +265,16 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-24"
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16"
             >
               <Button size="lg" className="text-lg px-8 py-6 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 transform hover:scale-105 transition-all duration-200">
-                <Link href="/business" className="flex items-center gap-2">
-                  비즈니스 모델 보기
+                <Link href="/about" className="flex items-center gap-2">
+                  회사 소개 보기
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </Button>
               
-              <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 transform hover:scale-105 transition-all duration-200">
+              <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transform hover:scale-105 transition-all duration-200">
                 <Link href="/contact" className="flex items-center gap-2">
                   파트너십 문의
                   <Users className="w-5 h-5" />
