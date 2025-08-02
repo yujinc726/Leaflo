@@ -537,12 +537,13 @@ export default function AboutPage() {
             transition={{ duration: 0.6 }}
           >
             <Card3D>
-              <div className="relative rounded-3xl bg-gradient-to-br from-emerald-600 to-green-700 p-16 text-center overflow-hidden">
+              <div className="relative rounded-3xl bg-gradient-to-br from-emerald-600 via-green-600 to-lime-600 p-16 text-center overflow-hidden">
                 <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-                <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl transform -translate-x-48 -translate-y-48"></div>
+                <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+                <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-300/20 rounded-full blur-3xl"></div>
                 
                 <div className="relative z-10">
-                  <Award className="w-20 h-20 text-white/80 mx-auto mb-6" />
+                  <Sparkles className="w-20 h-20 text-white/80 mx-auto mb-6" />
                   
                   <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                     함께 만들어가는 지속가능한 미래

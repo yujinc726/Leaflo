@@ -465,18 +465,18 @@ export default function BusinessPage() {
             <div className="space-y-12">
               {[
                 {
-                  year: "2024",
+                  year: "2025",
                   title: "사업 시작",
                   metrics: ["파일럿 플랜트 구축", "지자체 1곳 계약", "매출 5억원 달성"],
                   isActive: true
                 },
                 {
-                  year: "2025",
+                  year: "2026",
                   title: "시장 확대",
                   metrics: ["생산량 1,000톤 달성", "지자체 3곳 확대", "매출 15억원 목표"]
                 },
                 {
-                  year: "2026",
+                  year: "2027",
                   title: "본격 성장",
                   metrics: ["자동화 시스템 도입", "B2C 시장 진출", "매출 30억원 돌파"]
                 },

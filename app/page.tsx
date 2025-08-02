@@ -267,8 +267,8 @@ export default function HomePage() {
           
           <div className="container mx-auto px-6 relative z-10">
             <div className="text-center max-w-5xl mx-auto">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100/80 backdrop-blur-sm text-emerald-700 text-sm font-medium mb-8 animate-bounce">
-                <Sparkles className="w-4 h-4" />
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100/80 backdrop-blur-sm text-emerald-700 text-sm font-medium mb-8">
+                <Sparkles className="w-4 h-4 animate-bounce" />
                 지속가능한 미래를 만드는 혁신
               </div>
               
@@ -284,7 +284,7 @@ export default function HomePage() {
                 <span className="font-semibold text-gray-800">환경 보호와 경제적 가치</span>를 동시에 실현합니다
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-24">
                 <Link href="/business">
                   <Button className="group relative px-8 py-6 text-lg font-semibold rounded-2xl bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-2xl hover:shadow-emerald-500/25 transform hover:scale-105 transition-all duration-300 overflow-hidden">
                     <span className="relative z-10 flex items-center gap-2">
@@ -304,12 +304,12 @@ export default function HomePage() {
                   </Button>
                 </Link>
               </div>
-              
-              {/* Scroll indicator */}
-              <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-                <div className="w-6 h-10 rounded-full border-2 border-emerald-400 flex justify-center">
-                  <div className="w-1 h-3 bg-emerald-400 rounded-full mt-2 animate-pulse"></div>
-                </div>
+            </div>
+            
+            {/* Scroll indicator */}
+            <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+              <div className="w-6 h-10 rounded-full border-2 border-emerald-400 flex justify-center">
+                <div className="w-1 h-3 bg-emerald-400 rounded-full mt-2 animate-pulse"></div>
               </div>
             </div>
           </div>
@@ -351,14 +351,17 @@ export default function HomePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-24 relative bg-gradient-to-b from-transparent to-emerald-50/50">
+        <section className="py-24 relative">
           <div className="container mx-auto px-6">
             <Card3D>
-              <div className="relative rounded-3xl bg-gradient-to-br from-emerald-600 to-green-700 p-16 text-center overflow-hidden">
+              <div className="relative rounded-3xl bg-gradient-to-br from-emerald-600 via-green-600 to-lime-600 p-16 text-center overflow-hidden">
                 <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-                <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl transform translate-x-48 -translate-y-48"></div>
+                <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+                <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-300/20 rounded-full blur-3xl"></div>
                 
                 <div className="relative z-10">
+                  <Sparkles className="w-20 h-20 text-white/80 mx-auto mb-6" />
+                  
                   <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                     지속가능한 미래를 함께 만들어가요
                   </h2>
