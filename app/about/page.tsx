@@ -242,7 +242,7 @@ const teamMembers = [
     name: "차유진",
     role: "CIO",
     department: "연세대학교 컴퓨터과학과 전공",
-    achievement: "2021년 공군 행정 업무 자동화 기여 표창장, 2024년 넥슨 창의플랫폼 최우수상, 2025년 AGI Agent 해커톤 대회 우수상, Slide-Scribe CEO (2025년 9월 서비스 예정)"
+    achievement: "Slide-Scribe CEO (2025년 9월 서비스 예정), 2021년 공군 행정 업무 자동화 기여 표창장, 2024년 넥슨 창의플랫폼 최우수상, 2025년 AGI Agent 해커톤 대회 우수상"
   },
   {
     name: "고희승",
