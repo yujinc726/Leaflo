@@ -19,6 +19,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { useState, useEffect } from "react"
 
 // AnimatedIcon 컴포넌트
 function AnimatedIcon({
@@ -76,6 +77,51 @@ function TeamMember({
         <p className="text-gray-500 text-xs leading-relaxed">{achievement}</p>
       </div>
     </motion.div>
+  )
+}
+
+// AnimatedCounter 컴포넌트
+function AnimatedCounter({
+  end,
+  suffix = "",
+  duration = 2000,
+}: {
+  end: number;
+  suffix?: string;
+  duration?: number;
+}) {
+  const [count, setCount] = useState(0)
+  const [hasStarted, setHasStarted] = useState(false)
+
+  const animate = () => {
+    if (hasStarted) return
+    setHasStarted(true)
+    
+    const startTime = Date.now()
+    const animateFrame = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      
+      // easeOutCubic for smooth animation
+      const easeOutCubic = 1 - Math.pow(1 - progress, 3)
+      setCount(Math.floor(easeOutCubic * end))
+      
+      if (progress < 1) {
+        requestAnimationFrame(animateFrame)
+      }
+    }
+    animateFrame()
+  }
+
+  return (
+    <motion.span
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      onViewportEnter={animate}
+      viewport={{ once: true }}
+    >
+      {count.toLocaleString()}{suffix}
+    </motion.span>
   )
 }
 
@@ -361,114 +407,314 @@ export default function AboutPage() {
       </section>
 
       {/* Simple Stats */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
+      <section className="py-24 bg-gradient-to-br from-gray-50 via-white to-emerald-50 relative overflow-hidden">
+        {/* Background animated elements */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-20 left-20 w-96 h-96 bg-emerald-200 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-20 w-80 h-80 bg-blue-200 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-amber-200 rounded-full blur-3xl animate-pulse delay-500"></div>
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center mb-20"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Leaflo의 임팩트</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              데이터로 입증된 Leaflo의 혁신적 가치와 시장 잠재력
-            </p>
+            <motion.h2 
+              className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-gray-800 via-emerald-600 to-blue-600 bg-clip-text text-transparent"
+              initial={{ scale: 0.9 }}
+              whileInView={{ scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              Leaflo의 임팩트
+            </motion.h2>
+            <motion.p 
+              className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              데이터로 입증된 혁신적 가치와 시장 잠재력
+            </motion.p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* 효율성 카드 */}
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0 }}
-              className="relative group"
+              initial={{ opacity: 0, y: 50, rotateY: -15 }}
+              whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+              transition={{ duration: 0.8, delay: 0, ease: "easeOut" }}
+              whileHover={{ 
+                y: -20, 
+                rotateY: 5, 
+                scale: 1.05,
+                transition: { duration: 0.3 }
+              }}
+              className="relative group perspective-1000"
             >
-              <div className="bg-gradient-to-br from-emerald-50 to-green-50 p-8 rounded-3xl shadow-lg border border-emerald-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Zap className="w-6 h-6 text-emerald-600" />
-                  </div>
-                  <div className="text-right">
-                    <div className="text-3xl font-bold text-emerald-600 mb-1">96%</div>
-                    <div className="w-16 h-1 bg-emerald-200 rounded-full ml-auto">
-                      <div className="w-full h-full bg-emerald-500 rounded-full"></div>
+              <div className="relative bg-white/80 backdrop-blur-lg p-8 rounded-3xl shadow-2xl border border-white/20 hover:shadow-emerald-500/25 transition-all duration-500 transform-gpu">
+                {/* Glowing border effect */}
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-emerald-400 to-green-400 opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-8">
+                    <motion.div 
+                      className="w-14 h-14 bg-gradient-to-br from-emerald-100 to-emerald-200 rounded-2xl flex items-center justify-center shadow-lg"
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Zap className="w-7 h-7 text-emerald-600" />
+                    </motion.div>
+                    <div className="text-right">
+                      <motion.div 
+                        className="text-4xl font-bold text-emerald-600 mb-2"
+                        initial={{ scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        transition={{ duration: 0.8, delay: 0.3, type: "spring", bounce: 0.5 }}
+                      >
+                        <AnimatedCounter end={96} suffix="%" duration={2000} />
+                      </motion.div>
+                      <motion.div 
+                        className="w-20 h-2 bg-emerald-100 rounded-full overflow-hidden"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: 80 }}
+                        transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
+                      >
+                        <motion.div 
+                          className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 rounded-full"
+                          initial={{ width: "0%" }}
+                          whileInView={{ width: "100%" }}
+                          transition={{ duration: 2, delay: 1, ease: "easeOut" }}
+                        />
+                      </motion.div>
                     </div>
                   </div>
+                  <motion.h3 
+                    className="text-xl font-bold text-gray-800 mb-2"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                  >
+                    효율성
+                  </motion.h3>
+                  <motion.p 
+                    className="text-gray-600"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
+                  >
+                    목재 펠릿 대비
+                  </motion.p>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">효율성</h3>
-                <p className="text-gray-600 text-sm">목재 펠릿 대비</p>
               </div>
             </motion.div>
 
             {/* 수거량 카드 */}
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="relative group"
+              initial={{ opacity: 0, y: 50, rotateY: -15 }}
+              whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+              whileHover={{ 
+                y: -20, 
+                rotateY: 5, 
+                scale: 1.05,
+                transition: { duration: 0.3 }
+              }}
+              className="relative group perspective-1000"
             >
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl shadow-lg border border-blue-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Recycle className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <div className="text-right">
-                    <div className="text-3xl font-bold text-blue-600 mb-1">30만톤</div>
-                    <div className="w-16 h-1 bg-blue-200 rounded-full ml-auto">
-                      <div className="w-4/5 h-full bg-blue-500 rounded-full"></div>
+              <div className="relative bg-white/80 backdrop-blur-lg p-8 rounded-3xl shadow-2xl border border-white/20 hover:shadow-blue-500/25 transition-all duration-500 transform-gpu">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-400 to-indigo-400 opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-8">
+                    <motion.div 
+                      className="w-14 h-14 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center shadow-lg"
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Recycle className="w-7 h-7 text-blue-600" />
+                    </motion.div>
+                    <div className="text-right">
+                      <motion.div 
+                        className="text-4xl font-bold text-blue-600 mb-2"
+                        initial={{ scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        transition={{ duration: 0.8, delay: 0.4, type: "spring", bounce: 0.5 }}
+                      >
+                        <AnimatedCounter end={30} suffix="만톤" duration={2000} />
+                      </motion.div>
+                      <motion.div 
+                        className="w-20 h-2 bg-blue-100 rounded-full overflow-hidden"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: 80 }}
+                        transition={{ duration: 1.5, delay: 0.9, ease: "easeOut" }}
+                      >
+                        <motion.div 
+                          className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"
+                          initial={{ width: "0%" }}
+                          whileInView={{ width: "85%" }}
+                          transition={{ duration: 2, delay: 1.1, ease: "easeOut" }}
+                        />
+                      </motion.div>
                     </div>
                   </div>
+                  <motion.h3 
+                    className="text-xl font-bold text-gray-800 mb-2"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
+                  >
+                    수거 가능량
+                  </motion.h3>
+                  <motion.p 
+                    className="text-gray-600"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                  >
+                    연간 낙엽
+                  </motion.p>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">수거 가능량</h3>
-                <p className="text-gray-600 text-sm">연간 낙엽</p>
               </div>
             </motion.div>
 
             {/* 시장 규모 카드 */}
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative group"
+              initial={{ opacity: 0, y: 50, rotateY: -15 }}
+              whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              whileHover={{ 
+                y: -20, 
+                rotateY: 5, 
+                scale: 1.05,
+                transition: { duration: 0.3 }
+              }}
+              className="relative group perspective-1000"
             >
-              <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-8 rounded-3xl shadow-lg border border-amber-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <TrendingUp className="w-6 h-6 text-amber-600" />
-                  </div>
-                  <div className="text-right">
-                    <div className="text-3xl font-bold text-amber-600 mb-1">840억원</div>
-                    <div className="w-16 h-1 bg-amber-200 rounded-full ml-auto">
-                      <div className="w-5/6 h-full bg-amber-500 rounded-full"></div>
+              <div className="relative bg-white/80 backdrop-blur-lg p-8 rounded-3xl shadow-2xl border border-white/20 hover:shadow-amber-500/25 transition-all duration-500 transform-gpu">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-400 to-orange-400 opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-8">
+                    <motion.div 
+                      className="w-14 h-14 bg-gradient-to-br from-amber-100 to-amber-200 rounded-2xl flex items-center justify-center shadow-lg"
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <TrendingUp className="w-7 h-7 text-amber-600" />
+                    </motion.div>
+                    <div className="text-right">
+                      <motion.div 
+                        className="text-4xl font-bold text-amber-600 mb-2"
+                        initial={{ scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        transition={{ duration: 0.8, delay: 0.5, type: "spring", bounce: 0.5 }}
+                      >
+                        <AnimatedCounter end={840} suffix="억원" duration={2000} />
+                      </motion.div>
+                      <motion.div 
+                        className="w-20 h-2 bg-amber-100 rounded-full overflow-hidden"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: 80 }}
+                        transition={{ duration: 1.5, delay: 1.0, ease: "easeOut" }}
+                      >
+                        <motion.div 
+                          className="h-full bg-gradient-to-r from-amber-400 to-amber-600 rounded-full"
+                          initial={{ width: "0%" }}
+                          whileInView={{ width: "90%" }}
+                          transition={{ duration: 2, delay: 1.2, ease: "easeOut" }}
+                        />
+                      </motion.div>
                     </div>
                   </div>
+                  <motion.h3 
+                    className="text-xl font-bold text-gray-800 mb-2"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                  >
+                    시장 규모
+                  </motion.h3>
+                  <motion.p 
+                    className="text-gray-600"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.7 }}
+                  >
+                    블루오션 시장
+                  </motion.p>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">시장 규모</h3>
-                <p className="text-gray-600 text-sm">블루오션 시장</p>
               </div>
             </motion.div>
 
             {/* 절감 효과 카드 */}
             <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="relative group"
+              initial={{ opacity: 0, y: 50, rotateY: -15 }}
+              whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+              whileHover={{ 
+                y: -20, 
+                rotateY: 5, 
+                scale: 1.05,
+                transition: { duration: 0.3 }
+              }}
+              className="relative group perspective-1000"
             >
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-3xl shadow-lg border border-green-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <CheckCircle className="w-6 h-6 text-green-600" />
-                  </div>
-                  <div className="text-right">
-                    <div className="text-3xl font-bold text-green-600 mb-1">70%</div>
-                    <div className="w-16 h-1 bg-green-200 rounded-full ml-auto">
-                      <div className="w-3/4 h-full bg-green-500 rounded-full"></div>
+              <div className="relative bg-white/80 backdrop-blur-lg p-8 rounded-3xl shadow-2xl border border-white/20 hover:shadow-green-500/25 transition-all duration-500 transform-gpu">
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-green-400 to-emerald-400 opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-8">
+                    <motion.div 
+                      className="w-14 h-14 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center shadow-lg"
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <CheckCircle className="w-7 h-7 text-green-600" />
+                    </motion.div>
+                    <div className="text-right">
+                      <motion.div 
+                        className="text-4xl font-bold text-green-600 mb-2"
+                        initial={{ scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        transition={{ duration: 0.8, delay: 0.6, type: "spring", bounce: 0.5 }}
+                      >
+                        <AnimatedCounter end={70} suffix="%" duration={2000} />
+                      </motion.div>
+                      <motion.div 
+                        className="w-20 h-2 bg-green-100 rounded-full overflow-hidden"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: 80 }}
+                        transition={{ duration: 1.5, delay: 1.1, ease: "easeOut" }}
+                      >
+                        <motion.div 
+                          className="h-full bg-gradient-to-r from-green-400 to-green-600 rounded-full"
+                          initial={{ width: "0%" }}
+                          whileInView={{ width: "75%" }}
+                          transition={{ duration: 2, delay: 1.3, ease: "easeOut" }}
+                        />
+                      </motion.div>
                     </div>
                   </div>
+                  <motion.h3 
+                    className="text-xl font-bold text-gray-800 mb-2"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.7 }}
+                  >
+                    비용 절감
+                  </motion.h3>
+                  <motion.p 
+                    className="text-gray-600"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.8 }}
+                  >
+                    처리비용 절감 효과
+                  </motion.p>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">비용 절감</h3>
-                <p className="text-gray-600 text-sm">처리비용 절감 효과</p>
               </div>
             </motion.div>
           </div>
