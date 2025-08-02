@@ -81,9 +81,19 @@ function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
     COO: Globe,
     CCO: Award
   }
+
+  // Define solid colors for team member icons
+  const solidRoleColors = {
+    CEO: 'text-purple-600',
+    CTO: 'text-blue-600',
+    CIO: 'text-emerald-600',
+    COO: 'text-orange-600',
+    CCO: 'text-pink-600'
+  }
   
   const Icon = roleIcons[member.role as keyof typeof roleIcons] || Users
   const gradientColor = roleColors[member.role as keyof typeof roleColors] || 'from-gray-500 to-gray-600'
+  const iconSolidColor = solidRoleColors[member.role as keyof typeof solidRoleColors] || 'text-gray-700'
 
   return (
     <Card3D>
@@ -111,9 +121,9 @@ function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
                 {member.role}
               </div>
               
-              {/* Decorative icon - more visible */}
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradientColor} opacity-20 flex items-center justify-center`}>
-                <Icon className={`w-6 h-6 text-gradient bg-gradient-to-br ${gradientColor} bg-clip-text`} style={{ WebkitTextFillColor: 'transparent' }} />
+              {/* Decorative icon - solid color */}
+              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradientColor} opacity-30 flex items-center justify-center`}>
+                <Icon className={`w-6 h-6 ${iconSolidColor}`} />
               </div>
             </div>
             
@@ -270,6 +280,16 @@ function StatCard({ value, label, icon: Icon, color }: {
   const ref = useRef<HTMLDivElement>(null)
   const numericValue = parseInt(value.replace(/[^0-9]/g, ''))
 
+  // Define solid colors for each gradient
+  const solidColors = {
+    'from-emerald-600 to-emerald-400': 'text-emerald-600',
+    'from-blue-600 to-blue-400': 'text-blue-600', 
+    'from-purple-600 to-purple-400': 'text-purple-600',
+    'from-amber-600 to-amber-400': 'text-amber-600'
+  }
+
+  const iconColor = solidColors[color as keyof typeof solidColors] || 'text-gray-700'
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -329,12 +349,12 @@ function StatCard({ value, label, icon: Icon, color }: {
           <div className={`absolute -top-12 -right-12 w-32 h-32 rounded-full bg-gradient-to-br ${color} opacity-10 blur-2xl group-hover:scale-110 transition-transform duration-500`}></div>
           
           <div className="relative z-10">
-            {/* Icon with subtle background - increased opacity and darker icon */}
-            <div className={`w-14 h-14 mb-6 rounded-2xl bg-gradient-to-br ${color} opacity-20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-              <Icon className={`w-7 h-7 text-gradient bg-gradient-to-br ${color} bg-clip-text`} style={{ WebkitTextFillColor: 'transparent' }} />
+            {/* Icon with solid background and color */}
+            <div className={`w-14 h-14 mb-6 rounded-2xl bg-gradient-to-br ${color} opacity-30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+              <Icon className={`w-7 h-7 ${iconColor}`} />
             </div>
             
-            {/* Value with subtle gradient text */}
+            {/* Value with gradient text */}
             <div className="text-4xl font-bold mb-2">
               <span className={`bg-gradient-to-r ${color} bg-clip-text text-transparent`}>
                 {isVisible ? value.replace(/[0-9]+/, count.toString()) : '0'}
@@ -348,7 +368,7 @@ function StatCard({ value, label, icon: Icon, color }: {
           {/* Progress bar at bottom */}
           <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gray-200">
             <div 
-              className={`h-full bg-gradient-to-r ${color} opacity-40 transition-all duration-2000 ease-out`}
+              className={`h-full bg-gradient-to-r ${color} opacity-50 transition-all duration-2000 ease-out`}
               style={{ width: isVisible ? '100%' : '0%' }}
             ></div>
           </div>
