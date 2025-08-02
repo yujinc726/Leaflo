@@ -128,15 +128,15 @@ function TeamMemberCard({ member }: { member: typeof teamMembers[0] }) {
               </p>
             </div>
             
-            {/* Achievement section */}
-            <div className="space-y-3">
+            {/* Achievement section - with minimum height for uniform card heights */}
+            <div className="space-y-3 min-h-[120px] flex flex-col">
               <div className="flex items-center gap-2 mb-2">
                 <Award className="w-4 h-4 text-amber-500" />
                 <span className="text-sm font-semibold text-gray-700">주요 성과</span>
               </div>
               
               {/* Split achievements by comma and display as list */}
-              <div className="space-y-2">
+              <div className="space-y-2 flex-1">
                 {member.achievement.split(',').map((achievement, index) => (
                   <div key={index} className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
@@ -242,7 +242,7 @@ const teamMembers = [
     name: "차유진",
     role: "CIO",
     department: "연세대학교 컴퓨터과학과 전공",
-    achievement: "2021년 공군 행정 업무 자동화 기여 표창장, 2024년 넥슨 창의플랫폼 최우수상, 2025년 AGI Agent 해커톤 대회 우수상"
+    achievement: "2021년 공군 행정 업무 자동화 기여 표창장, 2024년 넥슨 창의플랫폼 최우수상, 2025년 AGI Agent 해커톤 대회 우수상, Slide-Scribe CEO (2025년 9월 서비스 예정)"
   },
   {
     name: "고희승",
