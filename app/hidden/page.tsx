@@ -272,7 +272,7 @@ const teamMembers = [
     name: "고희승",
     role: "COO",
     department: "동명여자중학교 졸업",
-    achievement: "박연진 전용 재롱"
+    achievement: "박연진 전용 재롱 셔틀"
   }
 ]
 
@@ -398,11 +398,11 @@ export default function HiddenAboutPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100/80 backdrop-blur-sm text-emerald-700 text-sm font-medium mb-8">
               <Users className="w-4 h-4" />
-              Team Bully (Secret Version)
+              Team Bully
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              <GradientText>팀 에테르</GradientText>,<br />
+              <GradientText>팀 빵셔틀</GradientText>,<br />
               <span className="text-gray-800">박연진의 원대한 꿈</span>
             </h1>
             
