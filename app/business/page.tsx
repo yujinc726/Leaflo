@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -175,6 +175,15 @@ function MarketStatCard({
   icon: any,
   color: string 
 }) {
+  const [count, setCount] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  
+  // Extract numeric value and suffix (억원, %, + etc.)
+  const numericMatch = value.match(/(\d+)(.*)/)
+  const numericValue = numericMatch ? parseInt(numericMatch[1]) : 0
+  const suffix = numericMatch ? numericMatch[2] : ''
+
   // Define solid colors for each gradient - using solid backgrounds
   const solidColors = {
     'from-emerald-600 to-emerald-400': 'bg-emerald-500',
@@ -185,36 +194,88 @@ function MarketStatCard({
 
   const iconBg = solidColors[color as keyof typeof solidColors] || 'bg-gray-500'
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    if (ref.current) {
+      observer.observe(ref.current)
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (isVisible && numericValue) {
+      const duration = 2000
+      const steps = 60
+      const increment = numericValue / steps
+      let current = 0
+
+      const timer = setInterval(() => {
+        current += increment
+        if (current >= numericValue) {
+          setCount(numericValue)
+          clearInterval(timer)
+        } else {
+          setCount(Math.floor(current))
+        }
+      }, duration / steps)
+
+      return () => clearInterval(timer)
+    }
+  }, [isVisible, numericValue])
+
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-      whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className="group"
-    >
-      <div className="relative p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-md hover:shadow-lg transition-all duration-300 h-full overflow-hidden">
-        {/* Subtle gradient background */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-300`}></div>
-        
-        <div className="relative z-10">
-          {/* Icon - solid background with white icon */}
-          <div className={`w-12 h-12 mb-4 rounded-xl ${iconBg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-            <Icon className="w-6 h-6 text-white" />
+    <div ref={ref}>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        whileHover={{ y: -5, transition: { duration: 0.2 } }}
+        className="group"
+      >
+        <div className="relative p-6 rounded-2xl bg-white/80 backdrop-blur-sm border border-gray-200/50 shadow-md hover:shadow-lg transition-all duration-300 h-full overflow-hidden">
+          {/* Subtle gradient background */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-300`}></div>
+          
+          <div className="relative z-10">
+            {/* Icon - solid background with white icon */}
+            <div className={`w-12 h-12 mb-4 rounded-xl ${iconBg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+              <Icon className="w-6 h-6 text-white" />
+            </div>
+            
+            {/* Content */}
+            <h4 className="text-sm font-medium text-gray-600 mb-2">{title}</h4>
+            <div className={`text-3xl font-bold mb-3 bg-gradient-to-r ${color} bg-clip-text text-transparent`}>
+              {isVisible ? `${count}${suffix}` : '0'}
+            </div>
+            <p className="text-sm text-gray-600 leading-relaxed">{description}</p>
           </div>
           
-          {/* Content */}
-          <h4 className="text-sm font-medium text-gray-600 mb-2">{title}</h4>
-          <div className={`text-3xl font-bold mb-3 bg-gradient-to-r ${color} bg-clip-text text-transparent`}>
-            {value}
+          {/* Bottom accent line - animated based on progress */}
+          <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gray-200">
+            <div 
+              className={`h-full bg-gradient-to-r ${color} opacity-40 transition-all duration-2000 ease-out`}
+              style={{ 
+                width: isVisible ? '100%' : '0%',
+                transition: 'width 2s ease-out'
+              }}
+            ></div>
           </div>
-          <p className="text-sm text-gray-600 leading-relaxed">{description}</p>
         </div>
-        
-        {/* Bottom accent line */}
-        <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r ${color} opacity-40 scale-x-0 group-hover:scale-x-100 transition-transform duration-300`}></div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   )
 }
 
@@ -615,7 +676,7 @@ export default function BusinessPage() {
                         <Button 
                           size="lg"
                           variant="outline"
-                          className="w-full sm:w-auto text-lg px-8 py-6 border-2 border-white text-white hover:bg-white/10"
+                          className="w-full sm:w-auto text-lg px-8 py-6 border-2 border-white/50 text-white bg-white/10 hover:bg-white hover:text-emerald-700 hover:border-white transition-all duration-300"
                           onClick={() => window.open('/business-plan.pdf', '_blank')}
                         >
                           <span className="flex items-center gap-2">
