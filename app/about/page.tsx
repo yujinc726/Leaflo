@@ -200,7 +200,7 @@ function TechStepCard({ step, title, description, features }: {
   features: string[] 
 }) {
   return (
-    <motion.div
+        <motion.div
       initial={{ opacity: 0, x: -50 }}
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.6, delay: step * 0.1 }}
@@ -235,8 +235,8 @@ function TechStepCard({ step, title, description, features }: {
   )
 }
 
-const teamMembers = [
-  {
+  const teamMembers = [
+    {
     name: "노민수",
     role: "CEO",
     department: "연세대학교 대기과학과",
@@ -429,7 +429,7 @@ export default function AboutPage() {
       {/* Mission Section */}
       <section className="py-24 relative">
         <div className="container mx-auto px-6">
-          <motion.div
+            <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -441,7 +441,7 @@ export default function AboutPage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               환경 문제를 혁신적인 기술로 해결하고, 경제적 가치를 창출합니다
             </p>
-          </motion.div>
+            </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
             <MissionCard
@@ -490,10 +490,10 @@ export default function AboutPage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {teamMembers.map((member, index) => (
-              <motion.div
+            <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <TeamMemberCard member={member} />
@@ -518,7 +518,7 @@ export default function AboutPage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               특허받은 3단계 솔루션으로 낙엽을 고품질 펠릿으로 전환합니다
             </p>
-          </motion.div>
+            </motion.div>
 
           <div className="max-w-4xl mx-auto space-y-8">
             <TechStepCard
@@ -560,16 +560,16 @@ export default function AboutPage() {
       {/* Process Flow Section */}
       <section className="py-24 relative bg-gradient-to-b from-emerald-50/30 to-transparent">
         <div className="container mx-auto px-6">
-          <motion.div
+            <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               낙엽펠릿 <GradientText>이동 과정</GradientText>
             </h2>
-          </motion.div>
+            </motion.div>
 
           <div className="grid md:grid-cols-4 gap-6">
             {[
@@ -578,10 +578,10 @@ export default function AboutPage() {
               { icon: Zap, title: "가공", desc: "고효율 펠릿 제조" },
               { icon: Globe, title: "공급", desc: "B2B/B2C 판매" }
             ].map((item, index) => (
-              <motion.div
+            <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="relative"
               >
@@ -598,7 +598,7 @@ export default function AboutPage() {
                     <ArrowRight className="w-6 h-6 text-emerald-400" />
                   </div>
                 )}
-              </motion.div>
+            </motion.div>
             ))}
           </div>
         </div>
@@ -659,7 +659,7 @@ export default function AboutPage() {
             <div className="absolute top-1/2 right-0 w-96 h-96 bg-green-200 rounded-full transform translate-x-1/3"></div>
             <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-lime-200 rounded-full transform translate-y-1/2"></div>
           </div>
-        </div>
+          </div>
 
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
