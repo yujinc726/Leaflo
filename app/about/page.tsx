@@ -240,13 +240,13 @@ const teamMembers = [
   {
     name: "차유진",
     role: "CIO",
-    department: "연세대학교 컴퓨터과학과",
+    department: "연세대학교 컴퓨터과학과 전공",
     achievement: "2021년 공군 행정 업무 자동화 기여 표창장, 2024년 넥슨 창의플랫폼 최우수상, 2025년 AGI Agent 해커톤 대회 우수상"
   },
   {
     name: "고희승",
     role: "COO",
-    department: "연세대학교 컴퓨터과학과",
+    department: "연세대학교 컴퓨터과학과 전공",
     achievement: "에어캡 게임 기획팀, 연세대학교 YCC 학술부 임원, IHEI 워크스테이션 개발팀장"
   },
   {

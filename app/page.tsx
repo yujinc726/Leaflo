@@ -268,7 +268,7 @@ export default function HomePage() {
           <div className="container mx-auto px-6 relative z-10">
             <div className="text-center max-w-5xl mx-auto">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100/80 backdrop-blur-sm text-emerald-700 text-sm font-medium mb-8">
-                <Sparkles className="w-4 h-4 animate-bounce" />
+                <Sparkles className="w-4 h-4 animate-pulse" />
                 지속가능한 미래를 만드는 혁신
               </div>
               

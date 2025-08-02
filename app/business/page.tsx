@@ -266,6 +266,13 @@ export default function BusinessPage() {
           </motion.div>
         </div>
         
+        {/* Scroll indicator */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 rounded-full border-2 border-emerald-400 flex justify-center">
+            <div className="w-1 h-3 bg-emerald-400 rounded-full mt-2 animate-pulse"></div>
+          </div>
+        </div>
+        
         {/* Floating elements */}
         <div className="absolute top-20 left-20 animate-float">
           <DollarSign className="w-16 h-16 text-emerald-200 opacity-20" />

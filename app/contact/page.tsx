@@ -179,6 +179,13 @@ export default function ContactPage() {
           </motion.div>
         </div>
         
+        {/* Scroll indicator */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 rounded-full border-2 border-emerald-400 flex justify-center">
+            <div className="w-1 h-3 bg-emerald-400 rounded-full mt-2 animate-pulse"></div>
+          </div>
+        </div>
+        
         {/* Floating elements */}
         <div className="absolute top-40 left-40 animate-float">
           <Mail className="w-12 h-12 text-emerald-200 opacity-20" />
@@ -369,45 +376,6 @@ export default function ContactPage() {
               </Card>
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* FAQ Preview Section */}
-      <section className="py-24 relative">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <div className="relative inline-block p-12 rounded-3xl bg-gradient-to-br from-emerald-600 to-green-700 text-white overflow-hidden">
-              <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-              <div className="absolute -top-12 -right-12 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
-              
-              <div className="relative z-10">
-                <Clock className="w-16 h-16 mx-auto mb-6 text-white/80" />
-                
-                <h3 className="text-3xl font-bold mb-4">빠른 응답을 약속드립니다</h3>
-                <p className="text-xl text-emerald-100 mb-8 max-w-2xl mx-auto">
-                  문의 주신 내용은 영업일 기준 24시간 이내에
-                  <br />
-                  담당자가 직접 연락드리겠습니다
-                </p>
-                
-                <div className="flex items-center justify-center gap-8 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-5 h-5" />
-                    <span>평균 응답 시간: 4시간</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <User className="w-5 h-5" />
-                    <span>전담 매니저 배정</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
     </main>
