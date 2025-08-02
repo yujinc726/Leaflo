@@ -229,41 +229,41 @@ export default function HomePage() {
             transition={{ duration: 0.8 }}
             className="max-w-5xl mx-auto"
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100/80 backdrop-blur-sm text-emerald-700 text-sm font-medium mb-8"
-            >
+          >
               <Sparkles className="w-4 h-4 animate-pulse" />
               지속가능한 미래를 만드는 혁신
-            </motion.div>
-            
-            <motion.h1
+          </motion.div>
+
+          <motion.h1
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
               className="text-6xl md:text-8xl font-bold leading-tight mb-8"
-            >
+          >
               낙엽이 <GradientText>에너지</GradientText>가 되는
-              <br />
+            <br />
               <GradientText>혁신</GradientText>적 솔루션
-            </motion.h1>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed"
-            >
+          >
               버려지던 낙엽을 고효율 바이오매스 펠릿으로 전환하여
-              <br />
+            <br />
               지속가능한 미래를 만들어가는 <strong>Leaflo</strong>입니다
-            </motion.p>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
               className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16"
             >
@@ -272,18 +272,18 @@ export default function HomePage() {
                   회사 소개 보기
                   <ArrowRight className="w-5 h-5" />
                 </Link>
-              </Button>
+                </Button>
               
               <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transform hover:scale-105 transition-all duration-200">
                 <Link href="/contact" className="flex items-center gap-2">
                   파트너십 문의
                   <Users className="w-5 h-5" />
-                </Link>
-              </Button>
-            </motion.div>
+            </Link>
+                </Button>
+              </motion.div>
           </motion.div>
         </div>
-        
+
         {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -375,7 +375,7 @@ export default function HomePage() {
               </linearGradient>
             </defs>
           </svg>
-        </div>
+          </div>
 
         <div className="container mx-auto px-6 relative z-10">
           <motion.div
@@ -433,9 +433,9 @@ export default function HomePage() {
                           회사 소개 보기
                           <ArrowRight className="w-5 h-5" />
                         </span>
-                      </Button>
+                </Button>
                     </Link>
-                  </motion.div>
+              </motion.div>
                   
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Link href="/contact">
@@ -445,7 +445,7 @@ export default function HomePage() {
                           <Users className="w-5 h-5" />
                         </span>
                       </Button>
-                    </Link>
+            </Link>
                   </motion.div>
                 </div>
                 

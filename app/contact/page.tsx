@@ -241,16 +241,16 @@ export default function ContactPage() {
       {/* Partner Types Section */}
       <section className="py-24 relative bg-gradient-to-b from-transparent to-emerald-50/30">
         <div className="container mx-auto px-6">
-          <motion.div
+            <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               찾고 있는 <GradientText>파트너</GradientText>
             </h2>
-          </motion.div>
+            </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
             <PartnerCard
@@ -352,7 +352,7 @@ export default function ContactPage() {
                     </div>
                     
                     <div className="text-center">
-                      <Button
+                <Button
                         type="submit"
                         disabled={formSubmitted}
                         className={`px-10 py-4 text-lg font-semibold rounded-2xl transform transition-all duration-300 ${
@@ -372,7 +372,7 @@ export default function ContactPage() {
                             <Send className="ml-2 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                           </>
                         )}
-                      </Button>
+                </Button>
                     </div>
                   </form>
                 </div>

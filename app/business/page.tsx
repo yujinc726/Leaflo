@@ -653,7 +653,7 @@ export default function BusinessPage() {
                         <div className="text-3xl font-bold text-white">840억원</div>
                         <div className="text-emerald-100">예상 시장 규모</div>
                       </div>
-                      <div>
+                <div>
                         <div className="text-3xl font-bold text-white">2025년</div>
                         <div className="text-emerald-100">사업 시작</div>
                       </div>
@@ -742,7 +742,7 @@ export default function BusinessPage() {
                             <h4 className="font-semibold text-gray-800 mb-1">검증된 기술력</h4>
                             <p className="text-sm text-gray-600">특허 기술과 국제 표준 인증</p>
                           </div>
-                        </div>
+                    </div>
                       </motion.div>
                     </div>
                     
