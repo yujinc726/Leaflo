@@ -650,45 +650,151 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 relative">
-        <div className="container mx-auto px-6">
+      {/* CTA Section - Redesigned */}
+      <section className="py-24 relative overflow-hidden">
+        {/* Geometric pattern background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-green-50">
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-0 left-0 w-64 h-64 bg-emerald-200 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute top-1/2 right-0 w-96 h-96 bg-green-200 rounded-full transform translate-x-1/3"></div>
+            <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-lime-200 rounded-full transform translate-y-1/2"></div>
+          </div>
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="max-w-6xl mx-auto"
           >
-            <Card3D>
-              <div className="relative rounded-3xl bg-gradient-to-br from-emerald-600 via-green-600 to-lime-600 p-16 text-center overflow-hidden">
-                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-                <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-300/20 rounded-full blur-3xl"></div>
+            {/* Main content with floating cards layout */}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left side - Text content */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-center lg:text-left"
+              >
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 text-emerald-700 text-sm font-medium mb-6">
+                  <Sparkles className="w-4 h-4" />
+                  Partnership & Growth
+                </div>
                 
-                <div className="relative z-10">
-                  <Sparkles className="w-20 h-20 text-white/80 mx-auto mb-6" />
-                  
-                  <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                    함께 만들어가는 지속가능한 미래
-                  </h2>
-                  <p className="text-xl text-emerald-100 mb-10 max-w-3xl mx-auto">
-                    Leaflo와 함께 환경을 보호하고 새로운 가치를 창출하세요
-                  </p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                    <Link href="/business">
-                      <Button className="px-8 py-4 text-lg font-semibold rounded-2xl bg-white text-emerald-700 hover:bg-emerald-50 transform hover:scale-105 transition-all duration-300 shadow-2xl">
-                        비즈니스 모델 보기
-                      </Button>
-                    </Link>
-                    <Link href="/contact">
-                      <Button className="px-8 py-4 text-lg font-semibold rounded-2xl bg-transparent text-white border-2 border-white hover:bg-white/10 transform hover:scale-105 transition-all duration-300">
-                        파트너십 문의
-                      </Button>
-                    </Link>
+                <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                  함께 만들어가는<br />
+                  <GradientText>지속가능한 미래</GradientText>
+                </h2>
+                
+                <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                  Leaflo와 함께 환경을 보호하고 새로운 가치를 창출하세요.
+                  우리의 혁신적인 솔루션으로 더 나은 내일을 만들어갑니다.
+                </p>
+
+                {/* Feature list */}
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <span className="text-gray-700">연간 30만톤 낙엽 처리 가능</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <span className="text-gray-700">목재 펠릿 대비 96% 효율</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <span className="text-gray-700">탄소배출 80% 감소 효과</span>
                   </div>
                 </div>
+                
+                {/* Action buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 lg:justify-start justify-center">
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link href="/business">
+                      <Button size="lg" className="text-lg px-8 py-6 bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-xl hover:shadow-emerald-500/25">
+                        <span className="flex items-center gap-2">
+                          비즈니스 모델 보기
+                          <ArrowRight className="w-5 h-5" />
+                        </span>
+                      </Button>
+                    </Link>
+                  </motion.div>
+                  
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link href="/contact">
+                      <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50">
+                        <span className="flex items-center gap-2">
+                          파트너십 문의
+                          <Users className="w-5 h-5" />
+                        </span>
+                      </Button>
+                    </Link>
+                  </motion.div>
+                </div>
+              </motion.div>
+
+              {/* Right side - Floating cards */}
+              <div className="relative h-[400px] hidden lg:block">
+                {/* Card 1 - Top */}
+                <motion.div
+                  className="absolute top-0 right-0 w-64 p-6 rounded-2xl bg-white shadow-xl border border-gray-100"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                >
+                  <div className="w-12 h-12 mb-4 rounded-xl bg-emerald-100 flex items-center justify-center">
+                    <Leaf className="w-6 h-6 text-emerald-600" />
+                  </div>
+                  <h4 className="font-semibold text-gray-800 mb-2">친환경 에너지</h4>
+                  <p className="text-sm text-gray-600">버려지는 낙엽을 가치있는 에너지로</p>
+                </motion.div>
+
+                {/* Card 2 - Middle */}
+                <motion.div
+                  className="absolute top-1/2 left-0 transform -translate-y-1/2 w-64 p-6 rounded-2xl bg-white shadow-xl border border-gray-100"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  whileHover={{ x: 5, transition: { duration: 0.2 } }}
+                >
+                  <div className="w-12 h-12 mb-4 rounded-xl bg-blue-100 flex items-center justify-center">
+                    <Target className="w-6 h-6 text-blue-600" />
+                  </div>
+                  <h4 className="font-semibold text-gray-800 mb-2">혁신적 기술</h4>
+                  <p className="text-sm text-gray-600">특허받은 고효율 펠릿 제조 기술</p>
+                </motion.div>
+
+                {/* Card 3 - Bottom */}
+                <motion.div
+                  className="absolute bottom-0 right-12 w-64 p-6 rounded-2xl bg-white shadow-xl border border-gray-100"
+                  initial={{ opacity: 0, y: -20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                  whileHover={{ y: 5, transition: { duration: 0.2 } }}
+                >
+                  <div className="w-12 h-12 mb-4 rounded-xl bg-purple-100 flex items-center justify-center">
+                    <Award className="w-6 h-6 text-purple-600" />
+                  </div>
+                  <h4 className="font-semibold text-gray-800 mb-2">검증된 품질</h4>
+                  <p className="text-sm text-gray-600">ISO 17225 국제 표준 충족</p>
+                </motion.div>
+
+                {/* Decorative elements */}
+                <motion.div
+                  className="absolute top-1/4 right-1/3 w-20 h-20 bg-emerald-200/30 rounded-full blur-xl"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                />
+                <motion.div
+                  className="absolute bottom-1/4 left-1/4 w-16 h-16 bg-green-200/30 rounded-full blur-xl"
+                  animate={{ scale: [1, 1.3, 1] }}
+                  transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+                />
               </div>
-            </Card3D>
+            </div>
           </motion.div>
         </div>
       </section>

@@ -21,7 +21,8 @@ import {
   Users,
   Rocket,
   Calendar,
-  Award
+  Award,
+  FileText
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -547,47 +548,153 @@ export default function BusinessPage() {
               </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 relative">
+      {/* CTA Section - Redesigned */}
+      <section className="py-24 relative bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="max-w-7xl mx-auto"
           >
-            <Card3D>
-              <div className="relative rounded-3xl bg-gradient-to-br from-emerald-600 via-green-600 to-lime-600 p-16 text-center overflow-hidden">
-                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-                <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-300/20 rounded-full blur-3xl"></div>
-                
-                <div className="relative z-10">
-                  <Sparkles className="w-20 h-20 text-white/80 mx-auto mb-6" />
+            {/* Split layout design */}
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+              <div className="grid lg:grid-cols-2">
+                {/* Left side - Content */}
+                <div className="p-12 lg:p-16 bg-gradient-to-br from-emerald-600 via-green-600 to-emerald-700 text-white relative overflow-hidden">
+                  {/* Background pattern */}
+                  <div className="absolute inset-0 opacity-10">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full transform translate-x-32 -translate-y-32"></div>
+                    <div className="absolute bottom-0 left-0 w-80 h-80 bg-white rounded-full transform -translate-x-40 translate-y-40"></div>
+                  </div>
                   
-                  <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                    함께 성장할 파트너를 찾습니다
-                  </h2>
-                  <p className="text-xl text-emerald-100 mb-10 max-w-3xl mx-auto">
-                    Leaflo와 함께 지속가능한 미래를 만들어갈 투자자와 파트너를 모집합니다
-                  </p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                    <Link href="/contact">
-                      <Button className="px-10 py-5 text-lg font-semibold rounded-2xl bg-white text-emerald-700 hover:bg-emerald-50 transform hover:scale-105 transition-all duration-300 shadow-2xl group">
-                        투자 문의하기
-                        <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    </Link>
-                    <Button 
-                      className="px-10 py-5 text-lg font-semibold rounded-2xl bg-transparent text-white border-2 border-white hover:bg-white/10 transform hover:scale-105 transition-all duration-300"
-                      onClick={() => window.open('/business-plan.pdf', '_blank')}
+                  <div className="relative z-10">
+                    <motion.div
+                      className="inline-flex items-center justify-center w-16 h-16 mb-6 rounded-2xl bg-white/20 backdrop-blur-sm"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
                     >
-                      사업계획서 다운로드
-                    </Button>
+                      <Sparkles className="w-8 h-8 text-white" />
+                    </motion.div>
+                    
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                      함께 성장할<br />파트너를 찾습니다
+                    </h2>
+                    
+                    <p className="text-xl text-emerald-50 mb-8 leading-relaxed">
+                      Leaflo와 함께 지속가능한 미래를 만들어갈<br />
+                      투자자와 파트너를 모집합니다
+                    </p>
+                    
+                    {/* Quick stats */}
+                    <div className="grid grid-cols-2 gap-6 mb-8">
+                      <div>
+                        <div className="text-3xl font-bold text-white">840억원</div>
+                        <div className="text-emerald-100">예상 시장 규모</div>
+                      </div>
+                      <div>
+                        <div className="text-3xl font-bold text-white">2025년</div>
+                        <div className="text-emerald-100">사업 시작</div>
+                      </div>
+                    </div>
+                    
+                    {/* Action buttons */}
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Link href="/contact">
+                          <Button size="lg" className="w-full sm:w-auto text-lg px-8 py-6 bg-white text-emerald-700 hover:bg-emerald-50 shadow-xl">
+                            <span className="flex items-center gap-2">
+                              투자 문의하기
+                              <ArrowRight className="w-5 h-5" />
+                            </span>
+                          </Button>
+                        </Link>
+                      </motion.div>
+                      
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button 
+                          size="lg"
+                          variant="outline"
+                          className="w-full sm:w-auto text-lg px-8 py-6 border-2 border-white text-white hover:bg-white/10"
+                          onClick={() => window.open('/business-plan.pdf', '_blank')}
+                        >
+                          <span className="flex items-center gap-2">
+                            사업계획서 다운로드
+                            <FileText className="w-5 h-5" />
+                          </span>
+                        </Button>
+                      </motion.div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Right side - Visual element */}
+                <div className="relative bg-gray-100 p-12 lg:p-16 flex items-center justify-center">
+                  <div className="relative w-full max-w-sm">
+                    {/* Investment highlights */}
+                    <div className="space-y-6">
+                      <motion.div
+                        className="p-6 rounded-2xl bg-white shadow-lg"
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                            <TrendingUp className="w-6 h-6 text-emerald-600" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-800 mb-1">높은 성장 잠재력</h4>
+                            <p className="text-sm text-gray-600">연평균 15% 이상 시장 성장 예상</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                      
+                      <motion.div
+                        className="p-6 rounded-2xl bg-white shadow-lg"
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+                            <Shield className="w-6 h-6 text-blue-600" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-800 mb-1">안정적 수익 구조</h4>
+                            <p className="text-sm text-gray-600">이중 수익 모델로 리스크 최소화</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                      
+                      <motion.div
+                        className="p-6 rounded-2xl bg-white shadow-lg"
+                        initial={{ opacity: 0, x: 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center flex-shrink-0">
+                            <Award className="w-6 h-6 text-purple-600" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-800 mb-1">검증된 기술력</h4>
+                            <p className="text-sm text-gray-600">특허 기술과 국제 표준 인증</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </div>
+                    
+                    {/* Decorative elements */}
+                    <motion.div
+                      className="absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-200/20 rounded-full blur-3xl"
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 4, repeat: Infinity }}
+                    />
                   </div>
                 </div>
               </div>
-            </Card3D>
+            </div>
           </motion.div>
         </div>
       </section>

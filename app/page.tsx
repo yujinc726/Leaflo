@@ -349,50 +349,125 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 relative">
-        <div className="container mx-auto px-6">
+      {/* CTA Section - Redesigned */}
+      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+        {/* Animated wave background */}
+        <div className="absolute inset-0">
+          <svg className="absolute bottom-0 w-full h-64" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <motion.path
+              fill="url(#wave-gradient)"
+              fillOpacity="0.3"
+              initial={{ d: "M0,160L48,170.7C96,181,192,203,288,213.3C384,224,480,224,576,213.3C672,203,768,181,864,181.3C960,181,1056,203,1152,213.3C1248,224,1344,224,1392,224L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z" }}
+              animate={{ 
+                d: [
+                  "M0,160L48,170.7C96,181,192,203,288,213.3C384,224,480,224,576,213.3C672,203,768,181,864,181.3C960,181,1056,203,1152,213.3C1248,224,1344,224,1392,224L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z",
+                  "M0,192L48,181.3C96,171,192,149,288,149.3C384,149,480,171,576,181.3C672,192,768,192,864,170.7C960,149,1056,107,1152,96C1248,85,1344,107,1392,117.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z",
+                  "M0,160L48,170.7C96,181,192,203,288,213.3C384,224,480,224,576,213.3C672,203,768,181,864,181.3C960,181,1056,203,1152,213.3C1248,224,1344,224,1392,224L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+                ]
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <defs>
+              <linearGradient id="wave-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#10b981" />
+                <stop offset="50%" stopColor="#059669" />
+                <stop offset="100%" stopColor="#84cc16" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <div className="container mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
+            className="max-w-4xl mx-auto"
           >
-            <Card3D>
-              <div className="relative rounded-3xl bg-gradient-to-br from-emerald-600 via-green-600 to-lime-600 p-16 text-center overflow-hidden">
-                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-                <div className="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-300/20 rounded-full blur-3xl"></div>
+            {/* Glassmorphism card */}
+            <div className="relative p-12 rounded-3xl bg-white/80 backdrop-blur-md border border-white/50 shadow-2xl overflow-hidden">
+              {/* Floating decorative elements */}
+              <motion.div
+                className="absolute -top-10 -right-10 w-40 h-40 bg-emerald-400/20 rounded-full blur-3xl"
+                animate={{ 
+                  x: [0, 20, 0],
+                  y: [0, -20, 0],
+                }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute -bottom-10 -left-10 w-40 h-40 bg-green-400/20 rounded-full blur-3xl"
+                animate={{ 
+                  x: [0, -20, 0],
+                  y: [0, 20, 0],
+                }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              />
+              
+              <div className="relative z-10 text-center">
+                {/* Animated icon */}
+                <motion.div
+                  className="inline-flex items-center justify-center w-24 h-24 mb-8 rounded-3xl bg-gradient-to-br from-emerald-400 to-green-600 shadow-xl"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Sparkles className="w-12 h-12 text-white" />
+                </motion.div>
                 
-                <div className="relative z-10">
-                  <Sparkles className="w-20 h-20 text-white/80 mx-auto mb-6" />
+                <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                  지속가능한 미래를 <GradientText>함께</GradientText> 만들어가요
+                </h2>
+                
+                <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                  Leaflo와 함께 환경을 보호하고 새로운 에너지 혁신을 경험해보세요.
+                  우리의 여정에 동참해 주세요.
+                </p>
+                
+                {/* Buttons with new style */}
+                <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link href="/about">
+                      <Button size="lg" className="text-lg px-10 py-6 bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-xl hover:shadow-emerald-500/25 transition-all duration-300">
+                        <span className="flex items-center gap-3">
+                          회사 소개 보기
+                          <ArrowRight className="w-5 h-5" />
+                        </span>
+                      </Button>
+                    </Link>
+                  </motion.div>
                   
-                  <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                    지속가능한 미래를 함께 만들어가요
-                  </h2>
-                  
-                  <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-                    Leaflo와 함께 환경을 보호하고 새로운 에너지 혁신을 경험해보세요.
-                  </p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button size="lg" variant="secondary" className="text-lg px-8 py-4 bg-white text-emerald-600 hover:bg-gray-100 transform hover:scale-105 transition-all duration-200">
-                      <Link href="/about" className="flex items-center gap-2">
-                        회사 소개 보기
-                        <ArrowRight className="w-5 h-5" />
-                      </Link>
-                    </Button>
-                    
-                    <Button size="lg" variant="outline" className="text-lg px-8 py-4 border-2 border-white text-white hover:bg-white/10 transform hover:scale-105 transition-all duration-200">
-                      <Link href="/contact" className="flex items-center gap-2">
-                        파트너십 시작하기
-                        <Users className="w-5 h-5" />
-                      </Link>
-                    </Button>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link href="/contact">
+                      <Button size="lg" className="text-lg px-10 py-6 bg-white text-emerald-600 border-2 border-emerald-200 hover:bg-emerald-50 shadow-xl transition-all duration-300">
+                        <span className="flex items-center gap-3">
+                          파트너십 시작하기
+                          <Users className="w-5 h-5" />
+                        </span>
+                      </Button>
+                    </Link>
+                  </motion.div>
+                </div>
+                
+                {/* Trust indicators */}
+                <div className="mt-12 pt-8 border-t border-gray-200">
+                  <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-600">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-emerald-500" />
+                      <span>특허 기술 보유</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Shield className="w-5 h-5 text-emerald-500" />
+                      <span>ISO 17225 인증</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Globe className="w-5 h-5 text-emerald-500" />
+                      <span>탄소중립 기여</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </Card3D>
+            </div>
           </motion.div>
         </div>
       </section>
