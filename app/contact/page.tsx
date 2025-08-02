@@ -150,13 +150,14 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-emerald-50">
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-20 right-20 w-96 h-96 bg-emerald-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-green-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute top-40 right-40 w-96 h-96 bg-emerald-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+          <div className="absolute bottom-40 left-40 w-96 h-96 bg-green-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-lime-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
         </div>
         
-        <div className="relative z-10 text-center px-6 max-w-4xl">
+        <div className="relative z-10 text-center px-6 max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -164,17 +165,16 @@ export default function ContactPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100/80 backdrop-blur-sm text-emerald-700 text-sm font-medium mb-8">
               <MessageSquare className="w-4 h-4" />
-              함께 성장하는 파트너
+              Contact Us
             </div>
             
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              <GradientText>파트너십</GradientText> 문의
+              <GradientText>함께 만들어가는</GradientText><br />
+              <span className="text-gray-800">지속가능한 미래</span>
             </h1>
             
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Leaflo와 함께 지속가능한 미래를 만들어갈
-              <br />
-              파트너를 기다리고 있습니다
+            <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Leaflo와 함께 환경 보호와 혁신적 사업의 여정을 시작하세요
             </p>
           </motion.div>
         </div>
@@ -187,11 +187,14 @@ export default function ContactPage() {
         </div>
         
         {/* Floating elements */}
-        <div className="absolute top-40 left-40 animate-float">
-          <Mail className="w-12 h-12 text-emerald-200 opacity-20" />
+        <div className="absolute top-20 left-20 animate-float">
+          <Mail className="w-12 h-12 text-emerald-200 opacity-30" />
         </div>
-        <div className="absolute bottom-40 right-40 animate-float animation-delay-2000">
-          <Phone className="w-12 h-12 text-green-200 opacity-20" />
+        <div className="absolute top-40 right-32 animate-float" style={{ animationDelay: '1s' }}>
+          <Phone className="w-10 h-10 text-green-200 opacity-30" />
+        </div>
+        <div className="absolute bottom-40 left-32 animate-float" style={{ animationDelay: '2s' }}>
+          <MessageSquare className="w-14 h-14 text-lime-200 opacity-30" />
         </div>
       </section>
 
